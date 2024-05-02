@@ -35,3 +35,6 @@ https://en.wikipedia.org/wiki/Lehmer_random_number_generator
 * Permutation aléatoire de Fisher Yates
 https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 
+# Licence
+Le code source de ce dépôt est publié sous license MIT.
+Voir [LICENSE](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/LICENSE) pour plus d'informations.
