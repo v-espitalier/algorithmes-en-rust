@@ -1,7 +1,7 @@
 
 # algorithmes-en-rust
 
-Voilà une liste d'algorithmes courants, implémentés en Rust. Peut éventuellement servir pour préparer des cours sur ce langage.
+Voilà une liste d'algorithmes courants, implémentés en langage Rust, pour se faire une idée de ce langage. Peut éventuellement servir pour préparer des cours.
 
 Algorithmes implémentés:
 
