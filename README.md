@@ -20,10 +20,13 @@ https://fr.wikipedia.org/wiki/Recherche_s%C3%A9quentielle
 * recherche dichotomique (récursif)
 https://fr.wikipedia.org/wiki/Recherche_dichotomique
 
-* tri_par_selection
+* tri par selection
 https://fr.wikipedia.org/wiki/Tri_par_s%C3%A9lection
 
-* tri_fusion
+* tri rapide
+https://fr.wikipedia.org/wiki/Tri_rapide
+
+* tri fusion
 https://fr.wikipedia.org/wiki/Tri_fusion
 
 * Générateur aléatoire MINSTD alias 'minimum standard' (de Park et Miller, 1988)
