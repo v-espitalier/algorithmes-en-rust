@@ -233,6 +233,61 @@ fn tri_par_selection(ma_liste: &mut [i32])
 } // fn tri_par_selection ()
 
 
+// Algorithme du tri rapide
+// Entrée = Sortie:
+// ma_liste: liste d'entiers 'ma_liste'
+// Implémentation tri en place, non stable
+// Complexité: n.log(n)
+// Version standard, non optimisée: Allocations internes pour construire les sous-listes
+// Voir: https://fr.wikipedia.org/wiki/Tri_rapide
+fn tri_rapide(ma_liste: &mut [i32])
+{
+    let n = ma_liste.len();
+
+    // Gestion des cas particuliers (fin des appels récursifs)
+    // Liste avec 1 seul élément (-> Plus rien à trier)
+    if n <= 1 {return;}
+
+    // Cas général, menant à 2 appels résursifs pour trier les 2 sous-listes
+
+    let pivot = ma_liste[0];  // Existe car la liste a au moins 2 éléments
+
+    let mut ma_liste_gauche: Vec<i32> = Vec::new();
+    let mut ma_liste_droite: Vec<i32> = Vec::new();
+
+    for index in 1..n
+    {
+        let valeur = ma_liste[index];
+        if (valeur <= pivot) {ma_liste_gauche.push(valeur);}
+        if (valeur > pivot) {ma_liste_droite.push(valeur);}
+
+    }
+
+    let ma_liste_gauche_slice: &mut [i32] = ma_liste_gauche.as_mut_slice();
+    let ma_liste_droite_slice: &mut [i32] = ma_liste_droite.as_mut_slice();
+    tri_rapide(ma_liste_gauche_slice);
+    tri_rapide(ma_liste_droite_slice);
+
+    // Rassemble les sous-listes triées en les copiant dans le tableau d'origine
+    let mut cpt:usize = 0;
+    for index in 0..ma_liste_gauche_slice.len()
+    {
+        ma_liste[cpt] = ma_liste_gauche_slice[index];
+        cpt += 1;
+    }
+
+    ma_liste[cpt] = pivot;
+    cpt += 1;
+
+    for index in 0..ma_liste_droite_slice.len()
+    {
+        ma_liste[cpt] = ma_liste_droite_slice[index];
+        cpt += 1;
+    }
+
+}
+
+
 // Algorithme du tri fusion
 // Entrée = Sortie:
 // ma_liste: liste d'entiers 'ma_liste'
@@ -240,7 +295,7 @@ fn tri_par_selection(ma_liste: &mut [i32])
 // Complexité: n.log(n)
 // Alloue un tableau de taille moitié (une seule fois) pour stocker les valeurs intermédiaires
 // et permettre la stabilité du tri
-// https://fr.wikipedia.org/wiki/Tri_fusion
+// Voir: https://fr.wikipedia.org/wiki/Tri_fusion
 fn tri_fusion(ma_liste: &mut [i32], index_min_opt : Option<usize>, index_max_opt : Option<usize>, ma_sous_liste_1_opt: Option<&mut [i32]>)
 {
     if ((index_min_opt != None) && (index_max_opt != None))
@@ -433,7 +488,7 @@ impl rng_minstd {
 
 // Algorithme de Fisher Yates
 // Permutation aléatoire (équidistribuée i.e. non biaisée) des élements de la liste
-// https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+// Voir: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 fn fisher_yates_shuffle(ma_liste: &mut [i32], seed: u32)
 {
     // Ancien code faisant appel à un RNG externe
@@ -521,7 +576,8 @@ fn main() {
         //println!("Recherche dichotomique de la valeur {}: index {}", p, recherche_dichotomique(ma_liste2, p, None, None).unwrap());
 
         //tri_par_selection(ma_liste2);
-        tri_fusion(ma_liste2, None, None, None);
+        //tri_fusion(ma_liste2, None, None, None);
+        tri_rapide(ma_liste2);
 
         println!("Liste triée: \n{:?}", &ma_liste2);
         assert!(verif_liste_croissante(&ma_liste2), "Erreur: la liste n'est pas correctement triée.");
