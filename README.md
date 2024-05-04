@@ -20,6 +20,9 @@ https://fr.wikipedia.org/wiki/Recherche_s%C3%A9quentielle
 * recherche dichotomique (récursif)
 https://fr.wikipedia.org/wiki/Recherche_dichotomique
 
+* tri par insertion
+https://fr.wikipedia.org/wiki/Tri_par_insertion
+
 * tri par selection
 https://fr.wikipedia.org/wiki/Tri_par_s%C3%A9lection
 

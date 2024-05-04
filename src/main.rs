@@ -351,10 +351,11 @@ fn main() {
         println!("\nRecherche lineaire de la valeur {}: index {} \n", p, recherche_lineaire(ma_liste2, p).unwrap());
         //println!("Recherche dichotomique de la valeur {}: index {}", p, recherche_dichotomique(ma_liste2, p, None, None).unwrap());
 
+        algos_tri::tri_par_insertion(ma_liste2);
         //algos_tri::tri_par_selection(ma_liste2);
         
         //algos_tri::tri_rapide(ma_liste2);
-        algos_tri::tri_fusion(ma_liste2);
+        //algos_tri::tri_fusion(ma_liste2);
         //algos_tri::tri_fusion_ameliore(ma_liste2, None, None, None);
 
         println!("Liste triée: \n{:?}", &ma_liste2);

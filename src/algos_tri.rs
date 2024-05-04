@@ -1,4 +1,47 @@
 
+// Algorithme du tri par insertion
+// Entrée = Sortie:
+// ma_liste: liste d'entiers 'ma_liste'
+// Le tri est stable et en place
+// Complexité: n^2
+// Voir: https://fr.wikipedia.org/wiki/Tri_par_insertion
+pub fn tri_par_insertion(ma_liste: &mut [i32])
+{
+    println!("tri_par_insertion > appel");
+
+    let n = ma_liste.len();
+
+    // On trie les élements du tableau, successivement
+    // for i in range(0, n):
+    for i in 0..n
+    {
+        let mut m = ma_liste[i];
+
+        // Déplacement des éléments d'index < i,  et plus grands que m en valeur 
+        // pour faire l'insertion de l'élément m ( d'origine ma_liste[i] ).
+        let mut insert_index = 0;
+        for j in (0..i).rev()
+        {
+            // On s'arrete quand les élements du tableau sont plus petits que m
+            // En cas d'égalité, on break => tri stable
+            if (ma_liste[j] <= m) {insert_index = j + 1; break;}
+            ma_liste[j + 1] = ma_liste[j];
+        }
+
+        // Insertion effective de l'élément m, à l'index 'insert_index'
+        ma_liste[insert_index] = m;
+
+        // Invariant de boucle:
+        // A la fin de chaque itération, les (i+1) premiers éléments
+        // du tableau 'ma_liste' sont triés
+    }
+
+    // 
+    // return ma_liste
+} // fn tri_par_insertion ()
+
+
+
 // Algorithme du tri par sélection
 // Entrée = Sortie:
 // ma_liste: liste d'entiers 'ma_liste'
@@ -39,6 +82,10 @@ pub fn tri_par_selection(ma_liste: &mut [i32])
             ma_liste[i] = m;
             ma_liste[m_index] = v_swap;
         }
+
+        // Invariant de boucle:
+        // A la fin de chaque itération, les (i+1) premiers éléments
+        // du tableau 'ma_liste' sont triés, et sont les plus petits de tout le tableau.
     }
 
     // 
