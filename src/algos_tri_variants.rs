@@ -79,9 +79,6 @@ where T : Ord //, T : Clone
     let mut permutation: Vec<usize> = Vec::from_iter((0..n));
     //let permutation: &mut [usize] = permutation_vec.as_mut_slice();
 
-    // Cas particulier d'une liste réduite à un seul élément.
-    if n <= 1 {return permutation;}
-
     // On trie les élements du tableau, successivement
     // for i in range(0, n):
     for i in 0..n
