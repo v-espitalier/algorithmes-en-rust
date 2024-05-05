@@ -89,13 +89,10 @@ where T : Ord //, T : Clone
 
         // Le i-eme élement le plus petit du tableau se trouve en position m_index, et vaut m
         // On permute les élement d'index i et m_index
-        if (i != min_index)
-        {
-            //println!("Echange les index {} et {}", i, m_index);
-            let index_swap = permutation[i];
-            permutation[i] = permutation[min_index];
-            permutation[min_index] = index_swap;
-        }
+        //println!("Echange les index {} et {}", i, m_index);
+        let index_swap = permutation[i];
+        permutation[i] = permutation[min_index];
+        permutation[min_index] = index_swap;
 
     }
 
