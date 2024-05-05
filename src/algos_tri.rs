@@ -97,7 +97,7 @@ pub fn tri_par_selection(ma_liste: &mut [i32])
 // Entrée = Sortie:
 // ma_liste: liste d'entiers 'ma_liste'
 // Implémentation tri en place, non stable
-// Complexité: n.log(n)
+// Complexité: n.log(n), en moyenne, et n^2 dans le pire cas
 // Version standard, non optimisée: Allocation interne à chaque appel pour construire les sous-listes
 // Voir: https://fr.wikipedia.org/wiki/Tri_rapide
 pub fn tri_rapide(ma_liste: &mut [i32])
@@ -153,7 +153,7 @@ pub fn tri_rapide(ma_liste: &mut [i32])
 // ma_liste: liste d'entiers 'ma_liste'
 // Implémentation tri stable et en place
 // Version standard, non optimisée: Allocation interne à chaque appel pour fusionner les sous-listes
-// Complexité: n.log(n)
+// Complexité: n.log(n), en moyenne et dans le pire cas
 // Voir: https://fr.wikipedia.org/wiki/Tri_fusion
 pub fn tri_fusion(ma_liste: &mut [i32])
 {
@@ -262,7 +262,7 @@ pub fn tri_fusion(ma_liste: &mut [i32])
 // Entrée = Sortie:
 // ma_liste: liste d'entiers 'ma_liste'
 // Implémentation tri stable et en place
-// Complexité: n.log(n)
+// Complexité: n.log(n), en moyenne et dans le pire cas
 // Version optimisée: Une seule allocation interne au premier appel à la fonction, de taille moitié du tableau d'origine
 // Voir: https://fr.wikipedia.org/wiki/Tri_fusion
 pub fn tri_fusion_ameliore(ma_liste: &mut [i32], index_min_opt : Option<usize>, index_max_opt : Option<usize>, ma_sous_liste_1_opt: Option<&mut [i32]>)
@@ -372,3 +372,49 @@ pub fn tri_fusion_ameliore(ma_liste: &mut [i32], index_min_opt : Option<usize>, 
     }
 
 } // fn tri_fusion_ameliore
+
+
+// Algorithme du tri par tas
+// Entrée = Sortie:
+// ma_liste: liste d'entiers 'ma_liste'
+// Implémentation tri en place, non stable
+// Complexité: n.log(n), en moyenne et dans le pire cas
+// Utilise la structure de données 'std::collections::BinaryHeap' de Rust.
+// Voir: https://fr.wikipedia.org/wiki/Tri_par_tas
+pub fn tri_par_tas(ma_liste: &mut [i32])
+{
+    let n = ma_liste.len();
+
+    // Liste avec 1 seul élément (-> rien à trier)
+    if n <= 1 {return;}
+
+    // Cas général avec au moins 2 éléments à trier
+    use std::collections::BinaryHeap ;
+    let mut binary_heap = BinaryHeap::new() ;
+    for i in 0..n
+    {
+        // On insère tous les éléments à trier dans le tas
+        binary_heap.push(ma_liste[i]) ;
+    }
+
+    for i in (0..n).rev()
+    {
+        // On retire tous les éléments du tas, qui sortent par ordre décroissant
+        // (binary_heap = tas = File de priorité => Les premiers éléments retournés sont de valeur maximale)
+        let v_opt = binary_heap.pop();
+        if v_opt == None
+        {
+            println!("tri_par_tas : Erreur interne: Il devrait rester des éléments dans le tas.");
+            panic!();
+        }
+        let v: i32 = v_opt.unwrap().clone();
+        ma_liste[i] = v;
+
+        // Invariant de boucle: A la fin de chaque itération:
+        // - les (n - i) derniers éléments de ma_liste sont triés et les plus grands du tableau initial
+        //   (i.e. ils sont à leur place finale)
+        // - Le tas contient les éléments restants, et la racine pointe vers le plus grand élément du tas
+    }
+
+} // fn tri_par_tas
+

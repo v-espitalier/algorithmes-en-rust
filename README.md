@@ -32,6 +32,9 @@ https://fr.wikipedia.org/wiki/Tri_rapide
 * tri fusion
 https://fr.wikipedia.org/wiki/Tri_fusion
 
+* tri par tas
+https://fr.wikipedia.org/wiki/Tri_par_tas
+
 * Générateur aléatoire MINSTD alias 'minimum standard' (de Park et Miller, 1988)
 
 https://fr.wikipedia.org/wiki/G%C3%A9n%C3%A9rateur_congruentiel_lin%C3%A9aire
