@@ -3,7 +3,7 @@
 // séparés algos_tri.rs et algos_tr_variant.rs
 // On inclut ces 'module'
 mod algos_tri;
-mod algos_tri_variants;
+mod algos_tri_variantes;
 
 
 // Implémentation récursive de la factorielle
@@ -355,7 +355,7 @@ fn main() {
         //println!("Recherche dichotomique de la valeur {}: index {}", p, recherche_dichotomique(ma_liste2, p, None, None).unwrap());
 
         //algos_tri::tri_par_insertion(ma_liste2);
-        //algos_tri_variants::tri_par_insertion_generique(ma_liste2);
+        //algos_tri_variantes::tri_par_insertion_generique(ma_liste2);
         //algos_tri::tri_par_selection(ma_liste2);
         
         //algos_tri::tri_rapide(ma_liste2);
@@ -391,10 +391,10 @@ fn main() {
 
         println!("\nListe départ: \n {:?}", &ma_liste_gen2);
 
-        //algos_tri_variants::tri_par_insertion_generique(ma_liste_gen2);
+        //algos_tri_variantes::tri_par_insertion_generique(ma_liste_gen2);
 
-        let permutation = algos_tri_variants::tri_par_selection_indirect_generique(ma_liste_gen2);
-        let ma_liste_gen2 = algos_tri_variants::permute_copie_liste(ma_liste_gen2 , &permutation);
+        let permutation = algos_tri_variantes::tri_par_selection_indirect_generique(ma_liste_gen2);
+        let ma_liste_gen2 = algos_tri_variantes::permute_copie_liste(ma_liste_gen2 , &permutation);
         println!("Permutation: {:?}", permutation);
 
         println!("Liste triée: \n{:?}", &ma_liste_gen2);
