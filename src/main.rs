@@ -1,7 +1,9 @@
 
-// Les implémentations des algorithmes de tri sont dans le fichier algos_tri.rs
-// On inclut ce 'module'
+// Les implémentations des algorithmes de tri sont dans des fichiers
+// séparés algos_tri.rs et algos_tr_variant.rs
+// On inclut ces 'module'
 mod algos_tri;
+mod algos_tri_variants;
 
 
 // Implémentation récursive de la factorielle
@@ -299,7 +301,8 @@ fn main() {
     println!("Hello, world!");
 
     let b_test_fonctions_math = false;
-    let b_test_recherche_liste_et_tris = true;
+    let b_test_recherche_liste_et_tris = false;
+    let b_test_tris_variants = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -352,6 +355,7 @@ fn main() {
         //println!("Recherche dichotomique de la valeur {}: index {}", p, recherche_dichotomique(ma_liste2, p, None, None).unwrap());
 
         //algos_tri::tri_par_insertion(ma_liste2);
+        //algos_tri_variants::tri_par_insertion_generique(ma_liste2);
         //algos_tri::tri_par_selection(ma_liste2);
         
         //algos_tri::tri_rapide(ma_liste2);
@@ -361,7 +365,39 @@ fn main() {
 
         println!("Liste triée: \n{:?}", &ma_liste2);
         assert!(verif_liste_croissante(&ma_liste2), "Erreur: la liste n'est pas correctement triée.");
-        
+    }
+
+
+    if (b_test_tris_variants)
+    {
+        // Tableau de données string
+        let mut ma_liste_gen: Vec<String> = vec!["rust".to_string(), "go".to_string(), "shell".to_string(), "ruby".to_string(), "python".to_string()];
+        let ma_liste_gen2: &mut [String] = ma_liste_gen.as_mut_slice();
+
+        /*
+        // Tableau d'entiers
+        let seed: u32 = 1234;
+        let n = 29;
+        let mut ma_liste_gen: Vec<i32> = Vec::from_iter((0..n));
+        let ma_liste_gen2: &mut [i32] = ma_liste_gen.as_mut_slice();
+        fisher_yates_shuffle(ma_liste_gen2, seed);
+        */
+
+        // Tableau de flottants
+        // Ordre pas total sur les flottants (NaN)
+        // let mut ma_liste_gen: Vec<f64> = vec![3.1415, 1.4142, 2.718, 1.732, 6.022, -273.15];
+        // let ma_liste_gen2: &mut [f64] = ma_liste_gen.as_mut_slice();
+ 
+
+        println!("\nListe départ: \n {:?}", &ma_liste_gen2);
+
+        //algos_tri_variants::tri_par_insertion_generique(ma_liste_gen2);
+
+        let permutation = algos_tri_variants::tri_par_selection_indirect_generique(ma_liste_gen2);
+        let ma_liste_gen2 = algos_tri_variants::permute_copie_liste(ma_liste_gen2 , &permutation);
+        println!("Permutation: {:?}", permutation);
+
+        println!("Liste triée: \n{:?}", &ma_liste_gen2);
     }
 
 }
