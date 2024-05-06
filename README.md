@@ -3,13 +3,10 @@
 
 Voilà une liste d'algorithmes courants, implémentés en langage Rust, pour se faire une idée de ce langage. Peut éventuellement servir pour préparer des cours.
 
-Algorithmes implémentés:
+## Algorithmes d'initiation:
 
 * factorielle (récursive)
 https://fr.wikipedia.org/wiki/Factorielle
-
-* pgcd (récursif)
-https://fr.wikipedia.org/wiki/Plus_grand_commun_diviseur
 
 * fibonacci (itératif et récursif)
 https://fr.wikipedia.org/wiki/Suite_de_Fibonacci
@@ -19,6 +16,11 @@ https://fr.wikipedia.org/wiki/Recherche_s%C3%A9quentielle
 
 * recherche dichotomique (récursif)
 https://fr.wikipedia.org/wiki/Recherche_dichotomique
+
+* pgcd (récursif)
+https://fr.wikipedia.org/wiki/Plus_grand_commun_diviseur
+
+## Algorithmes de tri:
 
 * tri par insertion
 https://fr.wikipedia.org/wiki/Tri_par_insertion
@@ -35,6 +37,9 @@ https://fr.wikipedia.org/wiki/Tri_fusion
 * tri par tas
 https://fr.wikipedia.org/wiki/Tri_par_tas
 
+
+## Algorithmes associés aux probabilités ou partiellement aléatoires
+
 * Générateur aléatoire MINSTD alias 'minimum standard' (de Park et Miller, 1988)
 
 https://fr.wikipedia.org/wiki/G%C3%A9n%C3%A9rateur_congruentiel_lin%C3%A9aire
@@ -43,6 +48,11 @@ https://en.wikipedia.org/wiki/Lehmer_random_number_generator
 
 * Permutation aléatoire de Fisher Yates
 https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+
+* Méthode de Box-Muller, pour générer des lois normales
+https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Box-Muller
+
+* Calcul de moyenne et variance de tableaux avec les traits de Rust
 
 # Licence
 Le code source de ce dépôt est publié sous license MIT.
