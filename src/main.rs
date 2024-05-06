@@ -5,6 +5,7 @@
 mod probabilites;
 mod algos_tri;
 mod algos_tri_variantes;
+mod algos_divers;
 
 
 // Implémentation récursive de la factorielle
@@ -215,7 +216,8 @@ fn main() {
     let b_test_fonctions_math = false;
     let b_test_recherche_liste_et_tris = false;
     let b_test_tris_variants = false;
-    let b_test_probas = true;
+    let b_test_probas = false;
+    let b_test_algos_divers = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -323,6 +325,18 @@ fn main() {
         let variance = probabilites::variance_non_biaisee(&normales.as_slice()).unwrap();
         //println!("normales: {:?}", &normales);
         println!("moyenne, variance, : {} {}", moyenne, variance);
+    }
+
+    if (b_test_algos_divers)
+    {
+        let solutions = algos_divers::resoud_probleme_des_8_dames();
+        println!("Nb solutions: {}", solutions.len());
+        //println!("Solutions: {:?}", solutions);
+        let solutions_uniques = algos_divers::calcule_solutions_uniques(&solutions);
+        println!("Nb solutions uniques: {}", solutions_uniques.len());
+        println!("Solutions uniques: {:?}", solutions_uniques);
+        println!(" ");
+        algos_divers::affiche_solutions_probleme_des_8_dames(&solutions_uniques);
     }
 
 }

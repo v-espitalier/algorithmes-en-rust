@@ -54,6 +54,11 @@ https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Box-Muller
 
 * Calcul de moyenne et variance de tableaux avec les traits de Rust
 
+## Algorithmes divers
+
+* Résolution du problème des 8 dames
+https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_huit_dames
+
 # Licence
 Le code source de ce dépôt est publié sous license MIT.
 Voir [LICENSE](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/LICENSE) pour plus d'informations.
