@@ -8,7 +8,7 @@ Voilà une recueil d'algorithmes courants, implémentés en langage Rust, pour s
 Pas de dépendances externes, autres que rust lui_même (voir: https://www.rust-lang.org/fr/tools/install).
 
 ```bash
-# Alternative sans git: télécharger la copie actuelle du repo depuis la page GitHub
+# Alternative à git: $ wget https://github.com/v-espitalier/algorithmes-en-rust/archive/refs/heads/main.zip
 git clone https://github.com/v-espitalier/algorithmes-en-rust
 cd algorithmes-en-rust
 cargo run
