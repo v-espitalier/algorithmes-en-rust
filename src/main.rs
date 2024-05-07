@@ -225,6 +225,7 @@ fn main() {
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
     {
+        println!("");
         let n: u64 = 5;
         println!("Factorielle({}) = {}", n, factorielle(n));
 
@@ -242,6 +243,7 @@ fn main() {
 
     if (b_test_recherche_tableau_et_tris)
     {
+        println!("");
 
         // Tester le générateur aléatoire (MINSTD)
         if (false)
@@ -286,6 +288,7 @@ fn main() {
 
     if (b_test_tris_variants)
     {
+        println!("");
         // Tableau de données string
         let mut mon_tableau_gen: Vec<String> = vec!["rust".to_string(), "go".to_string(), "shell".to_string(), "ruby".to_string(), "python".to_string()];
         let mon_tableau_gen2: &mut [String] = mon_tableau_gen.as_mut_slice();
@@ -331,6 +334,7 @@ fn main() {
 
     if (b_test_probas)
     {
+        println!("");
         let seed: u32 = 1234;
         let n: usize = 10000;
         let normales: Vec<f64> = probabilites::box_muller(n, seed);
@@ -342,6 +346,7 @@ fn main() {
 
     if (b_test_algos_divers)
     {
+        println!("");
         let solutions = algos_divers::resoud_probleme_des_8_dames();
         println!("Nb solutions: {}", solutions.len());
         //println!("Solutions: {:?}", solutions);

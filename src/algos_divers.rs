@@ -90,6 +90,7 @@ fn avance_a_la_prochaine_position(solution_relative_cour : &mut [usize; 8], inde
 // Sortie = ensemble des solutions du problème
 pub fn resoud_probleme_des_8_dames() -> Vec<[usize; 8]>
 {
+    println!("Appel à resoud_probleme_des_8_dames()");
     // Vecteur de solutions
     let mut solutions: Vec<[usize; 8]> = Vec::new();
 

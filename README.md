@@ -1,7 +1,19 @@
 
 # algorithmes-en-rust
 
-Voilà une liste d'algorithmes courants, implémentés en langage Rust, pour se faire une idée de ce langage. Peut éventuellement servir pour préparer des cours.
+Voilà une recueil d'algorithmes courants, implémentés en langage Rust, pour se faire une idée du langage. Peut éventuellement servir pour préparer des cours.
+
+## Téléchargement / utilisation
+
+Pas de dépendances externes, autres que rust lui_même (voir: https://www.rust-lang.org/fr/tools/install).
+
+```bash
+# Alternative sans git: télécharger la copie actuelle du repo depuis la page GitHub
+git clone https://github.com/v-espitalier/algorithmes-en-rust
+cd algorithmes-en-rust
+cargo run
+```
+
 
 ## Algorithmes d'initiation:
 
