@@ -61,9 +61,9 @@ impl rng_minstd {
 
 
 // Algorithme de Fisher Yates
-// Permutation aléatoire (équidistribuée i.e. non biaisée) des élements de la liste
+// Permutation aléatoire (équidistribuée i.e. non biaisée) des élements du tableau
 // Voir: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-pub fn fisher_yates_shuffle(ma_liste: &mut [i32], seed: u32)
+pub fn fisher_yates_shuffle(mon_tableau: &mut [i32], seed: u32)
 {
     // Ancien code faisant appel à un RNG externe
     //let mut rng = thread_rng();
@@ -76,7 +76,7 @@ pub fn fisher_yates_shuffle(ma_liste: &mut [i32], seed: u32)
     // Utiliser l'implémentation locale du RNG MINSTD pour éviter la dépendance au crate 'rand'
     let mut rng: rng_minstd = rng_minstd::new(seed);
 
-    let n: usize = ma_liste.len();
+    let n: usize = mon_tableau.len();
     //for i from n−1 down to 1 do
     for i in (0..n).rev()
     {
@@ -85,9 +85,9 @@ pub fn fisher_yates_shuffle(ma_liste: &mut [i32], seed: u32)
         let j: usize = rng.gen_range(0..(i + 1)) as usize;
 
         // exchange a[j] and a[i]
-        let v_swap = ma_liste[i];
-        ma_liste[i] = ma_liste[j] ;
-        ma_liste[j] = v_swap;
+        let v_swap = mon_tableau[i];
+        mon_tableau[i] = mon_tableau[j] ;
+        mon_tableau[j] = v_swap;
     }
 }
 
@@ -149,20 +149,20 @@ pub fn box_muller(nb_normales: usize, seed: u32) -> Vec<f64>
 // Calculer la moyenne d'un tableau de valeurs
 // Implémenté de façon générique, pour tout type de nombre
 // qui est clonable, additionnable, divisable..
-pub fn moyenne<T>(ma_liste : &[T]) -> Option<T>
+pub fn moyenne<T>(mon_tableau : &[T]) -> Option<T>
 where T : Clone + From<u32> + From<<T as std::ops::Div>::Output>  + std::ops::AddAssign + std::ops::Div
 {
-    let n = ma_liste.len();
+    let n = mon_tableau.len();
     if (n == 0)
     {
         return None;
     }
 
-    let mut somme: T = ma_liste[0].clone();
+    let mut somme: T = mon_tableau[0].clone();
 
     for i in 1..n
     {
-        somme += ma_liste[i].clone();
+        somme += mon_tableau[i].clone();
     }
 
     let n_as_u32: u32 = n as u32;
@@ -177,21 +177,21 @@ where T : Clone + From<u32> + From<<T as std::ops::Div>::Output>  + std::ops::Ad
 // Calculer la variance non biaisée d'un vecteur
 // Implémenté de façon générique, pour tout type de nombre
 // qui est clonable, additionnable, multipliable, divisable..
-pub fn variance_non_biaisee<T>(ma_liste : &[T]) -> Option<T>
+pub fn variance_non_biaisee<T>(mon_tableau : &[T]) -> Option<T>
 where T : Clone + From<u32> + From<<T as std::ops::Mul>::Output> + From<<T as std::ops::Div>::Output>,
       T : std::ops::AddAssign + std::ops::Mul + std::ops::Div
 {
-    let n = ma_liste.len();
+    let n = mon_tableau.len();
     if (n == 0)
     {
         return None;
     }
 
-    let mut somme_carres: T = T::from(ma_liste[0].clone() * ma_liste[0].clone());
+    let mut somme_carres: T = T::from(mon_tableau[0].clone() * mon_tableau[0].clone());
 
     for i in 1..n
     {
-        somme_carres += T::from(ma_liste[i].clone() * ma_liste[i].clone());
+        somme_carres += T::from(mon_tableau[i].clone() * mon_tableau[i].clone());
     }
 
     let n_moins_1_as_u32: u32 = (n - 1) as u32;

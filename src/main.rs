@@ -86,25 +86,25 @@ fn fibonacci_recursif(n : u64) -> u64
 
 // Fonction implémentant la recherche linéaire
 // Entrées:
-// * ma_liste: liste d'entiers 'ma_liste'
-// * val_recherche: Valeur que l'on recherche au sein de la liste
+// * mon_tableau: tableau d'entiers sous la forme d'une 'slice' Rust de i32
+// * val_recherche: Valeur que l'on recherche au sein du tableau
 // Sortie:
 // * Option<usize>: Enum Rust qui vaut:
-//   -> Soit Some(mon_index) : index du premier élément de la liste dont la valeur est 'val_recherche', s'il est trouvé
+//   -> Soit Some(mon_index) : index du premier élément du tableau dont la valeur est 'val_recherche', s'il est trouvé
 //   -> Soit None si l'élément n'a pas été trouvé
-// La recherche s'effectue en itérant sur les éléments de 'ma_liste'
+// La recherche s'effectue en itérant sur les éléments de 'mon_tableau'
 // L'index retourné commence à zéro (convention Python & Rust)
 // Complexité: linéaire..
 // Voir: https://fr.wikipedia.org/wiki/Recherche_s%C3%A9quentielle
-fn recherche_lineaire(ma_liste: &mut [i32], val_recherche: i32) -> Option<usize>
+fn recherche_lineaire(mon_tableau: &mut [i32], val_recherche: i32) -> Option<usize>
 {
-    let n = ma_liste.len();
+    let n = mon_tableau.len();
 
     for i in 0..n
     {
-        if ma_liste[i] == val_recherche {return Some(i);}
+        if mon_tableau[i] == val_recherche {return Some(i);}
         // Invariant de boucle: A la fin de chaque itération, si les itérations se poursuivent,
-        // val_recherche n'a pas été trouvé parmi les (i + 1) premiers éléments de la liste
+        // val_recherche n'a pas été trouvé parmi les (i + 1) premiers éléments du tableau
     }
     return None
 }
@@ -112,19 +112,19 @@ fn recherche_lineaire(ma_liste: &mut [i32], val_recherche: i32) -> Option<usize>
 
 // Fonction implémentant la recherche dichotomique
 // Entrées:
-// * ma_liste: liste d'entiers 'ma_liste'
-// * val_recherche: Valeur que l'on recherche au sein de la liste
+// * mon_tableau: tableau d'entiers
+// * val_recherche: Valeur que l'on recherche au sein du tableau
 // Sortie:
-// * L'index du premier élément de la liste dont la valeur est 'val_recherche', s'il est trouvé
+// * L'index du premier élément du tableau dont la valeur est 'val_recherche', s'il est trouvé
 // * renvoie 'None', si pas trouvé
-// On élimine la moitié des éléments à chaque fois, en comparant la valeur du milieu de la liste à la valeur cherchée.
+// On élimine la moitié des éléments à chaque fois, en comparant la valeur du milieu du tableau à la valeur cherchée.
 // L'index commence à zéro (convention Python & Rust)
-// << La fonction nécessite que la liste d'entiers en entrée soit croissante >>
+// << La fonction nécessite que le tableau d'entiers en entrée soit croissante >>
 // complexité: log_2(n),
 // Voir: https://fr.wikipedia.org/wiki/Recherche_dichotomique
-fn recherche_dichotomique(ma_liste: &mut [i32], val_recherche: i32, index_min_opt: Option<usize>, index_max_inclus_opt: Option<usize>) -> Option<usize>
+fn recherche_dichotomique(mon_tableau: &mut [i32], val_recherche: i32, index_min_opt: Option<usize>, index_max_inclus_opt: Option<usize>) -> Option<usize>
 {
-    assert!(verif_liste_croissante(&ma_liste), "(recherche_dichotomique) Erreur: la liste n'est pas croissante (Nécessite de la trier d'abord).");
+    assert!(verif_tableau_croissant(&mon_tableau), "(recherche_dichotomique) Erreur: le tableau n'est pas croissant (Nécessite de le trier d'abord).");
 
     if (false)
     {
@@ -137,12 +137,12 @@ fn recherche_dichotomique(ma_liste: &mut [i32], val_recherche: i32, index_min_op
         }
     }
 
-    let n = ma_liste.len();
+    let n = mon_tableau.len();
 
     // Cas particulier du premier appel à la fonction, l'appel général (sans indiquer les bornes de recherche)
     if ((index_min_opt == None) || (index_max_inclus_opt == None))
     {
-        return recherche_dichotomique(ma_liste, val_recherche, Some(0), Some(n - 1));
+        return recherche_dichotomique(mon_tableau, val_recherche, Some(0), Some(n - 1));
     }
 
     // A partir d'ici, on sait que index_min_opt et index_max_opt sont des 'vraies' valeurs (pas None)
@@ -157,21 +157,21 @@ fn recherche_dichotomique(ma_liste: &mut [i32], val_recherche: i32, index_min_op
     }
 
     // Gestion des cas particuliers (fin des appels récursifs)
-    // Liste avec 1 seul élement
+    // tableau avec 1 seul élement
     if index_max_inclus == index_min
     {
-        if ma_liste[index_min] == val_recherche
+        if mon_tableau[index_min] == val_recherche
             {return Some(index_min);}
         return None;
     }
 
     // Gestion des cas particuliers (fin des appels récursifs)
-    // Liste avec 2 élements
+    // tableau avec 2 élements
     if index_max_inclus == (index_min + 1)
     {
-        if ma_liste[index_min] == val_recherche
+        if mon_tableau[index_min] == val_recherche
             {return Some(index_min);}
-        if ma_liste[index_max_inclus] == val_recherche
+        if mon_tableau[index_max_inclus] == val_recherche
             {return Some(index_max_inclus);}
         return None
     }
@@ -179,31 +179,34 @@ fn recherche_dichotomique(ma_liste: &mut [i32], val_recherche: i32, index_min_op
     // Cas général, qui aboutit à un appel récursif
     let index_mid = ((index_min + index_max_inclus) / 2) as usize;
     let index_mid_opt = Some(index_mid);
-    let val_mid = ma_liste[index_mid];
+    let val_mid = mon_tableau[index_mid];
 
     // Appel récursif
     if (val_recherche > val_mid)
     {
-        return recherche_dichotomique(ma_liste, val_recherche, index_mid_opt, index_max_inclus_opt);
+        return recherche_dichotomique(mon_tableau, val_recherche, index_mid_opt, index_max_inclus_opt);
     }
     else
     {
-        return recherche_dichotomique(ma_liste, val_recherche, index_min_opt, index_mid_opt);
+        return recherche_dichotomique(mon_tableau, val_recherche, index_min_opt, index_mid_opt);
     }
 
 } // fn recherche_dichotomique()
 
 
 
-// Fonction vérifiant qu'une liste est croissante
-// Entrée = ma_liste: liste d'entiers
-// Sortie = un booleen. true -> liste croissante..
-fn verif_liste_croissante(ma_liste: &[i32]) -> bool
+// Fonction vérifiant qu'un tableau est croissant
+// Entrée = mon_tableau: tableau d'entiers
+// Sortie = un booleen. true -> tableau croissant..
+// Implémenté de façon générique
+// pour tous les types de données triables
+fn verif_tableau_croissant<T>(mon_tableau: &[T]) -> bool
+where T : Ord   // Le type T doit avoir le 'trait' Rust 'Ord': Les éléments doivent être ordonnés donc comparables
 {
-    let n = ma_liste.len();
+    let n = mon_tableau.len();
     for i in 0..(n - 1)
     {
-        if ma_liste[i + 1] - ma_liste[i] < 0 {return false;}
+        if mon_tableau[i + 1] < mon_tableau[i] {return false;}
     }
     return true;
 }
@@ -214,10 +217,10 @@ fn main() {
     println!("Hello, world!");
 
     let b_test_fonctions_math = false;
-    let b_test_recherche_liste_et_tris = false;
-    let b_test_tris_variants = false;
+    let b_test_recherche_tableau_et_tris = true;
+    let b_test_tris_variants = true;
     let b_test_probas = false;
-    let b_test_algos_divers = true;
+    let b_test_algos_divers = false;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -229,7 +232,7 @@ fn main() {
         let b: u64 = 48;
         println!("pgcd({}, {}) = {}", a, b, pgcd(a, b));
 
-        for i in 0..100
+        for i in 0..30 //100
         {
             println!("Fibonacci_iteratif({}) = {}", i, fibonacci_iteratif(i));
             println!("Fibonacci_recursif({}) = {}", i, fibonacci_recursif(i));
@@ -237,7 +240,7 @@ fn main() {
 
     }
 
-    if (b_test_recherche_liste_et_tris)
+    if (b_test_recherche_tableau_et_tris)
     {
 
         // Tester le générateur aléatoire (MINSTD)
@@ -253,66 +256,76 @@ fn main() {
         let n = 13;
         //let n = 40000;
 
-        //let mut ma_liste: Vec<i32> = vec![1, 2, 3, 4, 5];
-        //let mut ma_liste: Vec<i32> = vec![5, 4, 3, 2, 1];
-        let mut ma_liste: Vec<i32> = Vec::from_iter((0..n));
-        //let mut ma_liste: Vec<i32> = Vec::from_iter((0..n).rev());
+        //let mut mon_tableau: Vec<i32> = vec![1, 2, 3, 4, 5];
+        //let mut mon_tableau: Vec<i32> = vec![5, 4, 3, 2, 1];
+        let mut mon_tableau: Vec<i32> = Vec::from_iter((0..n));
+        //let mut mon_tableau: Vec<i32> = Vec::from_iter((0..n).rev());
 
-        let ma_liste2: &mut [i32] = ma_liste.as_mut_slice();
+        let mon_tableau2: &mut [i32] = mon_tableau.as_mut_slice();
 
 
-        println!("\nListe départ: \n {:?}", &ma_liste2);
-        probabilites::fisher_yates_shuffle(ma_liste2, seed);
-        println!("\nListe mélangée: \n {:?}", &ma_liste2);
+        println!("\ntableau départ: \n {:?}", &mon_tableau2);
+        probabilites::fisher_yates_shuffle(mon_tableau2, seed);
+        println!("\ntableau mélangé: \n {:?}", &mon_tableau2);
 
         let p: i32 = 3;
-        println!("\nRecherche lineaire de la valeur {}: index {} \n", p, recherche_lineaire(ma_liste2, p).unwrap());
-        //println!("Recherche dichotomique de la valeur {}: index {}", p, recherche_dichotomique(ma_liste2, p, None, None).unwrap());
+        println!("\nRecherche lineaire de la valeur {}: index {} \n", p, recherche_lineaire(mon_tableau2, p).unwrap());
+        //println!("Recherche dichotomique de la valeur {}: index {}", p, recherche_dichotomique(mon_tableau2, p, None, None).unwrap());
 
-        //algos_tri::tri_par_insertion(ma_liste2);
-        //algos_tri_variantes::tri_par_insertion_generique(ma_liste2);
-        //algos_tri::tri_par_selection(ma_liste2);
+        //algos_tri::tri_par_insertion(mon_tableau2);
+        //algos_tri::tri_par_selection(mon_tableau2);
         
-        //algos_tri::tri_rapide(ma_liste2);
-        //algos_tri::tri_fusion(ma_liste2);
-        //algos_tri::tri_fusion_ameliore(ma_liste2, None, None, None);
-        algos_tri::tri_par_tas(ma_liste2);
+        //algos_tri::tri_rapide(mon_tableau2);
+        //algos_tri::tri_fusion(mon_tableau2);
+        algos_tri::tri_par_tas(mon_tableau2);
 
-        println!("Liste triée: \n{:?}", &ma_liste2);
-        assert!(verif_liste_croissante(&ma_liste2), "Erreur: la liste n'est pas correctement triée.");
+        println!("tableau trié: \n{:?}", &mon_tableau2);
+        assert!(verif_tableau_croissant(&mon_tableau2), "Erreur: le tableau n'est pas correctement trié.");
     }
 
 
     if (b_test_tris_variants)
     {
         // Tableau de données string
-        let mut ma_liste_gen: Vec<String> = vec!["rust".to_string(), "go".to_string(), "shell".to_string(), "ruby".to_string(), "python".to_string()];
-        let ma_liste_gen2: &mut [String] = ma_liste_gen.as_mut_slice();
+        let mut mon_tableau_gen: Vec<String> = vec!["rust".to_string(), "go".to_string(), "shell".to_string(), "ruby".to_string(), "python".to_string()];
+        let mon_tableau_gen2: &mut [String] = mon_tableau_gen.as_mut_slice();
 
+        
         /*
         // Tableau d'entiers
         let seed: u32 = 1234;
-        let n = 29;
-        let mut ma_liste_gen: Vec<i32> = Vec::from_iter((0..n));
-        let ma_liste_gen2: &mut [i32] = ma_liste_gen.as_mut_slice();
-        fisher_yates_shuffle(ma_liste_gen2, seed);
+        let n = 17;
+        let mut mon_tableau_gen: Vec<i32> = Vec::from_iter((0..n));
+        let mon_tableau_gen2: &mut [i32] = mon_tableau_gen.as_mut_slice();
+        probabilites::fisher_yates_shuffle(mon_tableau_gen2, seed);
         */
+        
 
         // Tableau de flottants
-        // Ordre pas total sur les flottants (NaN)
-        // let mut ma_liste_gen: Vec<f64> = vec![3.1415, 1.4142, 2.718, 1.732, 6.022, -273.15];
-        // let ma_liste_gen2: &mut [f64] = ma_liste_gen.as_mut_slice();
+        // Ordre pas total sur les flottants (car valeur NaN possible)
+        // let mut mon_tableau_gen: Vec<f64> = vec![3.1415, 1.4142, 2.718, 1.732, 6.022, -273.15];
+        // let mon_tableau_gen2: &mut [f64] = mon_tableau_gen.as_mut_slice();
  
 
-        println!("\nListe départ: \n {:?}", &ma_liste_gen2);
+        println!("\ntableau départ: \n {:?}", &mon_tableau_gen2);
 
-        //algos_tri_variantes::tri_par_insertion_generique(ma_liste_gen2);
+        //algos_tri_variantes::tri_par_insertion_generique(mon_tableau_gen2);
+        // Tri fusion: Implémenté uniquement sur les entiers 'i32' (pas générique)
+        //algos_tri_variantes::tri_fusion_ameliore(mon_tableau_gen2, None, None, None);
 
-        let permutation = algos_tri_variantes::tri_par_selection_indirect_generique(ma_liste_gen2);
-        let ma_liste_gen2 = algos_tri_variantes::permute_copie_liste(ma_liste_gen2 , &permutation);
-        println!("Permutation: {:?}", permutation);
+        // Pour tester le tri par selection, qui est implémenté en 'indirect',
+        // et ne modifie pas directement le tableau.
+        // => nécessite d'appliquer la permutation à postériori.
+        if (true)
+        {
+            let permutation = algos_tri_variantes::tri_par_selection_indirect_generique(mon_tableau_gen2);
+            let mut mon_tableau_gen2_vec = algos_tri_variantes::permute_copie_tableau(mon_tableau_gen2 , &permutation);
+            mon_tableau_gen2.clone_from_slice(mon_tableau_gen2_vec.as_mut_slice()); 
+            println!("Permutation: {:?}", permutation);
+        }
 
-        println!("Liste triée: \n{:?}", &ma_liste_gen2);
+        println!("tableau trié: \n{:?}", &mon_tableau_gen2);
+        assert!(verif_tableau_croissant(&mon_tableau_gen2), "Erreur: le tableau n'est pas correctement trié.");
     }
 
 
