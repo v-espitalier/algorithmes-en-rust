@@ -49,6 +49,7 @@ https://fr.wikipedia.org/wiki/Tri_fusion
 * tri par tas
 https://fr.wikipedia.org/wiki/Tri_par_tas
 
+(Deux implémentations sont parfois proposées, dont la variante est générique et utilise les traits de Rust, afin de pouvoir comparer les différents codes et de disposer d'une implémentation plus simple qui trie uniquement les entiers.)
 
 ## Algorithmes associés aux probabilités ou partiellement aléatoires
 
