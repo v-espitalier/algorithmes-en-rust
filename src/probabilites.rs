@@ -24,7 +24,7 @@ impl rng_minstd {
     // Création d'un nouvelle instance avec une seed = état initial du RNG
     pub fn new(seed: u32) -> rng_minstd
     {
-        assert!(seed != 0, "La seed doit être différente de zéro.");
+        assert_ne!(seed, 0, "La seed doit être différente de zéro.");
         // Constantes du MINSTD a.k.a Park-Miller RNG
         let a: u64 = 16807;
         let m: u64 = 0x7FFFFFFF;   // 2^31 - 1
@@ -108,10 +108,13 @@ pub fn box_muller_paire(rng : &mut rng_minstd) -> (f64, f64)
     let u1_int: u32 = rng.gen();
     let u2_int: u32 = rng.gen();
 
-    let u1: f64 = (u1_int as f64) / (rng.rng_m as f64);
+    // Valeur 0 à éviter à cause du log qui suit
+    // (N'arrive jamais avec le PRNG actuel; Plutot au cas ou l'on en utilise un autre.)
+    let u1: f64 = if (u1_int != 0) {(u1_int as f64) / (rng.rng_m as f64)} else {f64::EPSILON};
     let u2: f64 = (u2_int as f64) / (rng.rng_m as f64);
 
     //pub const PI: f64 = 3.14159265358979323846264338327950288_f64; // 3.1415926535897931f64
+
 
     let rayon: f64 = f64::sqrt(-2. * u1.ln());
     let angle: f64 = 2. * std::f64::consts::PI * u2;
