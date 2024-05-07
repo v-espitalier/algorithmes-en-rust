@@ -62,19 +62,27 @@ fn trouve_k_ieme_case_libre(k: usize, profondeur: usize, cases_prises: &[usize; 
         }
     }
 
-    return 10; // On ne devrait jamais arriver ici
+    // On ne devrait jamais arriver ici
+    panic!("trouve_k_ieme_case_libre: Erreur interne");
+    return 10;
 }
 
 fn avance_a_la_prochaine_position(solution_relative_cour : &mut [usize; 8], index_pruning: usize)
 {
-    // Gérer la retenue par récursivité
+    // # Gérer la retenue par récursivité #
+
+    // On itère sur les 8! = 8x7x6x5x4x3x2x1 positions possibles des dames
+    // max_index = [0..7] x [0..6] x [0..5] x ... x [0..1] x [0..0]
     let max_index: usize = 7 - index_pruning;
+
+    // Si on déborde, on remet à zéro, et on propage la retenue (vers à gauche)
     if solution_relative_cour[index_pruning] == max_index
     {
         solution_relative_cour[index_pruning] = 0;
         avance_a_la_prochaine_position(solution_relative_cour, index_pruning - 1);
     }
     else {
+        // Pas de retenue: Simple incrément
         solution_relative_cour[index_pruning] += 1;
     }
 }
@@ -168,9 +176,7 @@ pub fn affiche_solutions_probleme_des_8_dames(solutions: &Vec<[usize; 8]>)
             {
                 if sol_cour[j] == (7 - i) {rev_index = j; break;}
             }
-            //let spaces: String = " -".repeat(sol_cour[7 - i]);
             let spaces: String = " -".repeat(rev_index);
-            //let spaces_after: String = " -".repeat(7 - sol_cour[7 - i]);
             let spaces_after: String = " -".repeat(7 - rev_index);
             println!("{} {} *{}  {}", (8 - i), spaces, spaces_after, (8 - i));
         }
@@ -212,7 +218,7 @@ pub fn calcule_symetries_rotations(solution: &[usize; 8]) -> Vec<[usize; 8]>
     }
     solutions_multiples_cour.push(solution_transformee.clone());
 
-    // Autres symétries selon les diagonales
+    // Les 2 symétries axiales selon les diagonales
     for i in 0..8
     {
         solution_transformee[solution[i]] = i;
