@@ -2,6 +2,10 @@
 // Module contenant des algorithmes divers et variés
 
 
+// Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
+#![allow(unused_parens)]
+
+
 // Algorithme résolvant le problème des 8 dames
 // https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_huit_dames
 // Il ne peut y avoir qu'un dame par colonne et par ligne, et il y a 8 dames à placer
@@ -64,7 +68,7 @@ fn trouve_k_ieme_case_libre(k: usize, profondeur: usize, cases_prises: &[usize; 
 
     // On ne devrait jamais arriver ici
     panic!("trouve_k_ieme_case_libre: Erreur interne");
-    return 10;
+    //return 10;
 }
 
 fn avance_a_la_prochaine_position(solution_relative_cour : &mut [usize; 8], index_pruning: usize)
@@ -94,7 +98,7 @@ pub fn resoud_probleme_des_8_dames() -> Vec<[usize; 8]>
     // Vecteur de solutions
     let mut solutions: Vec<[usize; 8]> = Vec::new();
 
-    let mut solution_relative_cour: [usize; 8] = [0; 8];   // Les premiers index de lignes, de la solution en construction
+    let mut solution_relative_cour: [usize; 8];   // Les premiers index de lignes, de la solution en construction
     let mut solution_absolue_cour: [usize; 8] = [0; 8];   // Les premiers index de lignes, de la solution en construction
     let mut diag1: [usize; 8] = [0; 8];   // i+j: Toujours positif
     let mut diag2: [isize; 8] = [0; 8];   // i-j: Peut etre négatif
@@ -290,12 +294,10 @@ pub fn calcule_solutions_uniques(solutions: &Vec<[usize; 8]>) -> Vec<[usize; 8]>
         //if sol_index > 2 {panic!();}
         let sol_cour = solutions[sol_index];
         let mut trouve = false;
-        trouve = false;
         for i in 0..solutions_multiples.len()
         {
             let sol_multiple_cour = solutions_multiples[i];
             let mut identique = true;
-            identique = true;
             for j in 0..8
             {
                 if sol_cour[j] != sol_multiple_cour[j]

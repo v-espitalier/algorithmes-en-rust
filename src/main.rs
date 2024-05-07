@@ -1,4 +1,7 @@
 
+// Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
+#![allow(unused_parens)]
+
 // Les implémentations des algorithmes de tri sont dans des fichiers
 // séparés algos_tri.rs et algos_tr_variant.rs
 // On inclut ces 'module'
@@ -6,6 +9,7 @@ mod probabilites;
 mod algos_tri;
 mod algos_tri_variantes;
 mod algos_divers;
+
 
 
 // Implémentation récursive de la factorielle
@@ -61,7 +65,7 @@ fn fibonacci_iteratif(n : u64) -> u64
     let mut w: u64 = u + v;
 
     // for i in range(1, n):
-    for i in 1..n
+    for _i in 1..n
     {
         w = u + v;
         u = v;
@@ -275,7 +279,7 @@ fn main() {
         if (false)
         {
             let seed: u32 = 1234;
-            let mut rng: probabilites::rng_minstd = probabilites::rng_minstd::new(seed);
+            let mut rng: probabilites::RngMinstd = probabilites::RngMinstd::new(seed);
             println!("PRNG: {}", rng.gen());
         }
 

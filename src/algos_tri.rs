@@ -1,4 +1,15 @@
 
+// Fichier module contenant les implémentations des tris standard
+// sans généricité, pour les tableaux d'entier i32 (excepté pour le tri par tas)
+// Le fichier algos_tri_variantes.rs contient des exemples d'algos de tri génériques.
+
+
+// Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
+#![allow(unused_parens)]
+
+// Ne pas faire de warning si des fonctions ne sont pas appelées
+#![warn(dead_code)]
+
 // Algorithme du tri par insertion
 // Entrée = Sortie:
 // mon_tableau: tableau d'entiers 'mon_tableau'
@@ -15,7 +26,7 @@ pub fn tri_par_insertion(mon_tableau: &mut [i32])
     // for i in range(0, n):
     for i in 0..n
     {
-        let mut m = mon_tableau[i];
+        let m = mon_tableau[i];
 
         // Déplacement des éléments d'index < i,  et plus grands que m en valeur 
         // pour faire l'insertion de l'élément m ( d'origine mon_tableau[i] ).
@@ -202,7 +213,7 @@ pub fn tri_fusion(mon_tableau: &mut [i32])
     // 
     // Invariant de boucle: A la fin de chaque itération, le tableau principal
     // contient les 'index' élements les plus petits des 2 sous-tableaus.
-    for index in 0..n
+    for _index in 0..n
     {
         if (mon_tableau_gauche_index < mon_sous_tableau_gauche.len()) &&
         (mon_tableau_droite_index < mon_sous_tableau_droite.len())

@@ -1,14 +1,20 @@
 
 // Ce fichier module réunit des 'variantes' d'implémentation des algorithmes de tri
 // par exemple:
-// - Utilise les fonctions dites 'generiques' de Rust
+// - Utilise les fonctions dites 'generiques' de Rust, basées sur les traits.
 // - Implémentation en tri indirect: Retourne la permutation pour trier les donner, plutot que les données triées
 // - Implémentation optimisée/peformante du tri (avec un nombre limité d'allocations par ex)
 // - Tri avec option multi-threading etc.
 // - Version modifiée de l'algorithme de tri, suivant la littérature
 
 
-// Implémentation du tri par insertion générique
+// Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
+#![allow(unused_parens)]
+
+// Ne pas faire de warning si des fonctions ne sont pas appelées
+#![warn(dead_code)]
+
+// Implémentation du tri par insertion, de façon générique (au sens de Rust)
 // Permet de trier n'importe quels tableaux dont le type des éléments implémente les traits:
 // - trait Ord (2 éléments peuvent toujours être ordonnés: x <= y ou y <= x)
 // - trait Clone (Un élément peut être duppliqué)
@@ -24,7 +30,7 @@ where T : Ord, T : Clone
     // for i in range(0, n):
     for i in 0..n
     {
-        let mut m: T = mon_tableau[i].clone();
+        let m: T = mon_tableau[i].clone();
 
         // Déplacement des éléments d'index < i,  et plus grands que m en valeur 
         // pour faire l'insertion de l'élément m ( d'origine mon_tableau[i] ).

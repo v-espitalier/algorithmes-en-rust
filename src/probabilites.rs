@@ -3,6 +3,10 @@
 // aux probabilités ou contenant une partie aléatoire
 
 
+// Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
+#![allow(unused_parens)]
+
+
 // Générateur de nombres pseudo aléatoires de type générateur Congruentiel Linéaire
 // Implémentation de l'algorithme 'MINSTD' alias 'standard minimal'
 // de Park et Miller (1988)
@@ -12,23 +16,23 @@
 //
 // https://fr.wikipedia.org/wiki/G%C3%A9n%C3%A9rateur_congruentiel_lin%C3%A9aire
 // https://en.wikipedia.org/wiki/Lehmer_random_number_generator
-pub struct rng_minstd
+pub struct RngMinstd
 {
     rng_a: u64,
     rng_m: u64,
     state: u32
 }
 
-impl rng_minstd {
+impl RngMinstd {
 
     // Création d'un nouvelle instance avec une seed = état initial du RNG
-    pub fn new(seed: u32) -> rng_minstd
+    pub fn new(seed: u32) -> RngMinstd
     {
         assert_ne!(seed, 0, "La seed doit être différente de zéro.");
         // Constantes du MINSTD a.k.a Park-Miller RNG
         let a: u64 = 16807;
         let m: u64 = 0x7FFFFFFF;   // 2^31 - 1
-        rng_minstd {rng_a: a, rng_m: m, state: seed}
+        RngMinstd {rng_a: a, rng_m: m, state: seed}
     }
 
     // Une itération du RNG
@@ -74,7 +78,7 @@ pub fn fisher_yates_shuffle(mon_tableau: &mut [i32], seed: u32)
     //let mut rng = StdRng::seed_from_u64(seed);
 
     // Utiliser l'implémentation locale du RNG MINSTD pour éviter la dépendance au crate 'rand'
-    let mut rng: rng_minstd = rng_minstd::new(seed);
+    let mut rng: RngMinstd = RngMinstd::new(seed);
 
     let n: usize = mon_tableau.len();
     //for i from n−1 down to 1 do
@@ -101,7 +105,7 @@ pub fn fisher_yates_shuffle(mon_tableau: &mut [i32], seed: u32)
 // Attention: Ce générateur est très prédictible
 // <<<  NE PAS UTILISER CE GENERATEUR ALEATOIRE POUR LA CRYPTOGRAPHIE OU LES JEUX D'ARGENT >>>
 // Voir: https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Box-Muller
-pub fn box_muller_paire(rng : &mut rng_minstd) -> (f64, f64)
+pub fn box_muller_paire(rng : &mut RngMinstd) -> (f64, f64)
 //pub fn box_muller_paire(rng : &mut rand::rngs::ThreadRng) -> (f64, f64)
 {
 
@@ -127,22 +131,22 @@ pub fn box_muller_paire(rng : &mut rng_minstd) -> (f64, f64)
 pub fn box_muller(nb_normales: usize, seed: u32) -> Vec<f64>
 {
     // Utiliser l'implémentation locale du RNG MINSTD pour éviter la dépendance au crate 'rand'
-    let mut rng: rng_minstd = rng_minstd::new(seed);
+    let mut rng: RngMinstd = RngMinstd::new(seed);
 
     let nb_paires_completes = nb_normales / 2;
     let nb_paires_incompletes = nb_normales - 2 * nb_paires_completes;
 
     let mut normales: Vec<f64> = Vec::new();
-    for i in 0..nb_paires_completes
+    for _i in 0..nb_paires_completes
     {
         let (z0, z1) = box_muller_paire(&mut rng);
         normales.push(z0);
         normales.push(z1);
     }
 
-    for i in 0..nb_paires_incompletes
+    for _i in 0..nb_paires_incompletes
     {
-        let (z0, z1) = box_muller_paire(&mut rng);
+        let (z0, _z1) = box_muller_paire(&mut rng);
         normales.push(z0);
     }
 
@@ -169,9 +173,9 @@ where T : Clone + From<u32> + From<<T as std::ops::Div>::Output>  + std::ops::Ad
     }
 
     let n_as_u32: u32 = n as u32;
-    let n_as_T = T::from(n_as_u32); //.unwrap()
+    let n_as_t = T::from(n_as_u32); //.unwrap()
 
-    let moyenne: T = T::from(somme / n_as_T);
+    let moyenne: T = T::from(somme / n_as_t);
 
     return Some(moyenne);
 }
@@ -198,9 +202,9 @@ where T : Clone + From<u32> + From<<T as std::ops::Mul>::Output> + From<<T as st
     }
 
     let n_moins_1_as_u32: u32 = (n - 1) as u32;
-    let n_moins_1_as_T = T::from(n_moins_1_as_u32); //.unwrap()
+    let n_moins_1_as_t = T::from(n_moins_1_as_u32); //.unwrap()
 
-    let moyenne: T = T::from(somme_carres / n_moins_1_as_T);
+    let moyenne: T = T::from(somme_carres / n_moins_1_as_t);
 
     return Some(moyenne);
 }
