@@ -17,6 +17,8 @@ fn factorielle(n : u64) -> u64
 {
     // Gestion du cas particulier (fin des appels récursifs)
     if n <= 1 {return 1;}
+
+    // Appel récursif
     return n * factorielle(n - 1);
 }
 
@@ -36,6 +38,9 @@ fn pgcd(a: u64, b: u64) -> u64
 
     // Appel récursif
     return pgcd(b, m);
+
+    // Le nombre de récursion est fini car a et b sont des entiers positifs 
+    // et diminuent strictement à chaque appel
 }
 
 
@@ -96,8 +101,9 @@ fn fibonacci_recursif(n : u64) -> u64
 // L'index retourné commence à zéro (convention Python & Rust)
 // Complexité: linéaire..
 // Voir: https://fr.wikipedia.org/wiki/Recherche_s%C3%A9quentielle
-fn recherche_lineaire(mon_tableau: &mut [i32], val_recherche: i32) -> Option<usize>
+fn recherche_lineaire(mon_tableau: &[i32], val_recherche: i32) -> Option<usize>
 {
+    println!("Appel à la fonction recherche_lineaire.");
     let n = mon_tableau.len();
 
     for i in 0..n
@@ -108,6 +114,26 @@ fn recherche_lineaire(mon_tableau: &mut [i32], val_recherche: i32) -> Option<usi
     }
     return None
 }
+
+// recherche linéaire implémentée de façon 'générique'
+// Fonctionne pour tous les types de données que l'on peut comparer
+// au sens 'être égal ou pas' : C'est le trait Rust 'core::cmp::Eq'
+fn recherche_lineaire_generique<T>(mon_tableau: &[T], val_recherche: T) -> Option<usize>
+where T : core::cmp::Eq
+{
+    println!("Appel à la fonction recherche_lineaire_generique.");
+    let n = mon_tableau.len();
+
+    for i in 0..n
+    {
+        if mon_tableau[i] == val_recherche {return Some(i);}
+        // Invariant de boucle: A la fin de chaque itération, si les itérations se poursuivent,
+        // val_recherche n'a pas été trouvé parmi les (i + 1) premiers éléments du tableau
+    }
+    return None
+}
+
+
 
 
 // Fonction implémentant la recherche dichotomique
@@ -268,10 +294,12 @@ fn main() {
 
         println!("\ntableau départ: \n {:?}", &mon_tableau2);
         probabilites::fisher_yates_shuffle(mon_tableau2, seed);
-        println!("\ntableau mélangé: \n {:?}", &mon_tableau2);
+        println!("\ntableau mélangé: \n {:?}\n", &mon_tableau2);
 
-        let p: i32 = 3;
-        println!("\nRecherche lineaire de la valeur {}: index {} \n", p, recherche_lineaire(mon_tableau2, p).unwrap());
+        let p: i32 = 8;
+        println!("Recherche lineaire de la valeur {}: index {} \n", p, recherche_lineaire(mon_tableau2, p).unwrap());
+        let p: i32 = 12;
+        println!("Recherche lineaire générique de la valeur {}: index {} \n", p, recherche_lineaire_generique(mon_tableau2, p).unwrap());
         //println!("Recherche dichotomique de la valeur {}: index {}", p, recherche_dichotomique(mon_tableau2, p, None, None).unwrap());
 
         //algos_tri::tri_par_insertion(mon_tableau2);
