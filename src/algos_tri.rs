@@ -263,8 +263,12 @@ pub fn tri_fusion(mon_tableau: &mut [i32])
 // Ils ressortent triés par ordre décroissant (BinaryHeap = File de priorité = Plus grand élément d'abord)
 // On remplit donc le tableau d'entrée/sortie à l'envers
 // Voir: https://fr.wikipedia.org/wiki/Tri_par_tas
-pub fn tri_par_tas(mon_tableau: &mut [i32])
+// Implémenté en générique
+// Trait requis pour les données à trier: Ordonnées + clonable + affichable
+pub fn tri_par_tas_generique<T>(mon_tableau: &mut [T])
+where T : Ord + Clone + core::fmt::Debug
 {
+    println!("Appel à la fonction tri_par_tas_generique");
     let n = mon_tableau.len();
 
     // tableau avec 1 seul élément (-> rien à trier)
@@ -276,7 +280,7 @@ pub fn tri_par_tas(mon_tableau: &mut [i32])
     for i in 0..n
     {
         // On insère tous les éléments à trier dans le tas
-        binary_heap.push(mon_tableau[i]) ;
+        binary_heap.push(mon_tableau[i].clone()) ;
     }
 
     for i in (0..n).rev()
@@ -284,9 +288,9 @@ pub fn tri_par_tas(mon_tableau: &mut [i32])
         // On retire tous les éléments du tas, qui sortent par ordre décroissant
         // (binary_heap = tas = File de priorité => Les premiers éléments retournés sont de valeur maximale)
         let v_opt = binary_heap.pop();
-        assert_ne!(v_opt, None, "tri_par_tas : Erreur interne (1): Il devrait rester des éléments dans le tas.");
+        assert_ne!(v_opt, None, "tri_par_tas : Erreur interne (1): Il devrait rester des éléments dans le tas."); 
 
-        let v: i32 = v_opt.unwrap().clone();
+        let v: T = v_opt.unwrap().clone();
         mon_tableau[i] = v;
 
         // Invariant de boucle: A la fin de chaque itération:

@@ -220,7 +220,7 @@ fn main() {
     let b_test_recherche_tableau_et_tris = true;
     let b_test_tris_variants = true;
     let b_test_probas = false;
-    let b_test_algos_divers = false;
+    let b_test_algos_divers = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -232,7 +232,7 @@ fn main() {
         let b: u64 = 48;
         println!("pgcd({}, {}) = {}", a, b, pgcd(a, b));
 
-        for i in 0..30 //100
+        for i in 0..100
         {
             println!("Fibonacci_iteratif({}) = {}", i, fibonacci_iteratif(i));
             println!("Fibonacci_recursif({}) = {}", i, fibonacci_recursif(i));
@@ -277,7 +277,7 @@ fn main() {
         
         //algos_tri::tri_rapide(mon_tableau2);
         //algos_tri::tri_fusion(mon_tableau2);
-        algos_tri::tri_par_tas(mon_tableau2);
+        algos_tri::tri_par_tas_generique(mon_tableau2);
 
         println!("tableau trié: \n{:?}", &mon_tableau2);
         assert!(verif_tableau_croissant(&mon_tableau2), "Erreur: le tableau n'est pas correctement trié.");
