@@ -1,10 +1,10 @@
 
 // Module contenant des algorithmes divers et variés
 
-
 // Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
 #![allow(unused_parens)]
 
+use std::arch::asm;
 
 // Algorithme résolvant le problème des 8 dames
 // https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_huit_dames
@@ -328,4 +328,47 @@ pub fn calcule_solutions_uniques(solutions: &Vec<[usize; 8]>) -> Vec<[usize; 8]>
     //println!("Nb solutions_multiples: {}", solutions_multiples.len());
 
     return solutions_uniques;
+}
+
+
+
+// Calcul récursif du pgcd des entiers a et b
+// Entrée: 2 entiers: a et b
+// Sortie: a ^ b = PGCD(a, b) - Plus Grand Commun Diviseur
+// Voir: https://fr.wikipedia.org/wiki/Plus_grand_commun_diviseur
+pub fn pgcd_asm(a: u64, b: u64) -> u64
+{
+    println!("Appel à pgcd_asm");
+    // On permute a et b si a < b
+    if a < b {return pgcd_asm(b, a);}
+
+    let mut pgcd: u64 = a;
+
+// Multiply x by 6 using shifts and adds
+    unsafe {
+        asm!(
+            // while (b != 0)
+            // {
+                "123:",        // label pour le jmp (boucle principale)
+                "cmp ecx, 0",  // Si b = 0, alors a est le pgcd -> break de la boucle
+                "je 456f",
+                "mov edx, 0",  // (edx apparait aussi comme operande en entrée de la division euclidienne)
+                // Division euclidienne de a par b.
+                // [ eax ; edx ] = [ int(eax / ecx) ; eax % ecx ]
+                "div ecx",
+                // a = b
+                "mov eax, ecx",
+                // b = r, le reste de la division
+                "mov ecx, edx",
+                // Fin de la boucle
+                "jmp 123b",
+                // après la boucle
+            // } // fin while
+            "456:",
+            inout("eax") pgcd,
+            in("ecx") b
+        );
+    }
+    return pgcd;
+
 }

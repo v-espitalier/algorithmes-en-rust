@@ -246,11 +246,11 @@ where T : Ord   // Le type T doit avoir le 'trait' Rust 'Ord': Les éléments do
 fn main() {
     println!("Hello, world!");
 
-    let b_test_fonctions_math = false;
-    let b_test_recherche_tableau_et_tris = true;
-    let b_test_tris_variants = true;
+    let b_test_fonctions_math = true;
+    let b_test_recherche_tableau_et_tris = false;
+    let b_test_tris_variants = false;
     let b_test_probas = false;
-    let b_test_algos_divers = true;
+    let b_test_algos_divers = false;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -259,11 +259,16 @@ fn main() {
         let n: u64 = 5;
         println!("Factorielle({}) = {}", n, factorielle(n));
 
-        let a: u64 = 42;
-        let b: u64 = 48;
-        println!("pgcd({}, {}) = {}", a, b, pgcd(a, b));
+        //let a: u64 = 48;
+        //let b: u64 = 42;
+        let a: u64 = 90;
+        let b: u64 = 28;
+        println!("pgcd({}, {}) = {}\n", a, b, pgcd(a, b));
+        println!("pgcd_asm({}, {}) = {}\n", a, b, algos_divers::pgcd_asm(a, b));
 
-        for i in 0..100
+        let n = 5;
+        //let n = 100;   Pour comparer les temps de calcul des 2 implémentations de Fibonacci
+        for i in 0..n
         {
             println!("Fibonacci_iteratif({}) = {}", i, fibonacci_iteratif(i));
             println!("Fibonacci_recursif({}) = {}", i, fibonacci_recursif(i));

@@ -29,7 +29,7 @@ https://fr.wikipedia.org/wiki/Recherche_s%C3%A9quentielle
 * recherche dichotomique (récursif)
 https://fr.wikipedia.org/wiki/Recherche_dichotomique
 
-* pgcd (récursif)
+* pgcd (récursif en Rust et itératif en assembleur)
 https://fr.wikipedia.org/wiki/Plus_grand_commun_diviseur
 
 ## Algorithmes de tri:
