@@ -313,3 +313,20 @@ where T : Ord + Clone + core::fmt::Debug
 
 } // fn tri_par_tas
 
+
+
+// Fonction vérifiant qu'un tableau est croissant
+// Entrée = mon_tableau: tableau d'entiers
+// Sortie = un booleen. true -> tableau croissant..
+// Implémenté de façon générique
+// pour tous les types de données triables
+pub fn verif_tableau_croissant<T>(mon_tableau: &[T]) -> bool
+where T : Ord   // Le type T doit avoir le 'trait' Rust 'Ord': Les éléments doivent être ordonnés donc comparables
+{
+    let n = mon_tableau.len();
+    for i in 0..(n - 1)
+    {
+        if mon_tableau[i + 1] < mon_tableau[i] {return false;}
+    }
+    return true;
+}
