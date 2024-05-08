@@ -4,7 +4,6 @@
 // - Utilise les fonctions dites 'generiques' de Rust, basées sur les traits.
 // - Implémentation en tri indirect: Retourne la permutation pour trier les donner, plutot que les données triées
 // - Implémentation optimisée/peformante du tri (avec un nombre limité d'allocations par ex)
-// - Tri avec option multi-threading etc.
 // - Version modifiée de l'algorithme de tri, suivant la littérature
 
 
