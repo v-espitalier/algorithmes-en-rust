@@ -332,10 +332,12 @@ pub fn calcule_solutions_uniques(solutions: &Vec<[usize; 8]>) -> Vec<[usize; 8]>
 
 
 
-// Calcul récursif du pgcd des entiers a et b
+// Calcul itératif du pgcd des entiers a et b
 // Entrée: 2 entiers: a et b
 // Sortie: a ^ b = PGCD(a, b) - Plus Grand Commun Diviseur
 // Voir: https://fr.wikipedia.org/wiki/Plus_grand_commun_diviseur
+// Implémentation avec inline assembleur
+// https://doc.rust-lang.org/rust-by-example/unsafe/asm.html
 pub fn pgcd_asm(a: u64, b: u64) -> u64
 {
     println!("Appel à pgcd_asm");
@@ -344,7 +346,6 @@ pub fn pgcd_asm(a: u64, b: u64) -> u64
 
     let mut pgcd: u64 = a;
 
-// Multiply x by 6 using shifts and adds
     unsafe {
         asm!(
             // while (b != 0)
