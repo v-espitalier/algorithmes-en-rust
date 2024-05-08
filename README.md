@@ -72,6 +72,14 @@ https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Box-Muller
 * Résolution du problème des 8 dames
 https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_huit_dames
 
+## Fonctionnalités du langage Rust testées:
+
+* Fonctions génériques basées sur les traits: Voir [tri_variances.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/tri_variantes.rs)
+
+* Macro unit tests, alias tests de régression: Voir [tests.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/tests.rs)
+
+* Code en assembleur inséré dans du Rust: Cf pgcd_asm() dans [divers.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/divers.rs#L341)
+
 # Licence
 Le code source de ce dépôt est publié sous license MIT.
 Voir [LICENSE](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/LICENSE) pour plus d'informations.
