@@ -73,7 +73,7 @@ https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Box-Muller
 https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_huit_dames
 
 * Recherche de nombres premiers via l'algorithme par essais de division (avec option multithreading)
-https://fr.wikipedia.org/wiki/Nombre_premier
+https://fr.wikipedia.org/wiki/Nombre_premier#Crible_d'%C3%89ratosth%C3%A8ne_et_algorithme_par_essais_de_division
 
 ## Fonctionnalités du langage Rust testées:
 
