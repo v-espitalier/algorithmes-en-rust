@@ -4,7 +4,15 @@
 // Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
 #![allow(unused_parens)]
 
+// Pour l'assembleur
 use std::arch::asm;
+
+// Pour le multithreading
+use std::sync::atomic::{AtomicUsize, Ordering, ATOMIC_USIZE_INIT};
+use std::thread;
+use std::time::Duration;
+use std::sync::{Arc, Mutex};
+
 
 // Algorithme résolvant le problème des 8 dames
 // https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_huit_dames
@@ -372,4 +380,93 @@ pub fn pgcd_asm(a: u64, b: u64) -> u64
     }
     return pgcd;
 
+}
+
+
+
+// Recherche des nombres premiers compris entre min_n (inclus) et max_n (exclu).
+pub fn recherche_premiers(min_n : usize, max_n : usize) -> Vec<usize>
+{
+    let mut premiers_trouves: Vec<usize> = Vec::new();
+
+    // On gère le cas particulier de l'unique nombre premier pair
+    if (min_n <=2) && (max_n > 2) {premiers_trouves.push(2);}
+
+    let min_n_impair: usize = if (min_n <= 2) {3} else {min_n + (1 - (min_n % 2))};
+
+    // A partir d'ici, on va tester uniquement des impairs
+    for i in (min_n_impair..max_n).step_by(2)
+    {
+        let max_j: usize  = f64::sqrt(i as f64) as usize;
+
+        let mut trouve: bool = false;
+        for j in (3..(max_j + 1)).step_by(2)
+        {
+            if (i % j == 0) {trouve = true; break;}
+        }
+        if (!trouve) {premiers_trouves.push(i);}
+    }
+
+    return premiers_trouves;
+}
+
+
+// Recherche des nombres premiers compris entre min_n (inclus) et max_n (exclu).
+// par paquets de taille 'batch_size', avec multithreading
+// Les paquets sont dispatchés sur les différents cores
+// Si min_n et max_n ne sont pas du même ordre de grandeur, les premiers paquets seront plus vite traités
+// donc il faut choisir un batch_size, par exemple, de l'ordre de (max_n - min_n) / 100,
+// pour faire une centaine de paquets, afin de répartir la charge tout en limitant le nombre de threads.
+// Plus rapide que la version sans multithreading, pour des index supérieurs à 1 million / 2 millions.
+pub fn recherche_premiers_multithreading(min_n: usize, max_n: usize, batch_size: usize) -> Vec<usize>
+{
+    println!("Appel à la fonction recherche_premiers_multithreading");
+    if (batch_size == 0) {panic!("Erreur dans recherche_premiers_multithreading: Il faut un batch_size non nul");}
+
+    let n_element: usize = max_n - min_n + 1;
+    let n_batch: usize = ((n_element as f64) / (batch_size as f64)).ceil() as usize;
+
+    static GLOBAL_THREAD_COUNT: AtomicUsize = ATOMIC_USIZE_INIT;
+
+    let mut premiers_trouves: Vec<usize> = Vec::new();
+    let shared_premiers_trouves = Arc::new(Mutex::new(premiers_trouves));
+
+    for batch_index in 0..n_batch
+    {
+        let min_n_batch: usize        = min_n + batch_size * batch_index;
+        let max_n_batch_complet:usize = min_n + batch_size * (batch_index + 1);
+        let max_n_batch: usize        = if (max_n_batch_complet < max_n) {max_n_batch_complet} else {max_n};
+
+        // Le vecteur d'entiers n'est pas cloné, c'est seulement le smart pointeur
+        // pointant vers le vecteur, qui l'est (!!)
+        let shared_premiers_trouves_batch = shared_premiers_trouves.clone();
+
+        // Partie du code parrallélisée
+        GLOBAL_THREAD_COUNT.fetch_add(1, Ordering::SeqCst);
+        let handle = std::thread::spawn( move ||
+        {
+            //
+            //println!("debug (2) : {} {} {}", batch_index, min_n_batch, max_n_batch);
+            let mut premiers_trouves_batch: Vec<usize> = recherche_premiers(min_n_batch, max_n_batch);
+
+            let mut shared_premiers_trouves_batch_val = shared_premiers_trouves_batch.lock().unwrap();
+
+            // Ligne qui nécessite le mutex/arc
+            shared_premiers_trouves_batch_val.append(&mut premiers_trouves_batch);
+
+            GLOBAL_THREAD_COUNT.fetch_sub(1, Ordering::SeqCst);
+            std::thread::sleep(std::time::Duration::from_millis(1));
+        });
+        //handle.join();
+    }
+
+    println!("Attente des threads..");
+    while GLOBAL_THREAD_COUNT.load(Ordering::SeqCst) != 0 {
+        thread::sleep(Duration::from_millis(1)); 
+    }
+
+    println!("Attente terminée..");
+    premiers_trouves = shared_premiers_trouves.lock().unwrap().clone(); 
+
+    return premiers_trouves;
 }

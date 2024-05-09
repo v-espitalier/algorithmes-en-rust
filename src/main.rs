@@ -15,6 +15,14 @@ mod divers;
 mod tests;
 
 
+use std::time::{SystemTime, UNIX_EPOCH};
+
+// Connaitre le temps en secondes depuis l'epoch
+fn get_curr_time_epoch() -> f64 {
+    return (SystemTime::now().duration_since(UNIX_EPOCH).expect("Time went backwards").as_millis() as f64) / 1000.;
+}
+
+
 
 
 fn main() {
@@ -24,7 +32,7 @@ fn main() {
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
-    let b_test_algos_divers = false;
+    let b_test_algos_divers = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -166,6 +174,37 @@ fn main() {
         println!("Solutions uniques: {:?}", solutions_uniques);
         println!(" ");
         divers::affiche_solutions_probleme_des_8_dames(&solutions_uniques);
+
+        println!(" ");
+
+        // Test des fonctions de recherche de nombres premiers
+        let min_n:usize  = 0;
+        //let min_n:usize  = 1000000;
+        //let max_n:usize  = 100;
+        let max_n:usize  = 2000000;
+        //let max_n:usize  = 10000000;
+        //let max_n:usize  = 1800000;
+
+        let chrono_start = get_curr_time_epoch();
+        println!("Test recherche_premiers() min_n:{}, max_n:{}", min_n, max_n);
+        let premiers: Vec<usize> = divers::recherche_premiers(min_n, max_n);
+        //println!("Nombres premiers : {:?}", premiers);
+        println!("Nombre total de nombres premiers trouvés: {}", premiers.len());
+        let chrono_end = get_curr_time_epoch();
+        let duree_recherche_premiers = (chrono_end - chrono_start);
+        println!("Durée des calculs: {}", duree_recherche_premiers);
+
+        let chrono_start = get_curr_time_epoch();
+        println!("\n");
+        let batch_size:usize = (max_n - min_n) / 40;
+        println!("Test recherche_premiers_multithreading() min_n:{}, max_n:{}, batch_size:{}", min_n, max_n, batch_size);
+        let premiers: Vec<usize> = divers::recherche_premiers_multithreading(min_n, max_n, batch_size);
+        println!("Nombre total de nombres premiers trouvés: {}", premiers.len());
+        let chrono_end = get_curr_time_epoch();
+        let duree_recherche_premiers_mutithreading = (chrono_end - chrono_start);
+        println!("Durée des calculs: {}", duree_recherche_premiers_mutithreading);
+        println!("ratio de durée avec multithreading / sans multithreading : {}", duree_recherche_premiers / duree_recherche_premiers_mutithreading);
+
     }
 
 }
