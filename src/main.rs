@@ -10,10 +10,10 @@ mod probabilites;
 mod tri;
 mod tri_variantes;
 mod divers;
+mod rationnels;
 
 #[cfg(test)]
 mod tests;
-
 
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -23,16 +23,15 @@ fn get_curr_time_epoch() -> f64 {
 }
 
 
-
-
 fn main() {
     println!("Hello, world!");
 
-    let b_test_fonctions_math = true;
+    let b_test_fonctions_math = false;
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
-    let b_test_algos_divers = true;
+    let b_test_algos_divers = false;
+    let b_test_rationnels = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -204,6 +203,16 @@ fn main() {
         let duree_recherche_premiers_mutithreading = (chrono_end - chrono_start);
         println!("Durée des calculs: {}", duree_recherche_premiers_mutithreading);
         println!("ratio de durée avec multithreading / sans multithreading : {}", duree_recherche_premiers / duree_recherche_premiers_mutithreading);
+
+    }
+
+    if (b_test_rationnels)
+    {
+        let r1 = rationnels::Rationnels { numerateur : 2u64, denominateur : 3u64};
+        let r2 = rationnels::Rationnels { numerateur : 5u64, denominateur : 6u64};
+        let mut r3 = &r1 + &r2; 
+        r3.rendre_irreductible();
+        println!("{}", &r3);
 
     }
 
