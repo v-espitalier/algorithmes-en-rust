@@ -1,5 +1,6 @@
 use crate::classiques as classiques;
 use crate::divers as divers;
+use crate::rationnels as rationnels;
 
 #[test]
 fn test_classiques_factorielle() {
@@ -58,4 +59,18 @@ fn test_classiques_recherche_dichotomique() {
 fn test_pgcd_asm() {
     assert_eq!(divers::pgcd_asm(15, 18), 3, "Echec test_pgcd_asm (1)");
     assert_eq!(divers::pgcd_asm(90, 28), 2, "Echec test_pgcd_asm (2)");
+}
+
+#[test]
+fn test_rationnels() {
+    let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
+    let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+    let r1_plus_r2 = rationnels::Rationnels { numerateur : 3i64, denominateur : 2i64};
+    let r1_moins_r2 = rationnels::Rationnels { numerateur : -1i64, denominateur : 6i64};
+    let r1_mult_r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 9i64};
+    let r1_div_r2 = rationnels::Rationnels { numerateur : 4i64, denominateur : 5i64};
+    assert_eq!(&r1 + &r2, r1_plus_r2, "Echec test_rationnels (1) : Addition de références.");
+    assert_eq!(&r1 - &r2, r1_moins_r2, "Echec test_rationnels (2) : Soustraction de références.");
+    assert_eq!(&r1 * &r2, r1_mult_r2, "Echec test_rationnels (3) : Multiplication de références.");
+    assert_eq!(&r1 / &r2, r1_div_r2, "Echec test_rationnels (4) : Division de références.");
 }

@@ -219,6 +219,7 @@ fn main() {
         r3.rendre_irreductible();
         println!("meme somme = {} (somme sans référence)", &r3);
 
+
         // Test soustraction
         let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
         let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
@@ -231,11 +232,28 @@ fn main() {
         println!("meme soustraction = {} (sans référence)", &r3);
 
 
-        /*
-        let mut r4 = &r1;
-        r4 += &r2;
-        println!("{}", &r4);
-        */
+        // Test multiplication
+        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
+        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let mut r3 = &r1 * &r2; 
+        r3.rendre_irreductible();
+        println!("{} * {} = {} (multiplication avec références)", &r1, &r2, &r3);
+
+        let mut r3 = r1 * r2; 
+        r3.rendre_irreductible();
+        println!("meme multiplication = {} (sans référence)", &r3);
+
+
+        // Test division
+        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
+        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let mut r3 = &r1 / &r2; 
+        r3.rendre_irreductible();
+        println!("{} / {} = {} (multiplication avec références)", &r1, &r2, &r3);
+
+        let mut r3 = r1 / r2; 
+        r3.rendre_irreductible();
+        println!("meme division = {} (sans référence)", &r3);
 
     }
 
