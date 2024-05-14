@@ -90,9 +90,9 @@ https://fr.wikipedia.org/wiki/Nombre_premier#Crible_d'%C3%89ratosth%C3%A8ne_et_a
 
 * Code en assembleur inséré dans du Rust: Cf pgcd_asm() dans [divers.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/divers.rs#L349)
 
-\qquad
+</br>
 
-\qquad
+</br>
 
 # algorithmes-en-rust (English)
 
