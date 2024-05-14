@@ -30,8 +30,8 @@ fn main() {
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
-    let b_test_algos_divers = false;
-    let b_test_rationnels = true;
+    let b_test_algos_divers = true;
+    let b_test_rationnels = false;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
