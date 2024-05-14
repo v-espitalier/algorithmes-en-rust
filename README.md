@@ -82,7 +82,7 @@ https://fr.wikipedia.org/wiki/Nombre_premier#Crible_d'%C3%89ratosth%C3%A8ne_et_a
 
 * Fonctions génériques basées sur les traits: Voir [tri_variances.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/tri_variantes.rs)
 
-* Création d'un nouveau type de données (rationnels), et implémentation des traits pour l'addition et la soustraction: Voir [rationnels.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/rationnels.rs)
+* Création d'un nouveau type de données (rationnels), et implémentation des traits standards pour l'arithmétique: Voir [rationnels.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/rationnels.rs)
 
 * Multithreading: Cf recherche_premiers_multithreading() dans [divers.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/divers.rs#L421)
 
@@ -174,15 +174,15 @@ https://en.wikipedia.org/wiki/Prime_number#Trial_division
 
 ## Rust language features tested:
 
-* Generic feature-based functions: See [tri_variances.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/tri_variantes.rs)
+* Generic trait-based functions: See [tri_variances.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/tri_variantes.rs)
 
-* Creation of a new data type (rationals), and implementation of traits for addition and subtraction: See [rationals.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/rationnels.rs)
+* Creation of a new data type (rationals), and implementation of basic traits for arithmetics: See [rationals.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/rationnels.rs)
 
 * Multithreading: See recherche_premiers_multithreading() in [divers.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/divers.rs#L421)
 
 * Macro unit tests, a.k.a. regression tests: See [tests.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/tests.rs)
 
-* Assembler code inserted in Rust: Cf pgcd_asm() in [divers.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/divers.rs#L349)
+* Assembly code inserted in Rust: Cf pgcd_asm() in [divers.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/divers.rs#L349)
 
 # Licence
 Le code source de ce dépôt est publié sous license MIT.
