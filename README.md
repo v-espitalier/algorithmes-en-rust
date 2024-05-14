@@ -79,6 +79,8 @@ https://fr.wikipedia.org/wiki/Nombre_premier#Crible_d'%C3%89ratosth%C3%A8ne_et_a
 
 * Fonctions génériques basées sur les traits: Voir [tri_variances.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/tri_variantes.rs)
 
+* Création d'un nouveau type de données (rationnels), et implémentation des traits pour l'addition et la soustraction: Voir [rationnels.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/rationnels.rs)
+
 * Multithreading: Cf recherche_premiers_multithreading() dans [divers.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/divers.rs#L421)
 
 * Macro unit tests, alias tests de régression: Voir [tests.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/tests.rs)
