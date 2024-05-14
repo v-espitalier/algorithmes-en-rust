@@ -3,7 +3,7 @@
 
 Voilà une recueil d'algorithmes courants, implémentés en langage Rust, pour se faire une idée du langage. Peut éventuellement servir pour préparer des cours.
 
-![Probleme des 8 dames: Solution 8](imgs/probleme_des_8_dames_solution_8.png)
+![Exemples d'algorithmes implémentés](imgs/exemples_algos.png)
 
 ## Téléchargement / utilisation
 
