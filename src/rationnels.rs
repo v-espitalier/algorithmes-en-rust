@@ -9,6 +9,7 @@ use std::cmp::{PartialEq, PartialOrd};
 use std::fmt::{Display, Formatter, Result, Debug};
 
 // En pratique, T = i32, i64, isize..
+#[derive(Debug)]
 pub struct Rationnels<T>
 //where T : Add<Output = T> + Mul<Output = T> + Clone + Copy,
 {
@@ -180,6 +181,7 @@ where T : Display
     }
 }
 
+/*
 impl<T> Debug for Rationnels<T>
 where T : Display
 {
@@ -187,7 +189,7 @@ where T : Display
         write!(f, "{}/{}", self.numerateur, self.denominateur)
     }
 }
-
+*/
 
 //trait Trait_NumDen: Ord + Eq + Clone {}
 //impl<T> Trait_NumDen for T where T: Ord + Eq + Clone + Rem<Output = T> + From<u32> {}
