@@ -256,6 +256,16 @@ fn main() {
         println!("meme division = {} (sans référence)", &r3);
 
 
+        // Test négation
+        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
+        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let r1neg = -&r1;
+        println!("-({}) = {} (avec référence)", &r1, &r1neg);
+        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
+        let r1neg = -r1;
+        println!("    = {} (sans référence)", &r1neg);
+
+
         // Test comparaison
         let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
         let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};

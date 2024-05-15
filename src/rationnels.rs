@@ -3,15 +3,17 @@
 #![allow(unused_parens)]
 
 use crate::classiques as classiques;
-use std::ops::{Add, Sub, Mul, Div, Rem}; //, AddAssign, Deref, DivAssign};
+use std::ops::{Add, Sub, Mul, Div, Rem, Neg}; //, AddAssign, Deref, DivAssign};
 use std::cmp::{PartialEq, PartialOrd, Ordering};
 //use std::convert::AsMut;// From;
 use std::fmt::{Display, Formatter, Result, Debug};
 
-// En pratique, T = i32, i64, isize..
+// Le derive trait 'Debug' évite d'avoir à implémenter 'à la main' le trait 'Debug'
+// (qui sert dans les unit tests, pour afficher les erreurs de valeurs différentes)
 #[derive(Debug)]
 pub struct Rationnels<T>
 //where T : Add<Output = T> + Mul<Output = T> + Clone + Copy,
+// En pratique, T = i32, i64, isize..
 {
     pub numerateur: T,
     pub denominateur: T,
@@ -144,6 +146,35 @@ where T : Mul<Output = T> + Copy,
         Rationnels {
             numerateur : self.numerateur * other.denominateur,
             denominateur : self.denominateur * other.numerateur,
+        }
+    }
+}
+
+// Trait Neg:   c = -a
+impl<T> Neg for Rationnels<T> 
+where T : Neg<Output = T> + Copy,
+{
+    type Output = Self;
+
+    fn neg(self) -> Self {
+        //assert_ne!(other.numerateur, 0, "Division par zéro");
+        Self {
+            numerateur : -self.numerateur,
+            denominateur : self.denominateur,
+        }
+    }
+}
+
+// Trait Neg:   c = -a
+impl<T> Neg for &Rationnels<T> 
+where T : Neg<Output = T> + Copy,
+{
+    type Output = Rationnels<T>;
+
+    fn neg(self) -> Rationnels<T> {
+        Rationnels {
+            numerateur : -self.numerateur,
+            denominateur : self.denominateur,
         }
     }
 }
