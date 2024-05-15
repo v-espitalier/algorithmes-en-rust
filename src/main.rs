@@ -30,8 +30,8 @@ fn main() {
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
-    let b_test_algos_divers = true;
-    let b_test_rationnels = false;
+    let b_test_algos_divers = false;
+    let b_test_rationnels = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -254,6 +254,17 @@ fn main() {
         let mut r3 = r1 / r2; 
         r3.rendre_irreductible();
         println!("meme division = {} (sans référence)", &r3);
+
+
+        // Test comparaison
+        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
+        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        println!("{} >= {} ? Réponse: {}", &r1, &r2, r1 >= r2);
+        println!("{} > {} ? Réponse: {}", &r1, &r2, r1 > r2);
+        println!("{} <= {} ? Réponse: {}", &r1, &r2, r1 <= r2);
+        println!("{} < {} ? Réponse: {}", &r1, &r2, r1 < r2);
+        println!("{} >= {} ? Réponse: {}", &r1, &r1, r1 >= r1);
+        println!("{} <= {} ? Réponse: {}", &r1, &r1, r1 <= r1);
 
     }
 

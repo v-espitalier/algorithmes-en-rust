@@ -4,7 +4,7 @@
 
 use crate::classiques as classiques;
 use std::ops::{Add, Sub, Mul, Div, Rem}; //, AddAssign, Deref, DivAssign};
-use std::cmp::{PartialEq, PartialOrd};
+use std::cmp::{PartialEq, PartialOrd, Ordering};
 //use std::convert::AsMut;// From;
 use std::fmt::{Display, Formatter, Result, Debug};
 
@@ -167,6 +167,25 @@ where T : Sub<Output = T> + Mul<Output = T> + Copy + PartialEq + TryFrom<i8>,
     }
 
 }
+
+impl<T> PartialOrd for Rationnels<T>
+where T : Sub<Output = T> + Mul<Output = T> + Copy + PartialEq + PartialOrd + TryFrom<i8>,
+<T as TryFrom<i8>>::Error: Debug
+{
+    fn partial_cmp(&self, other: &Rationnels<T>) -> Option<Ordering> {
+        let sub_num: T = (self - other).numerateur;
+        let mut return_ord: std::cmp::Ordering;
+        let zero: T = T::try_from(0i8).expect("rationnels.rs zero(): Problème dans la conversion du zéro.");
+        match sub_num {
+            tmp if tmp > zero => {return_ord = Ordering::Greater;}
+            tmp if tmp < zero => {return_ord = Ordering::Less;}
+            zero => {return_ord = Ordering::Equal;}
+        }
+        return Some(return_ord);
+    }
+
+}
+
 
 
 
