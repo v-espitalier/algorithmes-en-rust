@@ -15,11 +15,11 @@
 
 // Implémentation du tri par insertion, de façon générique (au sens de Rust)
 // Permet de trier n'importe quels tableaux dont le type des éléments implémente les traits:
-// - trait Ord (2 éléments peuvent toujours être ordonnés: x <= y ou y <= x)
+// - trait PartialOrd (On dispose de la comparaison d'éléments: x <= y ou y <= x)
 // - trait Clone (Un élément peut être duppliqué)
 // Fonction pour tous les types d'entiers u32, i64, de flottants f32, les chaines de caractères..
 pub fn tri_par_insertion_generique<T>(mon_tableau : &mut [T])
-where T : Ord, T : Clone
+where T : PartialOrd, T : Clone
 {
     println!("tri_par_insertion_generique > appel");
 

@@ -17,6 +17,8 @@ mod tests;
 
 use std::time::{SystemTime, UNIX_EPOCH};
 
+use crate::rationnels::Rationnels;
+
 // Connaitre le temps en secondes depuis l'epoch
 fn get_curr_time_epoch() -> f64 {
     return (SystemTime::now().duration_since(UNIX_EPOCH).expect("Time went backwards").as_millis() as f64) / 1000.;
@@ -30,8 +32,8 @@ fn main() {
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
-    let b_test_algos_divers = true;
-    let b_test_rationnels = false;
+    let b_test_algos_divers = false;
+    let b_test_rationnels = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -130,14 +132,14 @@ fn main() {
 
         println!("\ntableau départ: \n {:?}", &mon_tableau_gen2);
 
-        //algos_tri_variantes::tri_par_insertion_generique(mon_tableau_gen2);
+        tri_variantes::tri_par_insertion_generique(mon_tableau_gen2);
         // Tri fusion: Implémenté uniquement sur les entiers 'i32' (pas générique)
-        //algos_tri_variantes::tri_fusion_ameliore(mon_tableau_gen2, None, None, None);
+        //tri_variantes::tri_fusion_ameliore(mon_tableau_gen2, None, None, None);
 
         // Pour tester le tri par selection, qui est implémenté en 'indirect',
         // et ne modifie pas directement le tableau.
         // => nécessite d'appliquer la permutation à postériori.
-        if (true)
+        if (false)
         {
             let permutation = tri_variantes::tri_par_selection_indirect_generique(mon_tableau_gen2);
             let mut mon_tableau_gen2_vec = tri_variantes::permute_copie_tableau(mon_tableau_gen2 , &permutation);
@@ -276,6 +278,17 @@ fn main() {
         println!("{} >= {} ? Réponse: {}", &r1, &r1, r1 >= r1);
         println!("{} <= {} ? Réponse: {}", &r1, &r1, r1 <= r1);
 
+        // Test comparison, via un des algos de tri générique 
+        let mut mon_tableau_de_rationnels: Vec<Rationnels<i64>> = Vec::new();
+        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: 2, denominateur: 3});
+        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: -2, denominateur: 3});
+        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: -1, denominateur: 2});
+        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: 2, denominateur: 5});
+        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: -7, denominateur: 5});
+        let mon_tableau_de_rationnels2: &mut [Rationnels<i64>] = &mut mon_tableau_de_rationnels.as_mut_slice();
+        println!("\ntableau départ: \n {:?}", &mon_tableau_de_rationnels2);
+        tri_variantes::tri_par_insertion_generique(mon_tableau_de_rationnels2);
+        println!("\ntableau trié: \n {:?}", &mon_tableau_de_rationnels2);
     }
 
 }

@@ -8,9 +8,8 @@ use std::cmp::{PartialEq, PartialOrd, Ordering};
 //use std::convert::AsMut;// From;
 use std::fmt::{Display, Formatter, Result, Debug};
 
-// Le derive trait 'Debug' évite d'avoir à implémenter 'à la main' le trait 'Debug'
-// (qui sert dans les unit tests, pour afficher les erreurs de valeurs différentes)
-#[derive(Debug)]
+// Le derive trait 'Clone' évite d'avoir à implémenter 'à la main' le trait 'Clone'
+#[derive(Clone)]
 pub struct Rationnels<T>
 //where T : Add<Output = T> + Mul<Output = T> + Clone + Copy,
 // En pratique, T = i32, i64, isize..
@@ -165,7 +164,7 @@ where T : Neg<Output = T> + Copy,
     }
 }
 
-// Trait Neg:   c = -a
+// Trait Neg:   c = -a   (sur références)
 impl<T> Neg for &Rationnels<T> 
 where T : Neg<Output = T> + Copy,
 {
@@ -199,6 +198,7 @@ where T : Sub<Output = T> + Mul<Output = T> + Copy + PartialEq + TryFrom<i8>,
 
 }
 
+// Trait PartialOrd (sur refs):  Implémenter les 4 comparaisons : a > b,  a >= b,  a < b,  a <= b
 impl<T> PartialOrd for Rationnels<T>
 where T : Sub<Output = T> + Mul<Output = T> + Copy + PartialEq + PartialOrd + TryFrom<i8>,
 <T as TryFrom<i8>>::Error: Debug
@@ -219,19 +219,17 @@ where T : Sub<Output = T> + Mul<Output = T> + Copy + PartialEq + PartialOrd + Tr
 
 
 
-
-
 // Traits pour l'affichage
-
 impl<T> Display for Rationnels<T>
-where T : Display
+where T : Display + Clone
 {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         write!(f, "{}/{}", self.numerateur, self.denominateur)
     }
 }
 
-/*
+//Plus nécessaire car implémenté avec le derive trait directement
+//(Le formattage est différent mais cela suffit pour du debug)
 impl<T> Debug for Rationnels<T>
 where T : Display
 {
@@ -239,7 +237,8 @@ where T : Display
         write!(f, "{}/{}", self.numerateur, self.denominateur)
     }
 }
-*/
+
+
 
 //trait Trait_NumDen: Ord + Eq + Clone {}
 //impl<T> Trait_NumDen for T where T: Ord + Eq + Clone + Rem<Output = T> + From<u32> {}
