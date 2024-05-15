@@ -289,6 +289,21 @@ fn main() {
         println!("\ntableau départ: \n {:?}", &mon_tableau_de_rationnels2);
         tri_variantes::tri_par_insertion_generique(mon_tableau_de_rationnels2);
         println!("\ntableau trié: \n {:?}", &mon_tableau_de_rationnels2);
+
+
+        // Test de conversion rationnel vers flottant
+        let r1 = rationnels::Rationnels { numerateur : 2i32, denominateur : 3i32};
+        // On clone r1, car il est consommé par la conversion qui suit, mais on veut quand meme l'afficher..
+        let r1_clone = r1.clone();  
+        rationnels::Rationnels { numerateur : 2i32, denominateur : 3i32};
+        let r1_flottant: f64 = f64::from(r1);
+        println!("{} = {}", &r1_clone, r1_flottant);
+
+        // Test de conversion entier vers rationnel
+        let entier_i64: i64 = 5;
+        let r1 = Rationnels::<i64>::from(entier_i64);
+        println!("{} = {}", &entier_i64, r1);
+
     }
 
 }

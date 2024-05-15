@@ -217,6 +217,28 @@ where T : Sub<Output = T> + Mul<Output = T> + Copy + PartialEq + PartialOrd + Tr
 
 }
 
+// Conversion vers f64:   Fraction -> Flottant (division flottante approchée)
+// Marche pour i32, u32, i16, u16, i8, u8.
+// Ne marche pas pour i64 et u64, car Rust considère que la conversion vers f64
+// risque de se faire avec perte (Considérer le nombre de bit, et la forme des représentations)
+impl<T> From<Rationnels<T>> for f64
+where f64 : From<T>
+{
+    fn from(input: Rationnels<T>) -> f64 {
+        return f64::from(input.numerateur) / f64::from(input.denominateur);
+    }
+}
+
+// Conversion depuis i64:    Entier -> Fraction (num = entier, den = 1)
+impl<T> From<i64> for Rationnels<T>
+where T : From<i64> + TryFrom<i8>,
+<T as TryFrom<i8>>::Error: Debug
+{
+    fn from(input: i64) -> Rationnels<T> {
+        let un: T = T::try_from(1i8).expect("rationnels.rs: Problème dans la conversion du 'un.'");
+        Rationnels {numerateur : T::from(input), denominateur : un}
+    }
+}
 
 
 // Traits pour l'affichage
