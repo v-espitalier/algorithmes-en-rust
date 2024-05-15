@@ -176,6 +176,9 @@ pub fn resoud_probleme_des_8_dames() -> Vec<[usize; 8]>
 
 pub fn affiche_solutions_probleme_des_8_dames(solutions: &Vec<[usize; 8]>)
 {
+    // Afficher la dame en couleur, avec les 'escape sequences'
+    let dame_en_couleur = "\x1b[93m*\x1b[0m";
+    let dame: &str = dame_en_couleur; // "*";
     for sol_index in 0..solutions.len()
     {
         let sol_cour = solutions[sol_index];
@@ -191,7 +194,7 @@ pub fn affiche_solutions_probleme_des_8_dames(solutions: &Vec<[usize; 8]>)
             }
             let spaces: String = " -".repeat(rev_index);
             let spaces_after: String = " -".repeat(7 - rev_index);
-            println!("{} {} *{}  {}", (8 - i), spaces, spaces_after, (8 - i));
+            println!("{} {} {}{}  {}", (8 - i), spaces, dame, spaces_after, (8 - i));
         }
         println!("   a b c d e f g h");
         println!("");
