@@ -11,6 +11,7 @@ mod tri;
 mod tri_variantes;
 mod divers;
 mod rationnels;
+mod fichiers;
 
 #[cfg(test)]
 mod tests;
@@ -33,7 +34,8 @@ fn main() {
     let b_test_tris_variants = false;
     let b_test_probas = false;
     let b_test_algos_divers = false;
-    let b_test_rationnels = true;
+    let b_test_rationnels = false;
+    let b_test_fichiers = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -303,6 +305,49 @@ fn main() {
         let entier_i64: i64 = 5;
         let r1 = Rationnels::<i64>::from(entier_i64);
         println!("{} = {}", &entier_i64, r1);
+
+    }
+
+    if (b_test_fichiers)
+    {
+        // Test des accés aux fichiers
+        let fichier_chemin = "./mon_fichier.txt".to_string();
+
+        let contenu_a_ecrire: String = "Première ligne\nSeconde ligne".to_string();
+        println!("Ecriture dans le fichier {}", fichier_chemin);
+        fichiers::ecrire_fichier_texte(&fichier_chemin, &contenu_a_ecrire);
+        println!("Contenu écrit: {}", contenu_a_ecrire);
+        println!(" ");
+
+        let existe: bool = fichiers::test_existence_fichier(&fichier_chemin);
+        println!("Le fichier {} existe: {}", fichier_chemin, existe);
+        println!(" ");
+
+        let contenu_fichier: String = fichiers::lire_fichier_texte(&fichier_chemin);
+        println!("Contenu du fichier:");
+        println!("{:?}", &contenu_fichier);
+        println!(" ");
+
+        let lignes: Vec<String> = fichiers::lire_fichier_texte_lignes(&fichier_chemin, None);
+        println!("Liste de lignes lues avec le sépateur par défaut:");
+        println!("{:?}", &lignes);
+        println!(" ");
+
+        let dossier_chemin = "./".to_string();
+        let contenu_dossier: Vec<String> = fichiers::liste_dossier(&dossier_chemin);
+        println!("Contenu du dossier '{}' :", dossier_chemin);
+        println!("{:?}", &contenu_dossier);
+        println!(" ");
+
+        let fichier_chemin = "./mon_fichier.txt".to_string();
+        let type_fichier = fichiers::donne_type_fichier(&fichier_chemin);
+        println!("Type du fichier '{}' : {:?}", fichier_chemin, type_fichier);
+        println!(" ");
+
+        let fichier_chemin = "./.git".to_string();
+        let type_fichier = fichiers::donne_type_fichier(&fichier_chemin);
+        println!("Type du fichier '{}' : {:?}", fichier_chemin, type_fichier);
+        println!(" ");
 
     }
 
