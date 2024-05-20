@@ -193,7 +193,7 @@ where T : Sub<Output = T> + Mul<Output = T> + Copy + PartialEq + TryFrom<i8>,
     fn ne(&self, other: &Rationnels<T>) -> bool {
         let num_diff = self.numerateur * other.denominateur - self.denominateur * other.numerateur;
         let zero: T = T::try_from(0i8).expect("rationnels.rs zero(): Problème dans la conversion du zéro.");
-        return num_diff == zero;
+        return num_diff != zero;
     }
 
 }
