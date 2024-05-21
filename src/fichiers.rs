@@ -11,6 +11,7 @@ use std::io::ErrorKind;
 use std::fs::File;
 use std::io::Write;
 use std::time::SystemTime;
+use std::io::Read;
 
 pub fn test_existence_fichier(fichier_chemin: &String) -> bool {
     let existe: bool = Path::new(&fichier_chemin).exists();
@@ -61,6 +62,21 @@ pub fn lire_fichier_texte_lignes(fichier_chemin: &String, separateur_opt: Option
     return lignes_retour;
 }
 
+// Inspiré de: https://www.reddit.com/r/rust/comments/dekpl5/how_to_read_binary_data_from_a_file_into_a_vecu8/?rdt=46881
+pub fn lire_fichier_binaire(fichier_chemin: &String) -> Vec<u8>
+{
+    let mut fichier = File::open(&fichier_chemin)
+        .expect("Fichier introuvable");
+    let taille: usize = donne_taille_fichier(fichier_chemin) as usize;
+    let mut buffer: Vec<u8> = vec![0; taille];
+    fichier.read(&mut buffer).expect("Dépassement de capacité.");
+    return buffer;
+}
+
+pub fn ecrire_fichier_binaire(fichier_chemin: &String, contenu: &Vec<u8>)
+{
+    std::fs::write(fichier_chemin, contenu).expect("Erreur: N'a pas pu écrire le fichier binaire.");
+}
 
 // Voir: https://stackoverflow.com/questions/66577339/collect-file-names-into-vecstr
 pub fn liste_dossier(dossier_chemin: &String) -> Vec<String>
@@ -96,6 +112,7 @@ pub struct InfosFichier {
     pub date_modif: SystemTime,
     pub taille: u64
 }
+
 
 pub fn donne_infos_fichier(fichier_chemin: &String) -> InfosFichier
 {

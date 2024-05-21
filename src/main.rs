@@ -333,6 +333,24 @@ fn main() {
         println!("{:?}", &lignes);
         println!(" ");
 
+
+        let contenu_binaire: Vec<u8> = vec![0x42, 0x6f, 0x6e, 0x6a, 0x6f, 0x75, 0x72];
+        //                            idem [66, 111, 110, 106, 111, 116, 114];
+        let fichier_binaire_chemin = "./mon_fichier.dat".to_string();
+        println!("Ecriture dans le fichier {}", fichier_binaire_chemin);
+        fichiers::ecrire_fichier_binaire(&fichier_binaire_chemin, &contenu_binaire);
+        println!("Contenu écrit: {:?}", contenu_binaire);
+        println!(" ");
+
+        let contenu_binaire_lu: Vec<u8> = fichiers::lire_fichier_binaire(&fichier_binaire_chemin);
+        assert_eq!(contenu_binaire, contenu_binaire_lu, "Erreur: Le contenu diffère de celui attendu");
+        println!("Contenu du fichier:");
+        println!("{:?}", &contenu_binaire);
+        let contenu: String = String::from_utf8(contenu_binaire.clone()).unwrap();
+        println!("{}", &contenu);
+        println!(" ");
+
+
         let dossier_chemin = "./".to_string();
         let contenu_dossier: Vec<String> = fichiers::liste_dossier(&dossier_chemin);
         println!("Contenu du dossier '{}' :", dossier_chemin);
