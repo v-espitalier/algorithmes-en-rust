@@ -12,6 +12,7 @@ mod tri_variantes;
 mod divers;
 mod rationnels;
 mod fichiers;
+mod conversions_hexa_bin_dec;
 
 #[cfg(test)]
 mod tests;
@@ -35,7 +36,8 @@ fn main() {
     let b_test_probas = false;
     let b_test_algos_divers = false;
     let b_test_rationnels = false;
-    let b_test_fichiers = true;
+    let b_test_fichiers = false;
+    let b_test_conversions_entiers = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -373,6 +375,11 @@ fn main() {
         println!("Type du fichier '{}' : {:?}", fichier_chemin, type_fichier);
         println!(" ");
 
+    }
+
+    if (b_test_conversions_entiers)
+    {
+        conversions_hexa_bin_dec::conversions_entier();
     }
 
 }
