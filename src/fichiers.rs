@@ -5,11 +5,12 @@
 // Ne pas faire de warning si des fonctions ne sont pas appelées
 #![warn(dead_code)]
 
-use std::fs::{self, read_dir, FileType};
+use std::fs::{self, read_dir, FileType, Permissions};
 use std::path::Path;
 use std::io::ErrorKind;
 use std::fs::File;
 use std::io::Write;
+use std::time::SystemTime;
 
 pub fn test_existence_fichier(fichier_chemin: &String) -> bool {
     let existe: bool = Path::new(&fichier_chemin).exists();
@@ -86,17 +87,39 @@ pub enum TypeFichier {
     FichierRegulier,
     Dossier,
     LienSymbolique,
+}
+
+#[derive(Debug)]
+pub struct InfosFichier {
+    pub type_fichier: TypeFichier,
+    pub permissions: Permissions,
+    pub date_modif: SystemTime,
+    pub taille: u64
+}
+
+pub fn donne_infos_fichier(fichier_chemin: &String) -> InfosFichier
+{
+    let metadata = fs::metadata(fichier_chemin).expect("Fichier non trouvé.");
+
+    let file_type = metadata.file_type();
+    let mut type_fichier_opt: Option<TypeFichier> = None;
+    if (file_type.is_file()) {type_fichier_opt = Some(TypeFichier::FichierRegulier);}
+    if (file_type.is_dir()) {type_fichier_opt = Some(TypeFichier::Dossier);}
+    if (file_type.is_symlink()) {type_fichier_opt = Some(TypeFichier::LienSymbolique);}
+    if (type_fichier_opt.is_none()) {
+        panic!("Type de fichier non reconnu: {}", fichier_chemin);
     }
 
-pub fn donne_type_fichier(fichier_chemin: &String) -> TypeFichier
+    let permissions: Permissions = metadata.permissions();
+    let date_modif: SystemTime = metadata.modified().expect("Erreur avec metadata.modified()");
+    let taille: u64 = metadata.len();
+
+    return InfosFichier{ type_fichier : type_fichier_opt.unwrap(), permissions: permissions, date_modif: date_modif, taille: taille };
+}
+
+pub fn donne_taille_fichier(fichier_chemin: &String) -> u64
 {
-
     let metadata = fs::metadata(fichier_chemin).expect("Fichier non trouvé.");
-    let file_type = metadata.file_type();
-
-    if (file_type.is_file()) {return TypeFichier::FichierRegulier;}
-    if (file_type.is_dir()) {return TypeFichier::Dossier;}
-    if (file_type.is_symlink()) {return TypeFichier::LienSymbolique;}
-
-    panic!("Type de fichier non reconnu: {}", fichier_chemin);
+    let taille = metadata.len();
+    return taille;
 }

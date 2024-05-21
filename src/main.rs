@@ -340,12 +340,18 @@ fn main() {
         println!(" ");
 
         let fichier_chemin = "./mon_fichier.txt".to_string();
-        let type_fichier = fichiers::donne_type_fichier(&fichier_chemin);
+        let taille = fichiers::donne_taille_fichier(&fichier_chemin);
+        println!("Taille du fichier '{}' : {:?}", fichier_chemin, taille);
+        println!(" ");
+ 
+        let fichier_chemin = "./mon_fichier.txt".to_string();
+        let type_fichier = fichiers::donne_infos_fichier(&fichier_chemin);
         println!("Type du fichier '{}' : {:?}", fichier_chemin, type_fichier);
         println!(" ");
 
+
         let fichier_chemin = "./.git".to_string();
-        let type_fichier = fichiers::donne_type_fichier(&fichier_chemin);
+        let type_fichier = fichiers::donne_infos_fichier(&fichier_chemin);
         println!("Type du fichier '{}' : {:?}", fichier_chemin, type_fichier);
         println!(" ");
 
