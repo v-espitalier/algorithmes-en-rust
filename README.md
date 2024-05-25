@@ -18,7 +18,7 @@ cargo run
 ```
 
 
-## Algorithmes d'initiation:
+## Algorithmes classiques:
 
 * factorielle (récursive)
 https://fr.wikipedia.org/wiki/Factorielle
@@ -86,6 +86,12 @@ https://fr.wikipedia.org/wiki/Nombre_premier#Crible_d'%C3%89ratosth%C3%A8ne_et_a
 * Accés aux fichiers: Lecture/Ecriture/Listing
 
 * Syntaxe pour les conversions: entier décimal / hexadécimal / binaire / octal, ainsi que les chaînes (String, &str, Vec<char>..).
+
+* Fractales (flocon de Koch avec export en SVG)
+
+https://fr.wikipedia.org/wiki/Fractale
+
+https://fr.wikipedia.org/wiki/Flocon_de_Koch
 
 ## Fonctionnalités du langage Rust testées:
 

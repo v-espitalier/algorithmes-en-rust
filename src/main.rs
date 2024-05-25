@@ -407,7 +407,7 @@ fn main() {
         let hauteur: u32 = 1024;
         let largeur: u32 = 1920;
         let fichier_chemin: String = "images/flocon_Koch.svg".to_string();
-        let n_iter: u32 = 6;
+        let n_iter: u32 = 4;
         let lignes: Vec<fractales::ligne> = fractales::flocon_koch(hauteur, largeur, n_iter);
 
         let mut figures: Vec<Box<dyn fractales::vectorisable>> = Vec::new();
