@@ -70,6 +70,11 @@ https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Box-Muller
 
 * Calcul de moyenne et variance de tableaux avec les traits de Rust
 
+## Algorithmes liés au graphes
+
+* Algorithme de Dijkstra
+https://fr.wikipedia.org/wiki/Algorithme_de_Dijkstra
+
 ## Algorithmes divers
 
 * Résolution du problème des 8 dames
