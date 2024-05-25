@@ -1,0 +1,19 @@
+| Test divers 4 sources + 2 positions finales|
+,--------------------------------------------.
+|        o      o      o                     |
+|       ooo    ooo $  ooo    ooo             |
+|      ooooo  ooooo  ooooo  ooooo            |
+|     oooooooooooooooooooooooooooo           |
+|     ooooooooooooooooooooooooooooo          |
+|   oooooooooooooooooooooooooooooooo         |
+|  oooooooooooooooooooooooooooooooooo        |
+| ooooooo@oooooo@oooooo@oooooo@ooooooo       |
+|  ooooooooooooooooooooooooooxxoooooo        |
+|   oooooooooooooooooooooooooxoooooo         |
+|    ooooooooooooooooooooooxxxooooo          |
+|     ooooooooooooooooooooo$oooooo           |
+|      ooooo  ooooo  ooooo  ooooo            |
+|       ooo    oo     ooo    ooo             |
+|        o      o      o                     |
+|                                            |
+`--------------------------------------------"

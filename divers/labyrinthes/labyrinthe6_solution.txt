@@ -3,10 +3,10 @@
 |oooooooooooooooooooooo|
 |oooooooooxxx@ooooooooo|
 |ooooooooox,------.oooo|
-|ooo@ooooox|o    o|oooo|
-|ooooooooox|oo$  o|oooo|
-|ooooooooox|oox oo|oooo|
-|ooooooooox|oxxoooooooo|
-|oooooooooxxxxooooooooo|
+|ooo@ooooox|oo   o|oooo|
+|ooooooooox|xx$ oo|oooo|
+|ooooooooox|xooooo|oooo|
+|ooooooooox|xoooooooooo|
+|oooooooooxxxoooooooooo|
 |oooooooooooooooooooooo|
 `----------------------"

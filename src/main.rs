@@ -317,7 +317,7 @@ fn main() {
     if (b_test_fichiers)
     {
         // Test des accés aux fichiers
-        let fichier_chemin = "./fichiers/mon_fichier.txt".to_string();
+        let fichier_chemin = "./divers/mon_fichier.txt".to_string();
 
         let contenu_a_ecrire: String = "Première ligne\nSeconde ligne".to_string();
         println!("Ecriture dans le fichier {}", fichier_chemin);
@@ -342,7 +342,7 @@ fn main() {
 
         let contenu_binaire: Vec<u8> = vec![0x42, 0x6f, 0x6e, 0x6a, 0x6f, 0x75, 0x72];
         //                            idem [66, 111, 110, 106, 111, 116, 114];
-        let fichier_binaire_chemin = "./fichiers/mon_fichier.dat".to_string();
+        let fichier_binaire_chemin = "./divers/mon_fichier.dat".to_string();
         println!("Ecriture dans le fichier {}", fichier_binaire_chemin);
         fichiers::ecrire_fichier_binaire(&fichier_binaire_chemin, &contenu_binaire);
         println!("Contenu écrit: {:?}", contenu_binaire);
@@ -363,12 +363,12 @@ fn main() {
         println!("{:?}", &contenu_dossier);
         println!(" ");
 
-        let fichier_chemin = "./fichiers/mon_fichier.txt".to_string();
+        let fichier_chemin = "./divers/mon_fichier.txt".to_string();
         let taille = fichiers::donne_taille_fichier(&fichier_chemin);
         println!("Taille du fichier '{}' : {:?}", fichier_chemin, taille);
         println!(" ");
  
-        let fichier_chemin = "./fichiers/mon_fichier.txt".to_string();
+        let fichier_chemin = "./divers/mon_fichier.txt".to_string();
         let type_fichier = fichiers::donne_infos_fichier(&fichier_chemin);
         println!("Type du fichier '{}' : {:?}", fichier_chemin, type_fichier);
         println!(" ");
@@ -388,7 +388,7 @@ fn main() {
 
     if (b_test_graphes)
     {
-        let d_labyrinthes: String = "fichiers/labyrinthes".to_string();
+        let d_labyrinthes: String = "divers/labyrinthes".to_string();
         let f_liste_plan_labyrinthes: Vec<String> = fichiers::liste_dossier(&d_labyrinthes);
 
         for f_plan_labyrinthe in f_liste_plan_labyrinthes
