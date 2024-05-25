@@ -357,6 +357,19 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String)
         let (hauteur, largeur) = Labyrinthe::u64_vers_hauteur_largeur(sommet_final);
         println!("Sommet final ({}, {}) a une distance de : {}", largeur, hauteur, dist_final);
 
+        // Stocker tous les sommets parcourus
+        let mut sommets_parcourus:Vec<(u32, u32)> = Vec::new();
+        let s_init : Vec<u64> = labyrinthe.s_init();
+        let s_final : Vec<u64> = labyrinthe.s_final();
+        for (pos, dist) in P
+        {
+            if (s_init.contains(&pos)) {continue;}
+            if (s_final.contains(&pos)) {continue;}
+            let (hauteur, largeur) = Labyrinthe:: u64_vers_hauteur_largeur(pos);
+            sommets_parcourus.push((largeur, hauteur));
+        }
+
+
 
         // Construire la solution
         let mut chemin_solution:Vec<(u32, u32)> = Vec::new();
@@ -366,7 +379,7 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String)
         {
             //println!("Ajoute un point à la solution");
             sommet_cour = prec[&sommet_cour];
-            if (s_init.contains(&sommet_cour)) {break;}
+            if (s_init.contains(&sommet_cour)) {continue;}
             let (hauteur, largeur) = Labyrinthe:: u64_vers_hauteur_largeur(sommet_cour);
             chemin_solution.push((largeur, hauteur));
         }
@@ -374,8 +387,16 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String)
         // Enregistrer la solution sur disque dur
         let mut plan_solution = plan_labyrinthe.clone();
 
-        let caractere_solution = 'x';
+        let caractere_sommet_parcouru = 'o';
+        for (largeur, hauteur) in sommets_parcourus
+        {
+            let mut ligne_cour: Vec<char> = plan_solution[hauteur as usize].chars().collect::<Vec<_>>();
+            ligne_cour[largeur as usize] = caractere_sommet_parcouru;
+            let ligne_cour_string = ligne_cour.iter().collect::<String>();
+            plan_solution[hauteur as usize] = ligne_cour_string;
+        }
 
+        let caractere_solution = 'x';
         for (largeur, hauteur) in chemin_solution
         {
             let mut ligne_cour: Vec<char> = plan_solution[hauteur as usize].chars().collect::<Vec<_>>();
@@ -390,13 +411,15 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String)
 
         let caractere_init = labyrinthe.caractere_init();
         let caractere_final = labyrinthe.caractere_final();
+        let caractere_sommet_parcouru_couleur = "\x1b[90mo\x1b[0m";
         let chemin_solution_en_couleur = "\x1b[93mx\x1b[0m";
         let caractere_init_en_couleur = "\x1b[94m@\x1b[0m";
         let caractere_final_en_couleur = "\x1b[92m$\x1b[0m";
         let mut plan_solution_couleur: Vec<String> = Vec::new();
         for ligne in plan_solution
         {
-            let ligne_couleur = ligne.replace(caractere_solution, &chemin_solution_en_couleur);
+            let ligne_couleur = ligne.replace(caractere_sommet_parcouru, &caractere_sommet_parcouru_couleur);
+            let ligne_couleur = ligne_couleur.replace(caractere_solution, &chemin_solution_en_couleur);
             let ligne_couleur = ligne_couleur.replace(caractere_init, &caractere_init_en_couleur);
             let ligne_couleur = ligne_couleur.replace(caractere_final, &caractere_final_en_couleur);
             plan_solution_couleur.push(ligne_couleur);

@@ -1,0 +1,12 @@
+| Test sans murs       |
+,----------------------.
+|    ooooo             |
+|   ooooooo            |
+|  ooooooooo           |
+| ooooooooooo          |
+|oooooo@xxxxx$         |
+| ooooooooooo          |
+|   ooooooo            |
+|    ooooo             |
+|    ooooo             |
+`----------------------"

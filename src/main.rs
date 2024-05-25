@@ -386,14 +386,17 @@ fn main() {
 
     if (b_test_graphes)
     {
-        let f_plan_labyrinthe: String = "fichiers/labyrinthe.txt".to_string();
-        let f_plan_solution: String = "fichiers/labyrinthe_solution.txt".to_string();
-        graphes::resoud_labyrinthe(f_plan_labyrinthe, f_plan_solution);
+        let d_labyrinthes: String = "fichiers/labyrinthes".to_string();
+        let f_liste_plan_labyrinthes: Vec<String> = fichiers::liste_dossier(&d_labyrinthes);
 
-        let f_plan_labyrinthe2: String = "fichiers/labyrinthe2.txt".to_string();
-        let f_plan_solution2: String = "fichiers/labyrinthe_solution2.txt".to_string();
-        graphes::resoud_labyrinthe(f_plan_labyrinthe2, f_plan_solution2);
+        for f_plan_labyrinthe in f_liste_plan_labyrinthes
+        {
+            if (f_plan_labyrinthe.contains("solution")) {continue;}
+
+            let f_plan_solution = f_plan_labyrinthe.split(".").collect::<Vec<_>>()[0].to_string() + "_solution.txt";
+            //println!("{},{}", f_plan_labyrinthe, f_plan_solution);
+            graphes::resoud_labyrinthe(f_plan_labyrinthe, f_plan_solution);
 
         }
-
+    }
 }

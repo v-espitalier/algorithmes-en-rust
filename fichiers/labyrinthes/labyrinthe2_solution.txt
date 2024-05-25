@@ -1,0 +1,52 @@
+Source: https://www.asciiart.eu/art-and-design/mazes                       |  
+,-----------.-----------.--------------------.-----------.-----------------.  
+|oxxxxxxxxoo|oxxxxxxxxxx|oxxxxxxxxxxxxxxxxxxo|ooooooooooo|xxxxxxxoooooooooo|  
+|ox,-----xoo|ox,-----.ox|ox.oo,-----------.xo`--------ooo|xo,--.xo.oo,--ooo|  
+|ox|oxxxxxoo|ox|ooooo|ox|ox|oo|ooooooooooo|xooooooooooooo|xo|oo|xo|oo|ooooo|  
+|ox|ox,-----'ox|oo.oo|ox|ox`--"--------.oo"xo,-----------'xo"oo|xo`--"-----:  
+|ox|ox|ooooooox|oo|oo|ox|oxxxxxxxxxxxxx|oxxxo|xxxxxxxxxxxxxoooo|xxxxxxxxxoo|  
+|ox|ox|ooo--.ox|oo`--:ox|oo,--------.ox|ox,--:xo,--.-----------"--------xoo|  
+|ox|ox|ooooo|ox|ooooo|ox|oo|oooooooo|ox|ox|o@|xo|oo|oxxxxxxxxxxxxxxxxxxxxoo|  
+|ox|ox`-----'xx|ooo--'ox|oo`-----ooo|ox|ox|ox|xo|oo|ox,--------.--------.oo|  
+|ox|oxxxxxxxxxo|ooooooox|ooooooooooo|ox|ox|ox|xo|oo|ox|oooooooo|oooooooo|oo|  
+|ox`-----------"-----.ox`-----------:ox|ox"ox|xo|oo|ox|oo,--ooo|oo,--.oo|oo|  
+|oxxxxxxxxxxxxxxxxxxo|oxxxxxxxxxxxxx|ox|oxxxx|xo|oo|ox|oo|ooooo|oo|oo|oo|oo|  
+|oo,--------------.xo:-----------.ox|ox`-----:xo|oo|ox|oo`-----'oo"oo|oo|oo|  
+|oo|oooooooooooooo|xo|ooooooooooo|ox|oxxxxxoo|xo|oo|ox|oooooooooooooo|oo|oo|  
+|oo|oo,--------.oo|xo|oo,-----.oo|ox:-----xoo|xo|oo|ox`--------------:oo"oo|  
+|oo|oo|oooooooo|oo|xo|oo|ooooo|oo|ox|oxxxxxoo|xo|oo|oxxxxxxxxxxxxxxxo|ooooo|  
+|oo|oo`-----ooo|oo|xo|oo|oo.oo|oo|ox|ox,-----'xo|oo`--------------.xo`-----:  
+|oo|ooooooooooo|oo|xo|oo|oo|oo|oo|ox|ox|oxxxxxxo|ooooooooooooooooo|xxxxoooo|  
+|oo`-----------'oo|xo|oo|oo|oo|oo|ox|ox|xx,-----'oo,-----------.oo:--.xo.oo|  
+|ooooooooooooooooo|xo|oo|oo|oo|oo|ox|ox|xo|oooooooo|ooooooooooo|oo|oo|xo|oo|  
+:-----------------'xo|oo|oo|oo|oo|ox|ox|xo|oo,--.oo|ooo-----.oo|oo|oo|xo|oo|  
+|oxxxxxxxxxxxxxxxxxxo|oo|oo|oo|oo|ox|ox|xo|oo|oo|oo|oooooooo|oo|oo|oo|xo|oo|  
+|ox,--------ooo,-----:oo|oo|oo"oo|ox|ox|xo|oo"oo|oo|oo,-----'oo|oo"oo|xo|oo|  
+|ox|ooooooooooo|xxxxo|oo|oo|ooooo|ox|ox|xo|ooooo|oo|oo|oooooooo|ooooo|xo|oo|  
+|ox`-----------'xo.xo:--'oo`-----'ox"ox|xo:--.oo|oo:--'oo,--ooo`--.oo|xo|oo|  
+|oxxxxxxxxxxxxxxxo|xo|oooooooooooooxxxx|xo|oo|oo|oo|ooooo|oooooooo|oo|xo|oo|  
+|oo,-----.--------'xo|ooo-----.ooo--.oo|xo|oo"oo|oo|ooo--"--------'oo|xo|oo|  
+|oo|ooooo|oxxxxxxxxxo|oooooooo|ooooo|oo|xo|ooooo|oo|ooooooooooooooooo|xo|oo|  
+|oo`--ooo|ox,-----.oo:--------"-----"--'xo|ooo--:oo:-----------------'xo|oo|  
+|oooooooo|ox|ooooo|oo|oxxxxxxxxxxxxxxxxxxo|ooooo|oo|oxxxxxxxxxxxxxxxxxxo|oo|  
+:-----.oo|ox|ooo--:oo|ox,-----------.-----"-----'oo|ox,--.--------------'oo|  
+|ooooo|oo|ox|ooooo|oo|ox|ooooooooooo|oooooooooooooo|ox|oo|ooooooooooooooooo|  
+|oo.oo|oo|ox|oo.oo"oo|ox:--------ooo`--ooo,-----.oo|ox|oo|oo,-----------.--:  
+|oo|oo|oo|ox|oo|ooooo|ox|ooooooooooooooooo|ooooo|oo|ox|oo|oo|ooooooooooo|oo|  
+|oo`--:oo|ox`--"-----'ox"oo.oo,--ooo,-----'ooo--'oo|ox|oo"oo|oo.ooo--.oo"oo|  
+|ooooo|oo|oxxxxxxxxxxxxxooo|oo|ooooo|oooooooooooooo|ox|ooooo|oo|ooooo|ooooo|  
+|oo.oo|oo:-----.-----------"--"-----"--.ooo--------:ox:--.oo`--"--.oo`-----:  
+|oo|oo|oo|ooooo|oxxxxxxxxxxxxxxxxxxxxxo|ooooooooooo|ox|oo|oooooooo|oooooooo|  
+|oo|oo|oo|oo.oo|ox,-----------------.xo`-----------'ox|oo`--.--.oo|oo,--.oo|  
+|oo|oo|oo|oo|oo|ox|                 |xxxxxxxxxxxxxxxxx|ooooo|oo|oo|oo|oo|oo|  
+|oo`--'oo|oo`--:ox|  ,--------------"--------------.--'oo.oo|oo|oo|oo|oo|oo|  
+|oooooooo|ooooo|ox|  | oooooooooooooooooooooooooooo|ooooo|oo|oo|oo|oo|oo|oo|  
+|oo,-----'oo.oo|ox|  |  ,--------.-----.oo,-----.oo|oo.oo|oo|oo|oo|oo|oo|oo|  
+|oo|oooooooo|oo|ox|  |  |        |     |oo|  o  |oo|oo|oo|oo|oo|oo|oo|oo|oo|  
+|oo`--------:oo|ox|  |  |  .  .  `--   |oo| oo--'oo|oo|oo|oo"oo|oo|oo|oo|oo|  
+|ooooooooooo|oo|ox|  |  |  |  |        |oo|oooooooo|oo|oo|ooooo|oo|oo|oo|oo|  
+:--------.oo|oo|ox|  "  `--'  :--------:oo| oo-----:oo|oo`-----'oo|oo"oo|oo|  
+|oooooooo|oo|oo|ox|           |ooxxxxxo|oo|  o     |oo|ooooooooooo|ooooo|oo|  
+|ooo-----'oo"oo|ox`-----------'oxx--.xx|oo`--------'oo`-----.ooo--"-----'oo|  
+|oooooooooooooo|oxxxxxxxxxxxxxxxxooo|ox|oooooooooooooooooooo|oooooooooooooo|  
+`--------------"--------------------'o$`--------------------"--------------'  
