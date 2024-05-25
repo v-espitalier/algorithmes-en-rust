@@ -83,6 +83,10 @@ https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_huit_dames
 * Recherche de nombres premiers via l'algorithme par essais de division (avec option multithreading)
 https://fr.wikipedia.org/wiki/Nombre_premier#Crible_d'%C3%89ratosth%C3%A8ne_et_algorithme_par_essais_de_division
 
+* Accés aux fichiers: Lecture/Ecriture/Listing
+
+* Syntaxe pour les conversions: entier décimal / hexadécimal / binaire / octal, ainsi que les chaînes (String, &str, Vec<char>..).
+
 ## Fonctionnalités du langage Rust testées:
 
 * Fonctions génériques basées sur les traits: Voir [tri_variances.rs](https://github.com/v-espitalier/algorithmes-en-rust/blob/main/src/tri_variantes.rs)

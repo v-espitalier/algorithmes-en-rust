@@ -13,11 +13,13 @@ use std::io::Write;
 use std::time::SystemTime;
 use std::io::Read;
 
+// Fonction pour tester l'existence d'un fichier sur disque dur
 pub fn test_existence_fichier(fichier_chemin: &String) -> bool {
     let existe: bool = Path::new(&fichier_chemin).exists();
     return existe;
 }
 
+// Fonction pour lire un fichier texte, et renvoyer son contenu sour forme de String
 pub fn lire_fichier_texte(fichier_chemin: &String) -> String
 {
     // Ouvrir le fichier texte
@@ -30,6 +32,7 @@ pub fn lire_fichier_texte(fichier_chemin: &String) -> String
 }
 
 
+// Fonction pour lire un fichier texte, et renvoyer son contenu ligne par ligne en Vec<String>
 pub fn lire_fichier_texte_lignes(fichier_chemin: &String, separateur_opt: Option<&str>) -> Vec<String>
 {
     let mut lignes_retour: Vec<String> = Vec::new();
@@ -37,7 +40,6 @@ pub fn lire_fichier_texte_lignes(fichier_chemin: &String, separateur_opt: Option
     // Lire le fichier texte
     let contenu = lire_fichier_texte(fichier_chemin);
 
-    // Le lire ligne par ligne et nourrir la structure de sortie
     let separateur_defaut = "\n";
     let contenu_split;
     match (separateur_opt) {
@@ -54,6 +56,7 @@ pub fn lire_fichier_texte_lignes(fichier_chemin: &String, separateur_opt: Option
     return lignes_retour;
 }
 
+// Ecriture d'un fichier texte
 pub fn ecrire_fichier_texte(fichier_chemin: &String, contenu: &String)
 {
     // Voir: https://doc.rust-lang.org/std/fs/struct.File.html
@@ -69,6 +72,7 @@ pub fn ecrire_fichier_texte_lignes(fichier_chemin: &String, contenu_vec: &Vec<St
 
 
 // Inspiré de: https://www.reddit.com/r/rust/comments/dekpl5/how_to_read_binary_data_from_a_file_into_a_vecu8/?rdt=46881
+// Lire un fichier binaire
 pub fn lire_fichier_binaire(fichier_chemin: &String) -> Vec<u8>
 {
     let mut fichier = File::open(&fichier_chemin)
@@ -79,12 +83,14 @@ pub fn lire_fichier_binaire(fichier_chemin: &String) -> Vec<u8>
     return buffer;
 }
 
+// Ecrire une fichier binaire
 pub fn ecrire_fichier_binaire(fichier_chemin: &String, contenu: &Vec<u8>)
 {
     std::fs::write(fichier_chemin, contenu).expect("Erreur: N'a pas pu écrire le fichier binaire.");
 }
 
 // Voir: https://stackoverflow.com/questions/66577339/collect-file-names-into-vecstr
+// Lister tous les élements d'un dossier
 pub fn liste_dossier(dossier_chemin: &String) -> Vec<String>
 {
     let mut liste_fichiers_retour: Vec<String> = Vec::new();
@@ -119,7 +125,8 @@ pub struct InfosFichier {
     pub taille: u64
 }
 
-
+// Donner les informations essentielles d'un fichier:
+// sa taille, sa date de modif, son type (fichier, dossier, lien symbolique) et ses permissions
 pub fn donne_infos_fichier(fichier_chemin: &String) -> InfosFichier
 {
     let metadata = fs::metadata(fichier_chemin).expect("Fichier non trouvé.");
