@@ -50,6 +50,7 @@ where S : Eq + Hash + Clone, A : PartialOrd + Add + TryFrom<i8> + Clone + Debug
 }
 
 // Implémentation de l'algorithme de Dijkstra
+// https://fr.wikipedia.org/wiki/Algorithme_de_Dijkstra
 // Entrées: Sommets de départ, et terminaux
 // L'algorithme s'arrête dés que l'une des 2 conditions est remplie:
 // - Soit on a trouvé un chemin d'un sommet de départ au sommet d'arrivée
@@ -237,6 +238,16 @@ impl Labyrinthe
         return self.s_final.clone();
     }
 
+    pub fn caractere_init(&self) -> char
+    {
+        return self.caractere_init;
+    }
+
+    pub fn caractere_final(&self) -> char
+    {
+        return self.caractere_final;
+    }
+
 }
 
 
@@ -346,10 +357,9 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String)
         let (hauteur, largeur) = Labyrinthe::u64_vers_hauteur_largeur(sommet_final);
         println!("Sommet final ({}, {}) a une distance de : {}", largeur, hauteur, dist_final);
 
-        // Construire la solution
-        let mut plan_solution = plan_labyrinthe.clone();
 
-        let caractere_chemin_solution = 'x';
+        // Construire la solution
+        let mut chemin_solution:Vec<(u32, u32)> = Vec::new();
         let mut sommet_cour = sommet_final;
         let s_init : Vec<u64> = labyrinthe.s_init();
         while (prec.contains_key(&sommet_cour))
@@ -358,18 +368,42 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String)
             sommet_cour = prec[&sommet_cour];
             if (s_init.contains(&sommet_cour)) {break;}
             let (hauteur, largeur) = Labyrinthe:: u64_vers_hauteur_largeur(sommet_cour);
+            chemin_solution.push((largeur, hauteur));
+        }
+
+        // Enregistrer la solution sur disque dur
+        let mut plan_solution = plan_labyrinthe.clone();
+
+        let caractere_solution = 'x';
+
+        for (largeur, hauteur) in chemin_solution
+        {
             let mut ligne_cour: Vec<char> = plan_solution[hauteur as usize].chars().collect::<Vec<_>>();
-            ligne_cour[largeur as usize] = caractere_chemin_solution;
+            ligne_cour[largeur as usize] = caractere_solution;
             let ligne_cour_string = ligne_cour.iter().collect::<String>();
             plan_solution[hauteur as usize] = ligne_cour_string;
         }
 
-
         fichiers::ecrire_fichier_texte_lignes(&f_plan_solution, &plan_solution);
         println!("Fichier écrit: {}", f_plan_solution);
 
-        let plan_solution: String = fichiers::lire_fichier_texte(&f_plan_solution);
+
+        let caractere_init = labyrinthe.caractere_init();
+        let caractere_final = labyrinthe.caractere_final();
+        let chemin_solution_en_couleur = "\x1b[93mx\x1b[0m";
+        let caractere_init_en_couleur = "\x1b[94m@\x1b[0m";
+        let caractere_final_en_couleur = "\x1b[92m$\x1b[0m";
+        let mut plan_solution_couleur: Vec<String> = Vec::new();
+        for ligne in plan_solution
+        {
+            let ligne_couleur = ligne.replace(caractere_solution, &chemin_solution_en_couleur);
+            let ligne_couleur = ligne_couleur.replace(caractere_init, &caractere_init_en_couleur);
+            let ligne_couleur = ligne_couleur.replace(caractere_final, &caractere_final_en_couleur);
+            plan_solution_couleur.push(ligne_couleur);
+        }
+        // Afficher la solution à l'écran en couleur
         println!("Solution (via Dijkstra)");
-        println!("{}", plan_solution);
+        println!("{}", plan_solution_couleur.join("\n"));
+
     }
 }
