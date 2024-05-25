@@ -14,6 +14,7 @@ mod rationnels;
 mod fichiers;
 mod conversions_hexa_bin_dec;
 mod graphes;
+mod fractales;
 
 #[cfg(test)]
 mod tests;
@@ -39,7 +40,8 @@ fn main() {
     let b_test_rationnels = false;
     let b_test_fichiers = false;
     let b_test_conversions_entiers = false;
-    let b_test_graphes = true;
+    let b_test_graphes = false;
+    let b_test_fractales = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -398,5 +400,24 @@ fn main() {
             graphes::resoud_labyrinthe(f_plan_labyrinthe, f_plan_solution);
 
         }
+    }
+
+    if (b_test_fractales)
+    {
+        let hauteur: u32 = 1024;
+        let largeur: u32 = 1920;
+        let fichier_chemin: String = "images/flocon_Koch.svg".to_string();
+        let n_iter: u32 = 6;
+        let lignes: Vec<fractales::ligne> = fractales::flocon_koch(hauteur, largeur, n_iter);
+
+        let mut figures: Vec<Box<dyn fractales::vectorisable>> = Vec::new();
+        for ligne in lignes
+        {
+            //lignes.push(Box::new(ligne {x1: x1, y1:y1, x2:x2, y2:y2, couleur: couleur.clone(), epaisseur:epaisseur}));
+            let figure: Box<dyn fractales::vectorisable> = Box::new(ligne);
+            figures.push(figure);
+        }
+        fractales::cree_fichier_svg(fichier_chemin, hauteur, largeur, &figures);
+
     }
 }

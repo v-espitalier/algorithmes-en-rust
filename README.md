@@ -4,7 +4,7 @@
 
 Voilà une recueil d'algorithmes courants, implémentés en langage Rust, pour se faire une idée du langage. Peut éventuellement servir pour préparer des cours.
 
-![Exemples d'algorithmes implémentés](imgs/exemples_algos.png)
+![Exemples d'algorithmes implémentés](images/exemples_algos.png)
 
 ## Téléchargement / utilisation
 
@@ -107,7 +107,7 @@ https://fr.wikipedia.org/wiki/Nombre_premier#Crible_d'%C3%89ratosth%C3%A8ne_et_a
 
 Here's a collection of common algorithms implemented in Rust, to give you an idea of the language. Can also be used to prepare courses.
 
-![Examples of implemented algorithms](imgs/exemples_algos.png)
+![Examples of implemented algorithms](images/exemples_algos.png)
 
 ## Download / use
 

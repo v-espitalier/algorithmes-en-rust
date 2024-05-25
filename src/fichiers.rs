@@ -62,6 +62,7 @@ pub fn ecrire_fichier_texte(fichier_chemin: &String, contenu: &String)
     // Voir: https://doc.rust-lang.org/std/fs/struct.File.html
     let mut fichier = File::create(fichier_chemin).expect("Erreur: N'a pas pu créer le fichier.");
     fichier.write_all(contenu.as_bytes()).expect("Erreur: N'a pas pu écrire dans le fichier.");
+    println!("Fichier écrit: {}", fichier_chemin);
 }
 
 pub fn ecrire_fichier_texte_lignes(fichier_chemin: &String, contenu_vec: &Vec<String>)
