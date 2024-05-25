@@ -13,13 +13,14 @@ mod divers;
 mod rationnels;
 mod fichiers;
 mod conversions_hexa_bin_dec;
+mod graphes;
 
 #[cfg(test)]
 mod tests;
 
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use crate::rationnels::Rationnels;
+use crate::{graphes::Labyrinthe, rationnels::Rationnels};
 
 // Connaitre le temps en secondes depuis l'epoch
 fn get_curr_time_epoch() -> f64 {
@@ -37,7 +38,8 @@ fn main() {
     let b_test_algos_divers = false;
     let b_test_rationnels = false;
     let b_test_fichiers = false;
-    let b_test_conversions_entiers = true;
+    let b_test_conversions_entiers = false;
+    let b_test_graphes = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -313,7 +315,7 @@ fn main() {
     if (b_test_fichiers)
     {
         // Test des accés aux fichiers
-        let fichier_chemin = "./mon_fichier.txt".to_string();
+        let fichier_chemin = "./fichiers/mon_fichier.txt".to_string();
 
         let contenu_a_ecrire: String = "Première ligne\nSeconde ligne".to_string();
         println!("Ecriture dans le fichier {}", fichier_chemin);
@@ -338,7 +340,7 @@ fn main() {
 
         let contenu_binaire: Vec<u8> = vec![0x42, 0x6f, 0x6e, 0x6a, 0x6f, 0x75, 0x72];
         //                            idem [66, 111, 110, 106, 111, 116, 114];
-        let fichier_binaire_chemin = "./mon_fichier.dat".to_string();
+        let fichier_binaire_chemin = "./fichiers/mon_fichier.dat".to_string();
         println!("Ecriture dans le fichier {}", fichier_binaire_chemin);
         fichiers::ecrire_fichier_binaire(&fichier_binaire_chemin, &contenu_binaire);
         println!("Contenu écrit: {:?}", contenu_binaire);
@@ -359,12 +361,12 @@ fn main() {
         println!("{:?}", &contenu_dossier);
         println!(" ");
 
-        let fichier_chemin = "./mon_fichier.txt".to_string();
+        let fichier_chemin = "./fichiers/mon_fichier.txt".to_string();
         let taille = fichiers::donne_taille_fichier(&fichier_chemin);
         println!("Taille du fichier '{}' : {:?}", fichier_chemin, taille);
         println!(" ");
  
-        let fichier_chemin = "./mon_fichier.txt".to_string();
+        let fichier_chemin = "./fichiers/mon_fichier.txt".to_string();
         let type_fichier = fichiers::donne_infos_fichier(&fichier_chemin);
         println!("Type du fichier '{}' : {:?}", fichier_chemin, type_fichier);
         println!(" ");
@@ -381,5 +383,17 @@ fn main() {
     {
         conversions_hexa_bin_dec::conversions_entier();
     }
+
+    if (b_test_graphes)
+    {
+        let f_plan_labyrinthe: String = "fichiers/labyrinthe.txt".to_string();
+        let f_plan_solution: String = "fichiers/labyrinthe_solution.txt".to_string();
+        graphes::resoud_labyrinthe(f_plan_labyrinthe, f_plan_solution);
+
+        let f_plan_labyrinthe2: String = "fichiers/labyrinthe2.txt".to_string();
+        let f_plan_solution2: String = "fichiers/labyrinthe_solution2.txt".to_string();
+        graphes::resoud_labyrinthe(f_plan_labyrinthe2, f_plan_solution2);
+
+        }
 
 }

@@ -29,14 +29,6 @@ pub fn lire_fichier_texte(fichier_chemin: &String) -> String
     return contenu;
 }
 
-pub fn ecrire_fichier_texte(fichier_chemin: &String, contenu: &String)
-{
-    // Voir: https://doc.rust-lang.org/std/fs/struct.File.html
-    let mut fichier = File::create(fichier_chemin).expect("Erreur: N'a pas pu créer le fichier.");
-    fichier.write_all(contenu.as_bytes()).expect("Erreur: N'a pas pu écrire dans le fichier.");
-}
-
-
 
 pub fn lire_fichier_texte_lignes(fichier_chemin: &String, separateur_opt: Option<&str>) -> Vec<String>
 {
@@ -61,6 +53,20 @@ pub fn lire_fichier_texte_lignes(fichier_chemin: &String, separateur_opt: Option
 
     return lignes_retour;
 }
+
+pub fn ecrire_fichier_texte(fichier_chemin: &String, contenu: &String)
+{
+    // Voir: https://doc.rust-lang.org/std/fs/struct.File.html
+    let mut fichier = File::create(fichier_chemin).expect("Erreur: N'a pas pu créer le fichier.");
+    fichier.write_all(contenu.as_bytes()).expect("Erreur: N'a pas pu écrire dans le fichier.");
+}
+
+pub fn ecrire_fichier_texte_lignes(fichier_chemin: &String, contenu_vec: &Vec<String>)
+{
+    return ecrire_fichier_texte(fichier_chemin, &contenu_vec.join("\n"));
+}
+
+
 
 // Inspiré de: https://www.reddit.com/r/rust/comments/dekpl5/how_to_read_binary_data_from_a_file_into_a_vecu8/?rdt=46881
 pub fn lire_fichier_binaire(fichier_chemin: &String) -> Vec<u8>
