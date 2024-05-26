@@ -1,12 +1,12 @@
 | Test divers 2 sources|
 ,----------------------.
-| ooooooooo@xxxxxoooo  |
-|   ooooooooooooxoo    |
+|  oooooooo@xxxxoooo   |
+|   oooooooooooxxoo    |
 |  oooooooo|ooooxo     |
 | ooooooooo|oooox      |
 |oooooooooo|oooo$      |
 |oooooooooo|ooo        |
 |oooooo@ooo|oo         |
-|ooooooooooooooo       |
+|oooooooooooooo        |
 |ooooooooooooo         |
 `----------------------"

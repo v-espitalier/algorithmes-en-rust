@@ -1,12 +1,12 @@
 | Test divers          |
 ,----------------------.
-|  oooooooooooo        |
-|oooooooooooooo        |
-|oooooooooo|oo         |
-|oooooooooo|oo         |
-|ooooooo@xo|oo$        |
-|ooooooooxo|ooxo       |
-|ooooooooxxxxxxo       |
+| ooooooooooooo        |
 |ooooooooooooooo       |
-|  ooooooooooo         |
+|oooooooooo|ooo        |
+|oooooooooo|oo         |
+|ooooooo@xo|xx$        |
+|ooooooooxx|xooo       |
+|oooooooooxxxoooo      |
+|ooooooooooooooo       |
+| oooooooooooo         |
 `----------------------"

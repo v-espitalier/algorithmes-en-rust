@@ -4,9 +4,9 @@
 |    ooooo             |
 |  oooooooo            |
 |  ooooooooo           |
-| ooooo@xxxxx$         |
+|oooooo@xxxxx$         |
 |  ooooooooo           |
-|  ooooooooo           |
+|   ooooooo            |
 |    ooooo             |
-|     ooo              |
+|    oooo              |
 `----------------------"

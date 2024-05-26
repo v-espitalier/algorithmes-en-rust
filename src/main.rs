@@ -40,8 +40,8 @@ fn main() {
     let b_test_rationnels = false;
     let b_test_fichiers = false;
     let b_test_conversions_entiers = false;
-    let b_test_graphes = false;
-    let b_test_fractales = true;
+    let b_test_graphes = true;
+    let b_test_fractales = false;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
