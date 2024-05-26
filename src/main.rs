@@ -40,8 +40,8 @@ fn main() {
     let b_test_rationnels = false;
     let b_test_fichiers = false;
     let b_test_conversions_entiers = false;
-    let b_test_graphes = true;
-    let b_test_fractales = false;
+    let b_test_graphes = false;
+    let b_test_fractales = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -406,18 +406,15 @@ fn main() {
     {
         let hauteur: u32 = 1024;
         let largeur: u32 = 1920;
-        let fichier_chemin: String = "images/flocon_Koch.svg".to_string();
+        let f_flocon_svg: String = "images/flocon_Koch.svg".to_string();
         let n_iter: u32 = 4;
-        let lignes: Vec<fractales::ligne> = fractales::flocon_koch(hauteur, largeur, n_iter);
+        let lignes: Vec<fractales::Ligne> = fractales::flocon_koch(hauteur, largeur, n_iter);
+        fractales::cree_fichier_svg_depuis_lignes(&f_flocon_svg, hauteur, largeur, lignes);
 
-        let mut figures: Vec<Box<dyn fractales::vectorisable>> = Vec::new();
-        for ligne in lignes
-        {
-            //lignes.push(Box::new(ligne {x1: x1, y1:y1, x2:x2, y2:y2, couleur: couleur.clone(), epaisseur:epaisseur}));
-            let figure: Box<dyn fractales::vectorisable> = Box::new(ligne);
-            figures.push(figure);
-        }
-        fractales::cree_fichier_svg(fichier_chemin, hauteur, largeur, &figures);
 
+        let x_fractale = 0.3;
+        let y_fractale = 0.5;
+        let f_fractale_bmp: String = "images/fractale.bmp".to_string();
+        fractales::calcule_fractale_et_ecrit_bmp(x_fractale, y_fractale, &f_fractale_bmp);
     }
 }
