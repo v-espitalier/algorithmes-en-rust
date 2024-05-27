@@ -15,6 +15,7 @@ mod fichiers;
 mod conversions_hexa_bin_dec;
 mod graphes;
 mod fractales;
+mod machine_learning;
 
 #[cfg(test)]
 mod tests;
@@ -41,7 +42,8 @@ fn main() {
     let b_test_fichiers = false;
     let b_test_conversions_entiers = false;
     let b_test_graphes = false;
-    let b_test_fractales = true;
+    let b_test_fractales = false;
+    let b_test_machine_learning = true;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -167,7 +169,7 @@ fn main() {
         let n: usize = 10000;
         let normales: Vec<f64> = probabilites::box_muller(n, seed);
         let moyenne = probabilites::moyenne(&normales.as_slice()).unwrap();
-        let variance = probabilites::variance_non_biaisee(&normales.as_slice()).unwrap();
+        let variance = probabilites::variance(&normales.as_slice(), None).unwrap();
         //println!("normales: {:?}", &normales);
         println!("moyenne, variance, : {} {}", moyenne, variance);
     }
@@ -416,5 +418,13 @@ fn main() {
         let y_fractale = 0.5;
         let f_fractale_bmp: String = "images/fractale.bmp".to_string();
         fractales::calcule_fractale_et_ecrit_bmp(x_fractale, y_fractale, &f_fractale_bmp);
+    }
+
+    if (b_test_machine_learning)
+    {
+        let f_csv_in: String = "gitignore/model_classifier.csv".to_string(); // Trop gros pour Git
+        let f_similarite_cosinus_out: String = "divers/cosinus_similarite.txt".to_string();
+        machine_learning::calcule_similarite_cosinus(f_csv_in, f_similarite_cosinus_out);
+
     }
 }

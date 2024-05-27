@@ -184,7 +184,9 @@ where T : Clone + From<u32> + From<<T as std::ops::Div>::Output>  + std::ops::Ad
 // Calculer la variance non biaisée d'un vecteur
 // Implémenté de façon générique, pour tout type de nombre
 // qui est clonable, additionnable, multipliable, divisable..
-pub fn variance_non_biaisee<T>(mon_tableau : &[T]) -> Option<T>
+// Correction: Optionnel. Defaut = 1 -> Variance non biaisée
+// cf: https://pytorch.org/docs/stable/generated/torch.var.html
+pub fn variance<T>(mon_tableau : &[T], correction : Option<usize>) -> Option<T>
 where T : Clone + From<u32> + From<<T as std::ops::Mul>::Output> + From<<T as std::ops::Div>::Output>,
       T : std::ops::AddAssign + std::ops::Mul + std::ops::Div
 {
@@ -193,6 +195,7 @@ where T : Clone + From<u32> + From<<T as std::ops::Mul>::Output> + From<<T as st
     {
         return None;
     }
+    let delta_n: usize = if correction.is_none() {1} else {correction.unwrap()};
 
     let mut somme_carres: T = T::from(mon_tableau[0].clone() * mon_tableau[0].clone());
 
@@ -201,10 +204,10 @@ where T : Clone + From<u32> + From<<T as std::ops::Mul>::Output> + From<<T as st
         somme_carres += T::from(mon_tableau[i].clone() * mon_tableau[i].clone());
     }
 
-    let n_moins_1_as_u32: u32 = (n - 1) as u32;
-    let n_moins_1_as_t = T::from(n_moins_1_as_u32); //.unwrap()
+    let n_moins_delta_n_as_u32: u32 = (n - delta_n) as u32;
+    let n_moins_delta_n_as_t = T::from(n_moins_delta_n_as_u32); //.unwrap()
 
-    let moyenne: T = T::from(somme_carres / n_moins_1_as_t);
+    let moyenne: T = T::from(somme_carres / n_moins_delta_n_as_t);
 
     return Some(moyenne);
 }
