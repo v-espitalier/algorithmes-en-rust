@@ -37,13 +37,13 @@ fn main() {
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
-    let b_test_algos_divers = false;
+    let b_test_algos_divers = true;
     let b_test_rationnels = false;
     let b_test_fichiers = false;
     let b_test_conversions_entiers = false;
     let b_test_graphes = false;
     let b_test_fractales = false;
-    let b_test_machine_learning = true;
+    let b_test_machine_learning = false;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_fonctions_math)
@@ -215,6 +215,24 @@ fn main() {
         let duree_recherche_premiers_mutithreading = (chrono_end - chrono_start);
         println!("Durée des calculs: {}", duree_recherche_premiers_mutithreading);
         println!("ratio de durée avec multithreading / sans multithreading : {}", duree_recherche_premiers / duree_recherche_premiers_mutithreading);
+
+
+        // Test de la conjecture de Syracuse
+        println!("\nTest de la conjecture de Syracuse");
+        let n : u64 = 15;
+        let (temps_de_vol, altitude_max) = divers::calcule_temps_de_vol_et_altitude_max(n.clone());
+        println!("n = {}; Temps de vol = {}; Altitude max = {}", n, temps_de_vol, altitude_max);
+        let n : u64 = 27;
+        let (temps_de_vol, altitude_max) = divers::calcule_temps_de_vol_et_altitude_max(n.clone());
+        println!("n = {}; Temps de vol = {}; Altitude max = {}", n, temps_de_vol, altitude_max);
+        let n_max : u64 = 100;
+        let (temps_de_vol_max, temps_de_vol_max_index) = divers::calcule_temps_de_vol_max(n_max.clone());
+        println!("n_max = {}; Temps de vol max = {}; index associé = {}", n_max, temps_de_vol_max, temps_de_vol_max_index);
+        let n_max : u64 = 1000000;
+        let (temps_de_vol_max, temps_de_vol_max_index) = divers::calcule_temps_de_vol_max(n_max.clone());
+        println!("n_max = {}; Temps de vol max = {}; index associé = {}", n_max, temps_de_vol_max, temps_de_vol_max_index);
+        //let (temps_de_vol_max, temps_de_vol_max_index) = divers::calcule_temps_de_vol_max_asm(n_max.clone());
+        //println!("n_max = {}; Temps de vol max (asm) = {}; index associé = {}", n_max, temps_de_vol_max, temps_de_vol_max_index);
 
     }
 

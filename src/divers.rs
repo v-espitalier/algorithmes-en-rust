@@ -473,3 +473,151 @@ pub fn recherche_premiers_multithreading(min_n: usize, max_n: usize, batch_size:
 
     return premiers_trouves;
 }
+
+
+
+// Algorithmes relatifs du problème de Syracuse
+// https://fr.wikipedia.org/wiki/Conjecture_de_Syracuse
+// Calcule les termes de la suite de Syracuse depuis le nombre n
+// Renvoie le temps de vol et l'altitude maximale.
+pub fn calcule_temps_de_vol_et_altitude_max(n: u64) -> (u64, u64)
+{
+    let mut temps_de_vol: u64 = 0;
+    let mut altitude_max: u64 = n;
+
+    let mut n_cour: u64 = n;
+    while (n_cour != 1)
+    {
+        if ((n_cour % 2) == 0)
+        {
+            n_cour = n_cour / 2;
+        }
+        else
+        {
+            n_cour = 3 * n_cour + 1;
+
+        }
+        if (n_cour > altitude_max)
+        {
+            altitude_max = n_cour;
+        }
+
+        temps_de_vol = temps_de_vol + 1;
+    }
+
+    return (temps_de_vol, altitude_max);
+}
+
+
+// Calcule les suites de Syracuse inférieures ou égales à n
+// Renvoie le temps de vol maximal, et l'index de la suite qui a permis de l'atteindre
+// Valeurs de confirmation disponibles sur la page anglaise de Wikipédia:
+// https://en.wikipedia.org/wiki/Collatz_conjecture
+pub fn calcule_temps_de_vol_max(n_max: u64) -> (u64, u64)
+{
+    let mut temps_de_vol_max: u64 = 0;
+    let mut temps_de_vol_max_index: u64 = 0;
+
+    for n in 1..(n_max + 1)
+    {
+        let (temps_de_vol, _altitude_max) = calcule_temps_de_vol_et_altitude_max(n);
+        if (temps_de_vol > temps_de_vol_max)
+        {
+            temps_de_vol_max = temps_de_vol;
+            temps_de_vol_max_index = n;
+        }
+    }
+
+    return (temps_de_vol_max, temps_de_vol_max_index);
+}
+
+
+// Meme calcul que la fonction au dessus (calcule_temps_de_vol_max)
+// Implémentation en assembleur
+// Ne compile pas: A debugger:  "error: Undefined temporary symbol .Ltmp8"
+pub fn calcule_temps_de_vol_max_asm(n_max: u64) -> (u64, u64)
+{
+    let mut temps_de_vol_max: u64 = 0;
+    let mut temps_de_vol_max_index: u64 = 0;
+
+    unsafe {
+        asm!(
+
+            "xor r9, r9",      // Reset des valeurs de sortie
+            "xor r10, r10",
+
+            "mov r11, 3",      // Constante multiplicative apparaissant dans Syracuse
+
+
+            "mov rcx, 1",      // Variable de boucle
+
+            //for n in 1..(n_max + 1)
+            //{
+            "201:",
+            "cmp rcx, r8",
+            "ja 207f",
+
+                // let mut n_cour: u64 = n;
+                "mov rax, rcx",  // Variable de boucle (interne)
+                "xor r12, r12",  // Stockage temporaire du temps de vol (init à 0)
+
+
+                // while (n_cour != 1)
+                // {
+                "202:",
+                "cmp rax, 1",
+                "je 205f",
+
+                    // if ((n_cour % 2) == 0)
+                    "test eax, 1",
+                    "jnz  203f",
+                    // {
+                        // n_cour = n_cour / 2;
+                        "shr eax, 1",
+                    // }
+                    "jmp 204f",
+
+                    // else
+                    "203:",
+                    // {
+                        // n_cour = 3 * n_cour + 1;
+                        "imul r11",    // rax = rax * 3  ;  rdx est effacé
+                        "inc rax",
+                    // }
+                    "204:",
+
+                    // temps_de_vol = temps_de_vol + 1;
+                    "inc r12",
+
+                // }   end while (n_cour != 1)
+                "jmp 202f",
+
+                "205:",
+                // if (temps_de_vol > temps_de_vol_max)
+                "cmp r12, r9",
+                "jbe 206f",
+                // {
+
+                    // temps_de_vol_max = temps_de_vol;
+                    "mov r9, r12",
+                    // temps_de_vol_max_index = n;
+                    "mov r10, rcx",
+                // }
+                "206:",
+
+
+                "inc rcx",
+            // }  // end for n in 1..(n_max + 1)
+            "jmp 201f",
+
+            "207:",
+
+            out("r9") temps_de_vol_max,
+            out("r10") temps_de_vol_max_index,
+            in("r8") n_max
+        );
+    }
+
+    return (temps_de_vol_max, temps_de_vol_max_index);
+}
+
