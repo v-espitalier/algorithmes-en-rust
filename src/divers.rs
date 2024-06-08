@@ -569,11 +569,11 @@ pub fn calcule_temps_de_vol_max_asm(n_max: u64) -> (u64, u64)
                 "je 205f",
 
                     // if ((n_cour % 2) == 0)
-                    "test eax, 1",
+                    "test rax, 1",
                     "jnz  203f",
                     // {
                         // n_cour = n_cour / 2;
-                        "shr eax, 1",
+                        "shr rax, 1",
                     // }
                     "jmp 204f",
 
