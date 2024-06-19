@@ -3,7 +3,7 @@
 #![allow(unused_parens)]
 
 use crate::classiques as classiques;
-use std::ops::{Add, Sub, Mul, Div, Rem, Neg}; //, AddAssign, Deref, DivAssign};
+use std::ops::{Add, Sub, Mul, Div, Rem, Neg, AddAssign}; //, Deref, DivAssign};
 use std::cmp::{PartialEq, PartialOrd, Ordering};
 //use std::convert::AsMut;// From;
 use std::fmt::{Display, Formatter, Result, Debug};
@@ -50,18 +50,19 @@ where T : Add<Output = T> + Mul<Output = T> + Copy,
     }
 }
 
-/*
+
 // Trait AddAssign: Combine addition et affectation: a += &b
-impl AddAssign for &Rationnels<u64>
+impl<T> AddAssign for Rationnels<T>
+where T : Add<Output = T> + Mul<Output = T> + Copy,
 {
-    fn add_assign(&mut self, rhs: &Rationnels<u64>) {
+    fn add_assign(&mut self, rhs: Rationnels<T>) {
         let output_num = self.numerateur * rhs.denominateur + self.denominateur * rhs.numerateur;
         let output_den = self.denominateur * rhs.denominateur;
         self.numerateur = output_num; 
         self.denominateur = output_den;
     }
 }
-*/
+
 
 // Trait Sub:   c = a - b
 impl<T> Sub for Rationnels<T> 

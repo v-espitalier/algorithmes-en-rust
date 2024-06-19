@@ -37,8 +37,8 @@ fn main() {
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
-    let b_test_algos_divers = true;
-    let b_test_rationnels = false;
+    let b_test_algos_divers = false;
+    let b_test_rationnels = true;
     let b_test_fichiers = false;
     let b_test_conversions_entiers = false;
     let b_test_graphes = false;
@@ -248,6 +248,13 @@ fn main() {
         let mut r3 = r1 + r2; 
         r3.rendre_irreductible();
         println!("meme somme = {} (somme sans référence)", &r3);
+
+        // Test AddAssign
+        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
+        let mut r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        r2 += r1;
+        r3.rendre_irreductible();
+        println!("meme somme = {} (somme avec l'opérateur '+=' )", &r3);
 
 
         // Test soustraction
