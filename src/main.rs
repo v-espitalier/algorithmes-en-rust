@@ -239,81 +239,71 @@ fn main() {
     if (b_test_rationnels)
     {
         // Test addition
-        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
-        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let r1 = rationnels::Rationnels::new(2i64, 3i64);
+        let r2 = rationnels::Rationnels::new(5i64, 6i64);
         let mut r3 = &r1 + &r2; 
-        r3.rendre_irreductible();
         println!("{} + {} = {} (somme avec références)", &r1, &r2, &r3);
 
         let mut r3 = r1 + r2; 
-        r3.rendre_irreductible();
         println!("meme somme = {} (somme sans référence)", &r3);
 
         // Test AddAssign
-        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
-        let mut r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let r1 = rationnels::Rationnels::new(2i64, 3i64);
+        let mut r2 = rationnels::Rationnels::new(5i64, 6i64);
         r2 += r1;
-        r3.rendre_irreductible();
         println!("meme somme = {} (somme avec l'opérateur '+=' )\n", &r3);
 
 
         // Test soustraction
-        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
-        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let r1 = rationnels::Rationnels::new(2i64, 3i64);
+        let mut r2 = rationnels::Rationnels::new(5i64, 6i64);
         let mut r3 = &r1 - &r2; 
-        r3.rendre_irreductible();
         println!("{} - {} = {} (soustraction avec références)", &r1, &r2, &r3);
 
         let mut r3 = r1 - r2; 
-        r3.rendre_irreductible();
         println!("meme soustraction = {} (sans référence)", &r3);
 
         // Test SubAssign
-        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
-        let mut r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let r1 = rationnels::Rationnels::new(2i64, 3i64);
+        let mut r2 = rationnels::Rationnels::new(5i64, 6i64);
         r2 -= r1;
-        r3.rendre_irreductible();
         println!("meme soustraction = {} (soustraction avec l'opérateur '-=' )\n", &r3);
 
 
 
         // Test multiplication
-        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
-        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let r1 = rationnels::Rationnels::new(2i64, 3i64);
+        let r2 = rationnels::Rationnels::new(5i64, 6i64);
         let mut r3 = &r1 * &r2; 
-        r3.rendre_irreductible();
         println!("{} * {} = {} (multiplication avec références)", &r1, &r2, &r3);
 
         let mut r3 = r1 * r2; 
-        r3.rendre_irreductible();
         println!("meme multiplication = {} (sans référence)\n", &r3);
 
 
         // Test division
-        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
-        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let r1 = rationnels::Rationnels::new(2i64, 3i64);
+        let r2 = rationnels::Rationnels::new(5i64, 6i64);
         let mut r3 = &r1 / &r2; 
-        r3.rendre_irreductible();
         println!("{} / {} = {} (multiplication avec références)", &r1, &r2, &r3);
 
         let mut r3 = r1 / r2; 
-        r3.rendre_irreductible();
         println!("meme division = {} (sans référence)\n", &r3);
 
 
         // Test négation
-        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
-        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let r1 = rationnels::Rationnels::new(2i64, 3i64);
+        let r2 = rationnels::Rationnels::new(5i64, 6i64);
         let r1neg = -&r1;
         println!("-({}) = {} (négation avec référence)", &r1, &r1neg);
-        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
+        //let r1 = rationnels::Rationnels::new(2i64, 3i64);
         let r1neg = -r1;
         println!("    = {} (sans référence)\n", &r1neg);
 
 
         // Test comparaison
-        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
-        let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        let r1 = rationnels::Rationnels::new(2i64, 3i64);
+        let r2 = rationnels::Rationnels::new(5i64, 6i64);
         println!("{} >= {} ? Réponse: {}", &r1, &r2, r1 >= r2);
         println!("{} > {} ? Réponse: {}", &r1, &r2, r1 > r2);
         println!("{} <= {} ? Réponse: {}", &r1, &r2, r1 <= r2);
@@ -323,11 +313,11 @@ fn main() {
 
         // Test comparison, via un des algos de tri générique 
         let mut mon_tableau_de_rationnels: Vec<Rationnels<i64>> = Vec::new();
-        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: 2, denominateur: 3});
-        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: -2, denominateur: 3});
-        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: -1, denominateur: 2});
-        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: 2, denominateur: 5});
-        mon_tableau_de_rationnels.push(rationnels::Rationnels {numerateur: -7, denominateur: 5});
+        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(2, 3));
+        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(-2, 3));
+        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(-1, 2));
+        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(2, 5));
+        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(-7, 5));
         let mon_tableau_de_rationnels2: &mut [Rationnels<i64>] = &mut mon_tableau_de_rationnels.as_mut_slice();
         println!("\ntableau départ: \n {:?}", &mon_tableau_de_rationnels2);
         tri_variantes::tri_par_insertion_generique(mon_tableau_de_rationnels2);
@@ -335,10 +325,9 @@ fn main() {
 
 
         // Test de conversion rationnel vers flottant
-        let r1 = rationnels::Rationnels { numerateur : 2i32, denominateur : 3i32};
+        let r1 = rationnels::Rationnels::new(2i32, 3i32);
         // On clone r1, car il est consommé par la conversion qui suit, mais on veut quand meme l'afficher..
         let r1_clone = r1.clone();  
-        rationnels::Rationnels { numerateur : 2i32, denominateur : 3i32};
         let r1_flottant: f64 = f64::from(r1);
         println!("{} = {}", &r1_clone, r1_flottant);
 
