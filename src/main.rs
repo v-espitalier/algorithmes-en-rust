@@ -254,7 +254,7 @@ fn main() {
         let mut r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
         r2 += r1;
         r3.rendre_irreductible();
-        println!("meme somme = {} (somme avec l'opérateur '+=' )", &r3);
+        println!("meme somme = {} (somme avec l'opérateur '+=' )\n", &r3);
 
 
         // Test soustraction
@@ -268,6 +268,14 @@ fn main() {
         r3.rendre_irreductible();
         println!("meme soustraction = {} (sans référence)", &r3);
 
+        // Test SubAssign
+        let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
+        let mut r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
+        r2 -= r1;
+        r3.rendre_irreductible();
+        println!("meme soustraction = {} (soustraction avec l'opérateur '-=' )\n", &r3);
+
+
 
         // Test multiplication
         let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
@@ -278,7 +286,7 @@ fn main() {
 
         let mut r3 = r1 * r2; 
         r3.rendre_irreductible();
-        println!("meme multiplication = {} (sans référence)", &r3);
+        println!("meme multiplication = {} (sans référence)\n", &r3);
 
 
         // Test division
@@ -290,17 +298,17 @@ fn main() {
 
         let mut r3 = r1 / r2; 
         r3.rendre_irreductible();
-        println!("meme division = {} (sans référence)", &r3);
+        println!("meme division = {} (sans référence)\n", &r3);
 
 
         // Test négation
         let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
         let r2 = rationnels::Rationnels { numerateur : 5i64, denominateur : 6i64};
         let r1neg = -&r1;
-        println!("-({}) = {} (avec référence)", &r1, &r1neg);
+        println!("-({}) = {} (négation avec référence)", &r1, &r1neg);
         let r1 = rationnels::Rationnels { numerateur : 2i64, denominateur : 3i64};
         let r1neg = -r1;
-        println!("    = {} (sans référence)", &r1neg);
+        println!("    = {} (sans référence)\n", &r1neg);
 
 
         // Test comparaison
@@ -323,7 +331,7 @@ fn main() {
         let mon_tableau_de_rationnels2: &mut [Rationnels<i64>] = &mut mon_tableau_de_rationnels.as_mut_slice();
         println!("\ntableau départ: \n {:?}", &mon_tableau_de_rationnels2);
         tri_variantes::tri_par_insertion_generique(mon_tableau_de_rationnels2);
-        println!("\ntableau trié: \n {:?}", &mon_tableau_de_rationnels2);
+        println!("\ntableau trié: \n {:?}\n", &mon_tableau_de_rationnels2);
 
 
         // Test de conversion rationnel vers flottant

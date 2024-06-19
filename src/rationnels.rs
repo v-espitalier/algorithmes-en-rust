@@ -3,7 +3,7 @@
 #![allow(unused_parens)]
 
 use crate::classiques as classiques;
-use std::ops::{Add, Sub, Mul, Div, Rem, Neg, AddAssign}; //, Deref, DivAssign};
+use std::ops::{Add, Sub, Mul, Div, Rem, Neg, AddAssign, SubAssign}; //, Deref, DivAssign};
 use std::cmp::{PartialEq, PartialOrd, Ordering};
 //use std::convert::AsMut;// From;
 use std::fmt::{Display, Formatter, Result, Debug};
@@ -51,7 +51,7 @@ where T : Add<Output = T> + Mul<Output = T> + Copy,
 }
 
 
-// Trait AddAssign: Combine addition et affectation: a += &b
+// Trait AddAssign: Combine addition et affectation: a += b
 impl<T> AddAssign for Rationnels<T>
 where T : Add<Output = T> + Mul<Output = T> + Copy,
 {
@@ -91,6 +91,20 @@ where T : Sub<Output = T> + Mul<Output = T> + Copy,
         }
     }
 }
+
+
+// Trait Subssign: Combine soustraction et affectation: a -= b
+impl<T> SubAssign for Rationnels<T>
+where T : Sub<Output = T> + Mul<Output = T> + Copy,
+{
+    fn sub_assign(&mut self, rhs: Rationnels<T>) {
+        let output_num = self.numerateur * rhs.denominateur - self.denominateur * rhs.numerateur;
+        let output_den = self.denominateur * rhs.denominateur;
+        self.numerateur = output_num; 
+        self.denominateur = output_den;
+    }
+}
+
 
 // Trait Mul:   c = a * b
 impl<T> Mul for Rationnels<T> 
@@ -297,25 +311,17 @@ where T : Rem<Output = T> + PartialOrd +  TryFrom<i8> + Mul<T, Output = T> + Clo
 */
 
 
-impl Rationnels<u64> 
+impl Rationnels<i64> 
 {
     pub fn rendre_irreductible(&mut self) {
-        let pgcd: u64 = classiques::pgcd(self.numerateur, self.denominateur);
+        let abs_num: u64 = self.numerateur.abs() as u64;
+        let abs_den: u64 = self.denominateur.abs() as u64;
+        let pgcd: i64 = classiques::pgcd(abs_num, abs_den) as i64;
         self.numerateur /= pgcd;
         self.denominateur /= pgcd;
     }
 }
 
-impl Rationnels<i64> 
-{
-    pub fn rendre_irreductible(&mut self) {
-        let num: u64 = i64::abs(self.numerateur) as u64;
-        let den: u64 = i64::abs(self.denominateur) as u64;
-        let pgcd: i64 = classiques::pgcd(num, den) as i64;
-        self.numerateur /= pgcd;
-        self.denominateur /= pgcd;
-    }
-}
 
 /*
 impl<'a, T> Rationnels<T> 
