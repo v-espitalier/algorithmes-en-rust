@@ -33,12 +33,12 @@ fn get_curr_time_epoch() -> f64 {
 fn main() {
     println!("Hello, world!");
 
-    let b_test_fonctions_math = false;
+    let b_test_fonctions_math = true;
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
     let b_test_algos_divers = false;
-    let b_test_rationnels = true;
+    let b_test_rationnels = false;
     let b_test_fichiers = false;
     let b_test_conversions_entiers = false;
     let b_test_graphes = false;

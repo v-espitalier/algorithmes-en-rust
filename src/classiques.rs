@@ -76,12 +76,11 @@ pub fn fibonacci_iteratif(n : u64) -> u64
 // Voir: https://fr.wikipedia.org/wiki/Suite_de_Fibonacci#Algorithme_r%C3%A9cursif_na%C3%AFf
 pub fn fibonacci_recursif(n : u64) -> u64
 {
-    // Gestion des cas particuliers (fin des appels récursifs)
-    if n <= 0 {return 0;}
-    if n == 1 {return 1;}
-
-    // Appels récursifs
-    return fibonacci_recursif(n - 1) + fibonacci_recursif(n - 2);
+    match (n) {
+        0 => 0,
+        1 => 1,
+        _ => fibonacci_recursif(n - 1) + fibonacci_recursif(n - 2),
+    }
 }
 
 
