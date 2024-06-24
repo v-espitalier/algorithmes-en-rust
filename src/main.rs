@@ -15,7 +15,6 @@ mod fichiers;
 mod conversions_hexa_bin_dec;
 mod graphes;
 mod fractales;
-mod machine_learning;
 
 #[cfg(test)]
 mod tests;
@@ -45,7 +44,6 @@ fn main() {
     let b_test_conversions_entiers = false;
     let b_test_graphes = false;
     let b_test_fractales = false;
-    let b_test_machine_learning = false;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_classiques)
@@ -449,11 +447,4 @@ fn main() {
         fractales::calcule_fractale_et_ecrit_bmp(x_fractale, y_fractale, &f_fractale_bmp);
     }
 
-    if (b_test_machine_learning)
-    {
-        let f_csv_in: String = "gitignore/model_classifier.csv".to_string(); // Trop gros pour Git
-        let f_similarite_cosinus_out: String = "divers/cosinus_similarite.txt".to_string();
-        machine_learning::calcule_similarite_cosinus(f_csv_in, f_similarite_cosinus_out);
-
-    }
 }
