@@ -22,6 +22,8 @@ mod tests;
 
 use std::time::{SystemTime, UNIX_EPOCH};
 
+use classiques::resoud_tours_de_hanoi;
+
 use crate::{graphes::Labyrinthe, rationnels::Rationnels};
 
 // Connaitre le temps en secondes depuis l'epoch
@@ -33,7 +35,7 @@ fn get_curr_time_epoch() -> f64 {
 fn main() {
     println!("Hello, world!");
 
-    let b_test_fonctions_math = true;
+    let b_test_classiques = true;
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
@@ -46,7 +48,7 @@ fn main() {
     let b_test_machine_learning = false;
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
-    if (b_test_fonctions_math)
+    if (b_test_classiques)
     {
         println!("");
         let n: u64 = 5;
@@ -67,6 +69,11 @@ fn main() {
             println!("Fibonacci_recursif({}) = {}", i, classiques::fibonacci_recursif(i));
         }
 
+        for n in 1..6
+        {
+            resoud_tours_de_hanoi(n);
+            println!("\n");
+        }
     }
 
     if (b_test_recherche_tableau_et_tris)
@@ -241,10 +248,10 @@ fn main() {
         // Test addition
         let r1 = rationnels::Rationnels::new(2i64, 3i64);
         let r2 = rationnels::Rationnels::new(5i64, 6i64);
-        let mut r3 = &r1 + &r2; 
+        let r3 = &r1 + &r2; 
         println!("{} + {} = {} (somme avec références)", &r1, &r2, &r3);
 
-        let mut r3 = r1 + r2; 
+        let r3 = r1 + r2; 
         println!("meme somme = {} (somme sans référence)", &r3);
 
         // Test AddAssign
@@ -256,11 +263,11 @@ fn main() {
 
         // Test soustraction
         let r1 = rationnels::Rationnels::new(2i64, 3i64);
-        let mut r2 = rationnels::Rationnels::new(5i64, 6i64);
-        let mut r3 = &r1 - &r2; 
+        let r2 = rationnels::Rationnels::new(5i64, 6i64);
+        let r3 = &r1 - &r2; 
         println!("{} - {} = {} (soustraction avec références)", &r1, &r2, &r3);
 
-        let mut r3 = r1 - r2; 
+        let r3 = r1 - r2; 
         println!("meme soustraction = {} (sans référence)", &r3);
 
         // Test SubAssign
@@ -274,26 +281,26 @@ fn main() {
         // Test multiplication
         let r1 = rationnels::Rationnels::new(2i64, 3i64);
         let r2 = rationnels::Rationnels::new(5i64, 6i64);
-        let mut r3 = &r1 * &r2; 
+        let r3 = &r1 * &r2; 
         println!("{} * {} = {} (multiplication avec références)", &r1, &r2, &r3);
 
-        let mut r3 = r1 * r2; 
+        let r3 = r1 * r2; 
         println!("meme multiplication = {} (sans référence)\n", &r3);
 
 
         // Test division
         let r1 = rationnels::Rationnels::new(2i64, 3i64);
         let r2 = rationnels::Rationnels::new(5i64, 6i64);
-        let mut r3 = &r1 / &r2; 
+        let r3 = &r1 / &r2; 
         println!("{} / {} = {} (multiplication avec références)", &r1, &r2, &r3);
 
-        let mut r3 = r1 / r2; 
+        let r3 = r1 / r2; 
         println!("meme division = {} (sans référence)\n", &r3);
 
 
         // Test négation
         let r1 = rationnels::Rationnels::new(2i64, 3i64);
-        let r2 = rationnels::Rationnels::new(5i64, 6i64);
+        //let r2 = rationnels::Rationnels::new(5i64, 6i64);
         let r1neg = -&r1;
         println!("-({}) = {} (négation avec référence)", &r1, &r1neg);
         //let r1 = rationnels::Rationnels::new(2i64, 3i64);

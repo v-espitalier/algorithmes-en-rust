@@ -214,3 +214,102 @@ pub fn recherche_dichotomique(mon_tableau: &[i32], val_recherche: i32, index_min
 
 } // fn recherche_dichotomique()
 
+
+struct HanoiGame {
+    tours: [Vec<u32>; 3],
+    verbeux: bool
+}
+
+fn top(v : &Vec<u32>) -> Option<u32> {
+    match v.len() {
+        0 => None,
+        n => Some(v[n - 1]),
+    }
+}
+
+impl HanoiGame
+{
+    pub fn new(n: u32, verbeux : bool) -> Self
+    {
+        Self { tours: [(1..(n + 1)).rev().collect(), Vec::new(), Vec::new() ], verbeux : verbeux }
+    }
+    pub fn mov(self: &mut Self, src : usize, dest : usize)
+    {
+        // Le mov est valide si les conditions sont remplies:
+        // 1) src et dest sont compris entre 1 et 3
+        if (src < 1) || (src > 3) || (dest < 1) || (dest > 3)
+        {
+            panic!("Erreur: Les indices doivent se trouver dans [1, 3].");
+        }
+        // 2) La colonne source n'est pas vide
+        if (self.tours[src - 1].len() == 0)
+        {
+            panic!("La tour est vide.");
+        }
+        // 3) Soit la derniere colonne est vide,
+        //    soit son dernier disque est plus gros que le dernier disque de la colonne source
+        if (self.tours[dest - 1].len() > 0)
+        {
+            if (top(&self.tours[dest - 1]).unwrap() < top(&self.tours[src - 1]).unwrap())
+            {
+                println!("src: index {} val {:?}, dest: index {} val {:?}", src, self.tours[src - 1], dest, self.tours[dest - 1]);
+                panic!("Erreur: Le dernier element de la colonne cible doit etre plus grand que le dernier element de la colonne source");
+            }
+        }
+        // Pas de panic: Effectue le déplacement
+        let element: u32 = self.tours[src - 1].pop().unwrap();
+        self.tours[dest - 1].push(element);
+        if (self.verbeux)
+        {
+            self.affiche();
+        }
+
+    }
+
+    pub fn affiche(self: &Self)
+    {
+        println!("{:?}", self.tours);
+    }
+}
+
+
+fn deplace_tour_de_hanoi_recursif(hanoi: &mut HanoiGame, src: usize, dest: usize, p: u32)
+{
+    match (p)
+    {
+        0 => return,
+        1 => hanoi.mov(src, dest),
+        _ => {
+            // Pour déplacer les p premiers éléments de la tour src à la tour dest, on déplace:
+
+            // 1) Les p-1 éléments de la tour src à la 3eme tour
+            let index_tour3: usize = 6 - src - dest; // La somme des index des 3 tours = 1 + 2 + 3 = 6
+            deplace_tour_de_hanoi_recursif(hanoi, src, index_tour3, p - 1);
+
+            // 2) le p-ième élément de la tour src à la tour dest
+            deplace_tour_de_hanoi_recursif(hanoi, src, dest, 1);
+
+            // 3) Les p-1 éléments de la 3eme tour à la tour dest.
+            deplace_tour_de_hanoi_recursif(hanoi, index_tour3, dest, p - 1);
+        }
+    }
+
+}
+
+// https://fr.wikipedia.org/wiki/Tours_de_Hano%C3%AF
+pub fn resoud_tours_de_hanoi(n: u32)
+{
+    let verbeux: bool = true; // Afficher l'état des tours après chaque mouvement.
+    println!("Résolution du problème des tours de Hanoï avec {} élément(s).", n);
+    let mut hanoi: HanoiGame = HanoiGame::new(n, verbeux);
+    hanoi.affiche();
+
+    /*
+    hanoi.mov(1, 2);
+    hanoi.mov(1, 3);
+    hanoi.mov(2, 3);
+    */
+
+    // Résoudre le jeu en déplacant la tour complète de la colonne 1 à la colonne 3.
+    deplace_tour_de_hanoi_recursif(&mut hanoi, 1, 3, n);
+}
