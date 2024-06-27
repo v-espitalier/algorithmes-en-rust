@@ -4,6 +4,8 @@ use crate::rationnels as rationnels;
 
 #[test]
 fn test_classiques_factorielle() {
+    assert_eq!(classiques::factorielle(0), 1);
+    assert_eq!(classiques::factorielle(1), 1);
     assert_eq!(classiques::factorielle(4), 24);
     assert_eq!(classiques::factorielle(5), 120);
 }

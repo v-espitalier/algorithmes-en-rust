@@ -11,11 +11,7 @@ use crate::tri::verif_tableau_croissant;
 // Voir: https://fr.wikipedia.org/wiki/Factorielle
 pub fn factorielle(n : u64) -> u64
 {
-    // Gestion du cas particulier (fin des appels récursifs)
-    if n <= 1 {return 1;}
-
-    // Appel récursif
-    return n * factorielle(n - 1);
+    if n <= 1 {1} else {n * factorielle(n - 1)}
 }
 
 
