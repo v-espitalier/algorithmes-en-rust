@@ -43,25 +43,26 @@ pub fn pgcd(a: u64, b: u64) -> u64
 // Voir: https://fr.wikipedia.org/wiki/Suite_de_Fibonacci#Algorithme_polynomial
 pub fn fibonacci_iteratif(n : u64) -> u64
 {
-    // Gestion des cas particuliers
-    if n <= 0 {return 0;}
-    if n == 1 {return 1;}
+    match (n) {
+        0 => 0,
+        1 => 1,
+        _ => {
+            // On déclare les variables u, v, w  'mutables' pour pouvoir les modifier plus tard
+            let mut u: u64 = 0;      // Fibonacci(0) = 0
+            let mut v: u64 = 1;      // Fibonacci(1) = 1
+            let mut w: u64 = u + v;
 
-    // On déclare les variables u, v, w  'mutables' pour pouvoir les modifier plus tard
-    let mut u: u64 = 0;      // Fibonacci(0) = 0
-    let mut v: u64 = 1;      // Fibonacci(1) = 1
-    let mut w: u64 = u + v;
-
-    // for i in range(1, n):
-    for _i in 1..n
-    {
-        w = u + v;
-        u = v;
-        v = w;
-        // Invariant de boucle: A la fin de chaque itération, w = Fibo(i + 1)
+            // for i in range(1, n):
+            for _i in 1..n    // Avec un '_' en début du nom de variable: Pas explicitement utilisée
+            {
+                w = u + v;
+                u = v;
+                v = w;
+                // Invariant de boucle: A la fin de chaque itération, w = Fibo(i + 1)
+            }
+            w   // Valeur de retour
+        }
     }
-
-    return w;
 }
 
 
@@ -216,7 +217,9 @@ struct HanoiGame {
     verbeux: bool
 }
 
-fn top(v : &Vec<u32>) -> Option<u32> {
+fn top<T>(v : &Vec<T>) -> Option<T>
+where T: Copy
+{
     match v.len() {
         0 => None,
         n => Some(v[n - 1]),
