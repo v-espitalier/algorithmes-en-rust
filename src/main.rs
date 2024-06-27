@@ -23,7 +23,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use classiques::resoud_tours_de_hanoi;
 
-use crate::{graphes::Labyrinthe, rationnels::Rationnels};
+use crate::rationnels::Rationnels;
 
 // Connaitre le temps en secondes depuis l'epoch
 fn get_curr_time_epoch() -> f64 {
@@ -107,7 +107,10 @@ fn main() {
         println!("Recherche lineaire de la valeur {}: index {} \n", p, classiques::recherche_lineaire(mon_tableau2, p).unwrap());
         let p: i32 = 12;
         println!("Recherche lineaire générique de la valeur {}: index {} \n", p, classiques::recherche_lineaire_generique(mon_tableau2, p).unwrap());
-        //println!("Recherche dichotomique de la valeur {}: index {}", p, recherche_dichotomique(mon_tableau2, p, None, None).unwrap());
+        if (false)
+        {
+            println!("Recherche dichotomique de la valeur {}: index {}", p, classiques::recherche_dichotomique(mon_tableau2, p, None, None).unwrap());
+        }
 
         //algos_tri::tri_par_insertion(mon_tableau2);
         //algos_tri::tri_par_selection(mon_tableau2);
@@ -148,6 +151,7 @@ fn main() {
         println!("\ntableau départ: \n {:?}", &mon_tableau_gen2);
 
         tri_variantes::tri_par_insertion_generique(mon_tableau_gen2);
+
         // Tri fusion: Implémenté uniquement sur les entiers 'i32' (pas générique)
         //tri_variantes::tri_fusion_ameliore(mon_tableau_gen2, None, None, None);
 

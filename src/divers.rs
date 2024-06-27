@@ -446,7 +446,7 @@ pub fn recherche_premiers_multithreading(min_n: usize, max_n: usize, batch_size:
 
         // Partie du code parrallélisée
         GLOBAL_THREAD_COUNT.fetch_add(1, Ordering::SeqCst);
-        let handle = std::thread::spawn( move ||
+        let _handle = std::thread::spawn( move ||
         {
             //
             //println!("debug (2) : {} {} {}", batch_index, min_n_batch, max_n_batch);
@@ -534,11 +534,11 @@ pub fn calcule_temps_de_vol_max(n_max: u64) -> (u64, u64)
 
 // Meme calcul que la fonction au dessus (calcule_temps_de_vol_max)
 // Implémentation en assembleur
-// Ne compile pas: A debugger:  "error: Undefined temporary symbol .Ltmp8"
-pub fn calcule_temps_de_vol_max_asm(n_max: u64) -> (u64, u64)
+// TODO : Ne compile pas: A debugger:  "error: Undefined temporary symbol .Ltmp8"
+pub fn _calcule_temps_de_vol_max_asm(n_max: u64) -> (u64, u64)
 {
-    let mut temps_de_vol_max: u64 = 0;
-    let mut temps_de_vol_max_index: u64 = 0;
+    let mut temps_de_vol_max: u64;
+    let mut temps_de_vol_max_index: u64;
 
     unsafe {
         asm!(

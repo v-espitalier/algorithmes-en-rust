@@ -9,7 +9,7 @@ use std::fmt::{Write};
 use crate::fichiers as fichiers;
 use std::cmp::min;
 
-pub trait vectorisable
+pub trait Vectorisable
 {
     fn convertit_en_syntaxe_svg(&self) -> String;
 }
@@ -26,7 +26,7 @@ pub struct Ligne
 }
 
 
-impl vectorisable for Ligne
+impl Vectorisable for Ligne
 {
     fn convertit_en_syntaxe_svg(&self) -> String
     {
@@ -51,7 +51,7 @@ impl vectorisable for Ligne
 }
 
 
-pub fn cree_fichier_svg(fichier_chemin: &String, hauteur: u32, largeur: u32, figures: &Vec<Box<dyn vectorisable>>)
+pub fn cree_fichier_svg(fichier_chemin: &String, hauteur: u32, largeur: u32, figures: &Vec<Box<dyn Vectorisable>>)
 {
     let mut contenu_vec: Vec<String> = Vec::new();
 
@@ -83,11 +83,11 @@ pub fn cree_fichier_svg(fichier_chemin: &String, hauteur: u32, largeur: u32, fig
 
 pub fn cree_fichier_svg_depuis_lignes(fichier_chemin: &String, hauteur: u32, largeur: u32, lignes: Vec<Ligne>)
 {
-    let mut figures: Vec<Box<dyn vectorisable>> = Vec::new();
+    let mut figures: Vec<Box<dyn Vectorisable>> = Vec::new();
     for ligne in lignes
     {
         //lignes.push(Box::new(ligne {x1: x1, y1:y1, x2:x2, y2:y2, couleur: couleur.clone(), epaisseur:epaisseur}));
-        let figure: Box<dyn vectorisable> = Box::new(ligne);
+        let figure: Box<dyn Vectorisable> = Box::new(ligne);
         figures.push(figure);
     }
     cree_fichier_svg(&fichier_chemin, hauteur, largeur, &figures);
@@ -183,7 +183,7 @@ fn calcule_fractale_interne(x_min: f64, x_max: f64, x_n_step: u32, y_min: f64, y
             let mut x_n : f64 = x_cour;
             let mut y_n : f64 = y_cour;
             let mut norm: f64 = 0.;
-            for iter_index in (0..max_n_iter)
+            for _iter_index in (0..max_n_iter)
             {
                 let x_np1: f64 = x_n * x_n - y_n * y_n + x_fractale;
                 let y_np1: f64 = 2. * x_n * y_n + y_fractale;

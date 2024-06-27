@@ -132,6 +132,7 @@ where T : Ord, T : Clone
 // Complexité: n.log(n), en moyenne et dans le pire cas
 // Version optimisée: Une seule allocation interne au premier appel à la fonction, de taille moitié du tableau d'origine
 // Voir: https://fr.wikipedia.org/wiki/Tri_fusion
+#[allow(dead_code)]
 pub fn tri_fusion_ameliore(mon_tableau: &mut [i32], index_min_opt : Option<usize>, index_max_opt : Option<usize>, mon_sous_tableau_1_opt: Option<&mut [i32]>)
 {
     let arguments_manquants: bool = (index_min_opt == None) || (index_max_opt == None) 

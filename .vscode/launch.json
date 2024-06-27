@@ -12,10 +12,7 @@
             "args": [],
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "rust: cargo build",
-            "stopAtEntry": true,
             "console": "externalTerminal",
-            "externalConsole": true,
-
         }
     ]
 }

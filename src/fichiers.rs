@@ -5,7 +5,7 @@
 // Ne pas faire de warning si des fonctions ne sont pas appelées
 #![warn(dead_code)]
 
-use std::fs::{self, read_dir, FileType, Permissions};
+use std::fs::{self, read_dir, Permissions};
 use std::path::Path;
 use std::io::ErrorKind;
 use std::fs::File;
@@ -35,25 +35,13 @@ pub fn lire_fichier_texte(fichier_chemin: &String) -> String
 // Fonction pour lire un fichier texte, et renvoyer son contenu ligne par ligne en Vec<String>
 pub fn lire_fichier_texte_lignes(fichier_chemin: &String, separateur_opt: Option<&str>) -> Vec<String>
 {
-    let mut lignes_retour: Vec<String> = Vec::new();
-
     // Lire le fichier texte
     let contenu = lire_fichier_texte(fichier_chemin);
 
     let separateur_defaut = "\n";
-    let contenu_split;
-    match (separateur_opt) {
-
-        None =>
-        { contenu_split = contenu.split(separateur_defaut); },
-
-        Some(separateur) =>
-        { contenu_split = contenu.split(separateur); },
-    }
-
-    lignes_retour = contenu_split.map(|s| s.to_string()).collect();
-
-    return lignes_retour;
+    let separateur = if separateur_opt.is_none() {separateur_defaut} else {separateur_opt.unwrap()};
+    let contenu_split = contenu.split(separateur);
+    return contenu_split.map(|s| s.to_string()).collect();
 }
 
 // Ecriture d'un fichier texte
@@ -94,20 +82,16 @@ pub fn ecrire_fichier_binaire(fichier_chemin: &String, contenu: &Vec<u8>)
 // Lister tous les élements d'un dossier
 pub fn liste_dossier(dossier_chemin: &String) -> Vec<String>
 {
-    let mut liste_fichiers_retour: Vec<String> = Vec::new();
-
     let paths_res = read_dir(dossier_chemin);
     match (paths_res)
     {
         Err(erreur) if erreur.kind() == ErrorKind::NotFound => {panic!("Dossier non trouvé");},
         Err(erreur) => {panic!("Erreur inattendue: {:?}", erreur)},
-        Ok(resultat) => {liste_fichiers_retour = resultat.filter_map(|e| e.ok())
+        Ok(resultat) => {resultat.filter_map(|e| e.ok())
             .map(|e| e.path().to_string_lossy().into_owned())
             //.collect()
-            .collect::<Vec<_>>();},
+            .collect::<Vec<_>>()},
     }
-
-    return liste_fichiers_retour;
 }
 
 

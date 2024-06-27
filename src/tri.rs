@@ -8,7 +8,7 @@
 #![allow(unused_parens)]
 
 // Ne pas faire de warning si des fonctions ne sont pas appelées
-#![warn(dead_code)]
+#![allow(dead_code)]
 
 // Algorithme du tri par insertion
 // Entrée = Sortie:

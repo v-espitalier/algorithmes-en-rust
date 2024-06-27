@@ -2,8 +2,6 @@
 // Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
 #![allow(unused_parens)]
 
-use crate::classiques as classiques;
-use std::clone;
 use std::ops::{Add, Sub, Mul, Div, Rem, Neg, AddAssign, SubAssign}; //, Deref, DivAssign};
 use std::cmp::{PartialEq, PartialOrd, Ordering};
 //use std::convert::AsMut;// From;
@@ -285,12 +283,12 @@ T : Sub<Output = T> + Mul<Output = T> + Copy, // Pour le trait PartialOrd
 {
     fn partial_cmp(&self, other: &Rationnels<T>) -> Option<Ordering> {
         let sub_num: T = (self - other).numerateur;
-        let mut return_ord: std::cmp::Ordering;
+        let return_ord: std::cmp::Ordering;
         let zero: T = T::try_from(0i8).expect("rationnels.rs zero(): Problème dans la conversion du zéro.");
         match sub_num {
             tmp if tmp > zero => {return_ord = Ordering::Greater;}
             tmp if tmp < zero => {return_ord = Ordering::Less;}
-            zero => {return_ord = Ordering::Equal;}
+            _ => {return_ord = Ordering::Equal;}
         }
         return Some(return_ord);
     }

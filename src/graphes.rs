@@ -5,12 +5,12 @@
 // Ne pas faire de warning si des fonctions ne sont pas appelées
 #![warn(dead_code)]
 
-use std::collections::{HashSet, HashMap};
+use std::collections::HashMap;
 use std::hash::Hash;
 
 //use std::intrinsics::discriminant_value;
 use std::ops::Add;
-use std::fmt::{Debug};
+use std::fmt::Debug;
 
 use crate::fichiers as fichiers;
 
@@ -24,12 +24,12 @@ where A : PartialOrd + Add, S : PartialEq
 }
 
 
-fn trouve_clef_min_val_dans_hashmap<S, A>(C : &HashMap<S, A>) -> (S, A)
+fn trouve_clef_min_val_dans_hashmap<S, A>(c : &HashMap<S, A>) -> (S, A)
 where S : Eq + Hash + Clone, A : PartialOrd + Add + TryFrom<i8> + Clone + Debug
 {
     let mut s_min_opt: Option<&S> = None;
     let mut a_min_opt: Option<&A> = None;
-    for (s, a) in C.iter()
+    for (s, a) in c.iter()
     {
         if (a_min_opt.is_some())
         {
@@ -62,10 +62,10 @@ A : PartialOrd + Add + TryFrom<i8> + Clone + Debug + Add<Output = A>,
 <A as TryFrom<i8>>::Error: Debug,
 {
     // Liste passée (HashMap) des sommets déjà parcourus avec leur distance aux sommets initiaux (Vide au départ)
-    let mut P: HashMap<S, A> = HashMap::new();
+    let mut p: HashMap<S, A> = HashMap::new();
 
     // Liste courante (HashMap) des sommets avec leur distance aux sommets initiaux
-    let mut C: HashMap<S, A> = HashMap::new();
+    let mut c: HashMap<S, A> = HashMap::new();
 
     // Pour un sommet, donne le sommet précédent (en direction des sommets initiaux)
     let mut prec: HashMap<S, S> = HashMap::new();
@@ -75,22 +75,22 @@ A : PartialOrd + Add + TryFrom<i8> + Clone + Debug + Add<Output = A>,
     let dist_zero: A = A::try_from(0i8).expect("Distance nulle manquante pour le type A.");
     for sommet in s_init.iter()
     {
-        let _ = &C.insert(sommet.clone(), dist_zero.clone());
+        let _ = &c.insert(sommet.clone(), dist_zero.clone());
     }
 
     let mut sommet_final_opt: Option<S> = None;
 
     // Tant que la file n'est pas vide
-    while (&C.len() > &0)
+    while (&c.len() > &0)
     {
         // Prendre le plus petit élément a de la file de priorité
-        let (sommet, dist) = trouve_clef_min_val_dans_hashmap(&C);
+        let (sommet, dist) = trouve_clef_min_val_dans_hashmap(&c);
 
         // Retirer 'sommet' de la liste courante
-        C.remove(&sommet);
+        c.remove(&sommet);
 
         // L'ajouter 'sommet' de la file
-        P.insert(sommet.clone(), dist.clone());
+        p.insert(sommet.clone(), dist.clone());
 
         if (s_final.contains(&sommet))
         {
@@ -105,10 +105,10 @@ A : PartialOrd + Add + TryFrom<i8> + Clone + Debug + Add<Output = A>,
         for (voisin, voisin_dist) in voisins.iter()
         {
             // Si le voisin a déjà été parcouru, on continue
-            if P.contains_key(voisin) {continue;}
+            if p.contains_key(voisin) {continue;}
 
             let dist_nouveau_possible = dist.clone() + voisin_dist.clone();
-            let dist_cour_opt = C.get(voisin);
+            let dist_cour_opt = c.get(voisin);
 
             // Cas ou le voisin est déjà dans la liste courante, avec une autre distance
             if (dist_cour_opt.is_some())
@@ -119,13 +119,13 @@ A : PartialOrd + Add + TryFrom<i8> + Clone + Debug + Add<Output = A>,
                     // Si on a amélioré la distance, on met à jour les structures
                     //*C.get_mut(voisin).unwrap() = dist_nouveau_possible;
                     //*prec.get_mut(voisin).unwrap() = sommet.clone();
-                    C.insert(voisin.clone(), dist_nouveau_possible);
+                    c.insert(voisin.clone(), dist_nouveau_possible);
                     prec.insert(voisin.clone(), sommet.clone());
                 }
             }
             else {
                 // Si le voisin n'est pas dans la liste courante, on le rajoute
-                C.insert(voisin.clone(), dist_nouveau_possible);
+                c.insert(voisin.clone(), dist_nouveau_possible);
                 prec.insert(voisin.clone(), sommet.clone());
             }
 
@@ -133,7 +133,7 @@ A : PartialOrd + Add + TryFrom<i8> + Clone + Debug + Add<Output = A>,
 
     }
 
-    return (P, prec, sommet_final_opt);
+    return (p, prec, sommet_final_opt);
 
 }
 
@@ -284,11 +284,11 @@ impl Voisins<u64, u64> for Labyrinthe
         for (voisin, dist) in voisins_possibles
         {
             let (hauteur_v, largeur_v) : (u32, u32) = Self::u64_vers_hauteur_largeur(voisin);
-            if (hauteur_v >= self.hauteur) {continue;;}
-            if (largeur_v >= self.largeur) {continue;;}
+            if (hauteur_v >= self.hauteur) {continue;}
+            if (largeur_v >= self.largeur) {continue;}
 
             let case_cour: char = self.plan[hauteur_v as usize].chars().collect::<Vec<_>>()[largeur_v as usize];
-            if (!caracteres_passage.contains(&case_cour)) {continue;;}
+            if (!caracteres_passage.contains(&case_cour)) {continue;}
             voisins.push((voisin, dist));
         }
 
@@ -296,7 +296,7 @@ impl Voisins<u64, u64> for Labyrinthe
         if (false)
         {
             println!("\nVoisins de la position: ({}, {})", largeur, hauteur);
-            for (pos, dist) in &voisins
+            for (pos, _dist) in &voisins
             {
                 let (hauteur, largeur) = Labyrinthe::u64_vers_hauteur_largeur(*pos);
                 println!("(x,y) = ({},{})", largeur, hauteur);
@@ -336,14 +336,14 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String)
 
     //let (HashMap<S, A>, HashMap<S, S>, Option<S>)
 
-    let (P, prec, sommet_final_opt) = resoud_dijstra(&labyrinthe, s_init, s_final);
+    let (p, prec, sommet_final_opt) = resoud_dijstra(&labyrinthe, s_init, s_final);
     //println!("P: {:?}", P); 
     //println!("\nSommet_final_opt: {:?}", sommet_final_opt); 
 
     if (false)
     {
         println!("\nDistance de chaque sommet au(x) point(s) initial(aux):");
-        for (pos, dist) in &P
+        for (pos, dist) in &p
         {
             let (hauteur, largeur) = Labyrinthe::u64_vers_hauteur_largeur(*pos);
             println!("(x,y) = ({},{}) a une distance {}", largeur, hauteur, dist);
@@ -353,7 +353,7 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String)
     if (sommet_final_opt.is_some())
     {
         let sommet_final = sommet_final_opt.unwrap();
-        let dist_final = P[&sommet_final];
+        let dist_final = p[&sommet_final];
         let (hauteur, largeur) = Labyrinthe::u64_vers_hauteur_largeur(sommet_final);
         println!("Sommet final ({}, {}) a une distance de : {}", largeur, hauteur, dist_final);
 
@@ -361,7 +361,7 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String)
         let mut sommets_parcourus:Vec<(u32, u32)> = Vec::new();
         let s_init : Vec<u64> = labyrinthe.s_init();
         let s_final : Vec<u64> = labyrinthe.s_final();
-        for (pos, dist) in P
+        for (pos, _dist) in p
         {
             if (s_init.contains(&pos)) {continue;}
             if (s_final.contains(&pos)) {continue;}

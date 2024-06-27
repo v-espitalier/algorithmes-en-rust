@@ -1,6 +1,5 @@
 
 // Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
-#![allow(unused_parens)]
 
 use crate::tri::verif_tableau_croissant;
 
