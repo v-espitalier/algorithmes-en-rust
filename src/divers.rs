@@ -8,7 +8,7 @@
 use std::arch::asm;
 
 // Pour le multithreading
-use std::sync::atomic::{AtomicUsize, Ordering, ATOMIC_USIZE_INIT};
+use std::sync::atomic::{AtomicUsize, Ordering};
 use std::thread;
 use std::time::Duration;
 use std::sync::{Arc, Mutex};
@@ -429,7 +429,7 @@ pub fn recherche_premiers_multithreading(min_n: usize, max_n: usize, batch_size:
     let n_element: usize = max_n - min_n + 1;
     let n_batch: usize = ((n_element as f64) / (batch_size as f64)).ceil() as usize;
 
-    static GLOBAL_THREAD_COUNT: AtomicUsize = ATOMIC_USIZE_INIT;
+    static GLOBAL_THREAD_COUNT: AtomicUsize = AtomicUsize::new(0);
 
     let mut premiers_trouves: Vec<usize> = Vec::new();
     let shared_premiers_trouves = Arc::new(Mutex::new(premiers_trouves));
