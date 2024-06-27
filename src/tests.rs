@@ -1,6 +1,6 @@
-use crate::classiques as classiques;
-use crate::divers as divers;
-use crate::rationnels as rationnels;
+use crate::classiques;
+use crate::divers;
+use crate::rationnels;
 
 #[test]
 fn test_classiques_factorielle() {

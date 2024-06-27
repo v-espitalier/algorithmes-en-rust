@@ -2,9 +2,6 @@
 // Ne pas faire de warning s'il y a des parenthèses en trop autour des conditions des if
 #![allow(unused_parens)]
 
-// Ne pas faire de warning si des fonctions ne sont pas appelées
-#![warn(dead_code)]
-
 use std::fs::{self, read_dir, Permissions};
 use std::path::Path;
 use std::io::ErrorKind;
