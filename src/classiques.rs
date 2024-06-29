@@ -32,7 +32,7 @@ pub fn pgcd(a: u64, b: u64) -> u64 {
     }
 
     // Appel récursif
-    return pgcd(b, m);
+    pgcd(b, m)
 
     // Le nombre de récursion est fini car a et b sont des entiers positifs
     // et diminuent strictement à chaque appel
@@ -94,16 +94,15 @@ pub fn fibonacci_recursif(n: u64) -> u64 {
 // Voir: https://fr.wikipedia.org/wiki/Recherche_s%C3%A9quentielle
 pub fn recherche_lineaire(mon_tableau: &[i32], val_recherche: i32) -> Option<usize> {
     println!("Appel à la fonction recherche_lineaire.");
-    let n = mon_tableau.len();
 
-    for i in 0..n {
-        if mon_tableau[i] == val_recherche {
+    for (i, elem) in mon_tableau.iter().enumerate() {
+        if *elem == val_recherche {
             return Some(i);
         }
         // Invariant de boucle: A la fin de chaque itération, si les itérations se poursuivent,
         // val_recherche n'a pas été trouvé parmi les (i + 1) premiers éléments du tableau
     }
-    return None;
+    None
 }
 
 // recherche linéaire implémentée de façon 'générique'
@@ -114,16 +113,15 @@ where
     T: core::cmp::Eq,
 {
     println!("Appel à la fonction recherche_lineaire_generique.");
-    let n = mon_tableau.len();
 
-    for i in 0..n {
-        if mon_tableau[i] == val_recherche {
+    for (i, elem) in mon_tableau.iter().enumerate() {
+        if *elem == val_recherche {
             return Some(i);
         }
         // Invariant de boucle: A la fin de chaque itération, si les itérations se poursuivent,
         // val_recherche n'a pas été trouvé parmi les (i + 1) premiers éléments du tableau
     }
-    return None;
+    None
 }
 
 // Fonction implémentant la recherche dichotomique
@@ -144,10 +142,10 @@ pub fn recherche_dichotomique(
     index_min_opt: Option<usize>,
     index_max_inclus_opt: Option<usize>,
 ) -> Option<usize> {
-    assert!(verif_tableau_croissant(&mon_tableau), "(recherche_dichotomique) Erreur: le tableau n'est pas croissant (Nécessite de le trier d'abord).");
+    assert!(verif_tableau_croissant(mon_tableau), "(recherche_dichotomique) Erreur: le tableau n'est pas croissant (Nécessite de le trier d'abord).");
 
     if (false) {
-        if ((index_min_opt != None) && (index_max_inclus_opt != None)) {
+        if index_min_opt.is_some() && index_max_inclus_opt.is_some() {
             println!(
                 "Appel à recherche_dichotomique: {} {}",
                 index_min_opt.unwrap(),
@@ -161,7 +159,7 @@ pub fn recherche_dichotomique(
     let n = mon_tableau.len();
 
     // Cas particulier du premier appel à la fonction, l'appel général (sans indiquer les bornes de recherche)
-    if ((index_min_opt == None) || (index_max_inclus_opt == None)) {
+    if index_min_opt.is_none() || index_max_inclus_opt.is_none() {
         return recherche_dichotomique(mon_tableau, val_recherche, Some(0), Some(n - 1));
     }
 
@@ -197,20 +195,20 @@ pub fn recherche_dichotomique(
     }
 
     // Cas général, qui aboutit à un appel récursif
-    let index_mid = ((index_min + index_max_inclus) / 2) as usize;
+    let index_mid = ((index_min + index_max_inclus) / 2);
     let index_mid_opt = Some(index_mid);
     let val_mid = mon_tableau[index_mid];
 
     // Appel récursif
     if (val_recherche > val_mid) {
-        return recherche_dichotomique(
+        recherche_dichotomique(
             mon_tableau,
             val_recherche,
             index_mid_opt,
             index_max_inclus_opt,
-        );
+        )
     } else {
-        return recherche_dichotomique(mon_tableau, val_recherche, index_min_opt, index_mid_opt);
+        recherche_dichotomique(mon_tableau, val_recherche, index_min_opt, index_mid_opt)
     }
 } // fn recherche_dichotomique()
 
@@ -219,7 +217,7 @@ struct HanoiGame {
     verbeux: bool,
 }
 
-fn top<T>(v: &Vec<T>) -> Option<T>
+fn top<T>(v: &[T]) -> Option<T>
 where
     T: Copy,
 {
@@ -233,33 +231,34 @@ impl HanoiGame {
     pub fn new(n: u32, verbeux: bool) -> Self {
         Self {
             tours: [(1..(n + 1)).rev().collect(), Vec::new(), Vec::new()],
-            verbeux: verbeux,
+            verbeux,
         }
     }
-    pub fn mov(self: &mut Self, src: usize, dest: usize) {
+    pub fn mov(&mut self, src: usize, dest: usize) {
         // Le mov est valide si les conditions sont remplies:
         // 1) src et dest sont compris entre 1 et 3
-        if (src < 1) || (src > 3) || (dest < 1) || (dest > 3) {
+        if !(1..=3).contains(&src) || !(1..=3).contains(&dest) {
             panic!("Erreur: Les indices doivent se trouver dans [1, 3].");
         }
         // 2) La colonne source n'est pas vide
-        if (self.tours[src - 1].len() == 0) {
+        if self.tours[src - 1].is_empty() {
             panic!("La tour est vide.");
         }
         // 3) Soit la derniere colonne est vide,
         //    soit son dernier disque est plus gros que le dernier disque de la colonne source
-        if (self.tours[dest - 1].len() > 0) {
-            if (top(&self.tours[dest - 1]).unwrap() < top(&self.tours[src - 1]).unwrap()) {
-                println!(
-                    "src: index {} val {:?}, dest: index {} val {:?}",
-                    src,
-                    self.tours[src - 1],
-                    dest,
-                    self.tours[dest - 1]
-                );
-                panic!("Erreur: Le dernier element de la colonne cible doit etre plus grand que le dernier element de la colonne source");
-            }
+        if !self.tours[dest - 1].is_empty()
+            && top(&self.tours[dest - 1]).unwrap() < top(&self.tours[src - 1]).unwrap()
+        {
+            println!(
+                "src: index {} val {:?}, dest: index {} val {:?}",
+                src,
+                self.tours[src - 1],
+                dest,
+                self.tours[dest - 1]
+            );
+            panic!("Erreur: Le dernier element de la colonne cible doit etre plus grand que le dernier element de la colonne source");
         }
+
         // Pas de panic: Effectue le déplacement
         let element: u32 = self.tours[src - 1].pop().unwrap();
         self.tours[dest - 1].push(element);
@@ -268,14 +267,14 @@ impl HanoiGame {
         }
     }
 
-    pub fn affiche(self: &Self) {
+    pub fn affiche(&self) {
         println!("{:?}", self.tours);
     }
 }
 
 fn deplace_tour_de_hanoi_recursif(hanoi: &mut HanoiGame, src: usize, dest: usize, p: u32) {
     match (p) {
-        0 => return,
+        0 => (),
         1 => hanoi.mov(src, dest),
         _ => {
             // Pour déplacer les p premiers éléments de la tour src à la tour dest, on déplace:

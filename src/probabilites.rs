@@ -38,7 +38,7 @@ impl RngMinstd {
     pub fn gen(&mut self) -> u32 {
         let new_state: u32 = (((self.state as u64) * self.rng_a) % self.rng_m) as u32;
         self.state = new_state;
-        return new_state;
+        new_state
     }
 
     // Renvoie un entier dans l'intervalle 'range'
@@ -59,7 +59,7 @@ impl RngMinstd {
             rng_val = self.gen();
         }
 
-        return range_start + (rng_val % range_size);
+        range_start + (rng_val % range_size)
     }
 }
 
@@ -86,9 +86,7 @@ pub fn fisher_yates_shuffle(mon_tableau: &mut [i32], seed: u32) {
         let j: usize = rng.gen_range(0..(i + 1)) as usize;
 
         // exchange a[j] and a[i]
-        let v_swap = mon_tableau[i];
-        mon_tableau[i] = mon_tableau[j];
-        mon_tableau[j] = v_swap;
+        mon_tableau.swap(i, j);
     }
 }
 
@@ -120,7 +118,7 @@ pub fn box_muller_paire(rng: &mut RngMinstd) -> (f64, f64)
     let z0 = rayon * f64::cos(angle);
     let z1 = rayon * f64::sin(angle);
 
-    return (z0, z1);
+    (z0, z1)
 }
 
 pub fn box_muller(nb_normales: usize, seed: u32) -> Vec<f64> {
@@ -142,7 +140,7 @@ pub fn box_muller(nb_normales: usize, seed: u32) -> Vec<f64> {
         normales.push(z0);
     }
 
-    return normales;
+    normales
 }
 
 // Calculer la moyenne d'un tableau de valeurs
@@ -159,8 +157,8 @@ where
 
     let mut somme: T = mon_tableau[0].clone();
 
-    for i in 1..n {
-        somme += mon_tableau[i].clone();
+    for elem in mon_tableau.iter().skip(1) {
+        somme += elem.clone();
     }
 
     let n_as_u32: u32 = n as u32;
@@ -168,7 +166,7 @@ where
 
     let moyenne: T = T::from(somme / n_as_t);
 
-    return Some(moyenne);
+    Some(moyenne)
 }
 
 // Calculer la variance non biaisée d'un vecteur
@@ -185,16 +183,12 @@ where
     if (n == 0) {
         return None;
     }
-    let delta_n: usize = if correction.is_none() {
-        1
-    } else {
-        correction.unwrap()
-    };
+    let delta_n: usize = if let Some(elem) = correction { elem } else { 1 };
 
     let mut somme_carres: T = T::from(mon_tableau[0].clone() * mon_tableau[0].clone());
 
-    for i in 1..n {
-        somme_carres += T::from(mon_tableau[i].clone() * mon_tableau[i].clone());
+    for elem in mon_tableau.iter().skip(1) {
+        somme_carres += T::from(elem.clone() * elem.clone());
     }
 
     let n_moins_delta_n_as_u32: u32 = (n - delta_n) as u32;
@@ -202,5 +196,5 @@ where
 
     let moyenne: T = T::from(somme_carres / n_moins_delta_n_as_t);
 
-    return Some(moyenne);
+    Some(moyenne)
 }

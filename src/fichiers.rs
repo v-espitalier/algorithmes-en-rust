@@ -11,8 +11,7 @@ use std::time::SystemTime;
 
 // Fonction pour tester l'existence d'un fichier sur disque dur
 pub fn test_existence_fichier(fichier_chemin: &String) -> bool {
-    let existe: bool = Path::new(&fichier_chemin).exists();
-    return existe;
+    Path::new(&fichier_chemin).exists()
 }
 
 // Fonction pour lire un fichier texte, et renvoyer son contenu sour forme de String
@@ -20,9 +19,7 @@ pub fn lire_fichier_texte(fichier_chemin: &String) -> String {
     // Ouvrir le fichier texte
     // Voir: https://doc.rust-lang.org/book/ch12-02-reading-a-file.html
     // et: https://doc.rust-lang.org/std/fs/struct.File.html
-    let contenu = fs::read_to_string(fichier_chemin).expect("Fichier introuvable");
-
-    return contenu;
+    fs::read_to_string(fichier_chemin).expect("Fichier introuvable")
 }
 
 // Fonction pour lire un fichier texte, et renvoyer son contenu ligne par ligne en Vec<String>
@@ -34,13 +31,12 @@ pub fn lire_fichier_texte_lignes(
     let contenu = lire_fichier_texte(fichier_chemin);
 
     let separateur_defaut = "\n";
-    let separateur = if separateur_opt.is_none() {
-        separateur_defaut
+    let separateur = if let Some(elem) = separateur_opt {
+        elem
     } else {
-        separateur_opt.unwrap()
+        separateur_defaut
     };
-    let contenu_split = contenu.split(separateur);
-    return contenu_split.map(|s| s.to_string()).collect();
+    contenu.split(separateur).map(|s| s.to_string()).collect()
 }
 
 // Ecriture d'un fichier texte
@@ -53,18 +49,20 @@ pub fn ecrire_fichier_texte(fichier_chemin: &String, contenu: &String) {
     println!("Fichier écrit: {}", fichier_chemin);
 }
 
-pub fn ecrire_fichier_texte_lignes(fichier_chemin: &String, contenu_vec: &Vec<String>) {
-    return ecrire_fichier_texte(fichier_chemin, &contenu_vec.join("\n"));
+pub fn ecrire_fichier_texte_lignes(fichier_chemin: &String, contenu_vec: &[String]) {
+    ecrire_fichier_texte(fichier_chemin, &contenu_vec.join("\n"))
 }
 
 // Inspiré de: https://www.reddit.com/r/rust/comments/dekpl5/how_to_read_binary_data_from_a_file_into_a_vecu8/?rdt=46881
 // Lire un fichier binaire
 pub fn lire_fichier_binaire(fichier_chemin: &String) -> Vec<u8> {
-    let mut fichier = File::open(&fichier_chemin).expect("Fichier introuvable");
+    let mut fichier = File::open(fichier_chemin).expect("Fichier introuvable");
     let taille: usize = donne_taille_fichier(fichier_chemin) as usize;
     let mut buffer: Vec<u8> = vec![0; taille];
-    fichier.read(&mut buffer).expect("Dépassement de capacité.");
-    return buffer;
+    fichier
+        .read_exact(&mut buffer)
+        .expect("Dépassement de capacité.");
+    buffer
 }
 
 // Ecrire une fichier binaire
@@ -101,6 +99,7 @@ pub enum TypeFichier {
 }
 
 #[derive(Debug)]
+#[allow(dead_code)] // En fait, utilisé par le print debug{:?}
 pub struct InfosFichier {
     pub type_fichier: TypeFichier,
     pub permissions: Permissions,
@@ -134,16 +133,16 @@ pub fn donne_infos_fichier(fichier_chemin: &String) -> InfosFichier {
         .expect("Erreur avec metadata.modified()");
     let taille: u64 = metadata.len();
 
-    return InfosFichier {
+    InfosFichier {
         type_fichier: type_fichier_opt.unwrap(),
-        permissions: permissions,
-        date_modif: date_modif,
-        taille: taille,
-    };
+        permissions,
+        date_modif,
+        taille,
+    }
 }
 
 pub fn donne_taille_fichier(fichier_chemin: &String) -> u64 {
-    let metadata = fs::metadata(fichier_chemin).expect("Fichier non trouvé.");
-    let taille = metadata.len();
-    return taille;
+    fs::metadata(fichier_chemin)
+        .expect("Fichier non trouvé.")
+        .len()
 }

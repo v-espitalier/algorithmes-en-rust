@@ -69,10 +69,9 @@ pub fn tri_par_selection(mon_tableau: &mut [i32]) {
         let mut m_index = i;
 
         // Recherche du plus petit élément, parmi les éléments non triés
-        for j in (i + 1)..n {
-            let v = mon_tableau[j];
-            if v < m {
-                m = v;
+        for (j, elem) in mon_tableau.iter().enumerate().skip(i + 1) {
+            if *elem < m {
+                m = *elem;
                 m_index = j;
             }
         }
@@ -115,13 +114,12 @@ pub fn tri_rapide(mon_tableau: &mut [i32]) {
     let mut mon_tableau_gauche_vec: Vec<i32> = Vec::new();
     let mut mon_tableau_droite_vec: Vec<i32> = Vec::new();
 
-    for index in 1..n {
-        let valeur = mon_tableau[index];
-        if (valeur <= pivot) {
-            mon_tableau_gauche_vec.push(valeur);
+    for elem in mon_tableau.iter().skip(1) {
+        if (*elem <= pivot) {
+            mon_tableau_gauche_vec.push(*elem);
         }
-        if (valeur > pivot) {
-            mon_tableau_droite_vec.push(valeur);
+        if (*elem > pivot) {
+            mon_tableau_droite_vec.push(*elem);
         }
     }
 
@@ -132,16 +130,16 @@ pub fn tri_rapide(mon_tableau: &mut [i32]) {
 
     // Rassemble les sous-tableaus triés en les copiant dans le tableau d'origine
     let mut cpt: usize = 0;
-    for index in 0..mon_tableau_gauche.len() {
-        mon_tableau[cpt] = mon_tableau_gauche[index];
+    for elem in mon_tableau_gauche.iter() {
+        mon_tableau[cpt] = *elem;
         cpt += 1;
     }
 
     mon_tableau[cpt] = pivot;
     cpt += 1;
 
-    for index in 0..mon_tableau_droite.len() {
-        mon_tableau[cpt] = mon_tableau_droite[index];
+    for elem in mon_tableau_droite {
+        mon_tableau[cpt] = *elem;
         cpt += 1;
     }
 }
@@ -167,9 +165,7 @@ pub fn tri_fusion(mon_tableau: &mut [i32]) {
     if n == 2 {
         // Permuter les elements d'indice 0 et 1 si nécessaire
         if mon_tableau[0] > mon_tableau[1] {
-            let v_swap = mon_tableau[1];
-            mon_tableau[1] = mon_tableau[0];
-            mon_tableau[0] = v_swap;
+            mon_tableau.swap(0, 1);
         }
         // Algorithme 'en place': On modifie directement le tableau en entrée,
         // donc pas de valeur de retour
@@ -234,8 +230,7 @@ pub fn tri_fusion(mon_tableau: &mut [i32]) {
     } // for index in 0..n
 
     let mon_tableau_bis: &mut [i32] = mon_tableau_bis_vec.as_mut_slice();
-    mon_tableau.clone_from_slice(&mon_tableau_bis);
-    return;
+    mon_tableau.clone_from_slice(mon_tableau_bis);
 } // fn tri_fusion
 
 // Algorithme du tri par tas
@@ -265,9 +260,9 @@ where
     // Cas général avec au moins 2 éléments à trier
     use std::collections::BinaryHeap;
     let mut binary_heap = BinaryHeap::new();
-    for i in 0..n {
+    for elem in mon_tableau.iter() {
         // On insère tous les éléments à trier dans le tas
-        binary_heap.push(mon_tableau[i].clone());
+        binary_heap.push(elem.clone());
     }
 
     for i in (0..n).rev() {
@@ -309,5 +304,5 @@ where
             return false;
         }
     }
-    return true;
+    true
 }

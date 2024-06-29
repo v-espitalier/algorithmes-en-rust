@@ -39,7 +39,7 @@ impl Vectorisable for Ligne {
         write!(ligne, "{}", self.epaisseur).expect("Erreur dans la conversion (5).");
         ligne += "\"/>";
 
-        return ligne;
+        ligne
     }
 }
 
@@ -47,7 +47,7 @@ pub fn cree_fichier_svg(
     fichier_chemin: &String,
     hauteur: u32,
     largeur: u32,
-    figures: &Vec<Box<dyn Vectorisable>>,
+    figures: &[Box<dyn Vectorisable>],
 ) {
     let mut contenu_vec: Vec<String> = Vec::new();
 
@@ -71,7 +71,7 @@ pub fn cree_fichier_svg(
     let ligne: String = "</svg>".to_string();
     contenu_vec.push(ligne);
 
-    fichiers::ecrire_fichier_texte_lignes(&fichier_chemin, &contenu_vec);
+    fichiers::ecrire_fichier_texte_lignes(fichier_chemin, &contenu_vec);
 }
 
 pub fn cree_fichier_svg_depuis_lignes(
@@ -86,7 +86,7 @@ pub fn cree_fichier_svg_depuis_lignes(
         let figure: Box<dyn Vectorisable> = Box::new(ligne);
         figures.push(figure);
     }
-    cree_fichier_svg(&fichier_chemin, hauteur, largeur, &figures);
+    cree_fichier_svg(fichier_chemin, hauteur, largeur, &figures);
 }
 
 pub fn flocon_koch_recursif(lignes: &Vec<Ligne>, n_iter: u32) -> Vec<Ligne> {
@@ -119,12 +119,12 @@ pub fn flocon_koch_recursif(lignes: &Vec<Ligne>, n_iter: u32) -> Vec<Ligne> {
         let couleur = ligne.couleur.clone();
         let epaisseur = ligne.epaisseur;
         lignes_retour.push(Ligne {
-            x1: x1,
-            y1: y1,
-            x2: x2,
-            y2: y2,
+            x1,
+            y1,
+            x2,
+            y2,
             couleur: couleur.clone(),
-            epaisseur: epaisseur,
+            epaisseur,
         });
         lignes_retour.push(Ligne {
             x1: x2,
@@ -132,7 +132,7 @@ pub fn flocon_koch_recursif(lignes: &Vec<Ligne>, n_iter: u32) -> Vec<Ligne> {
             x2: x3,
             y2: y3,
             couleur: couleur.clone(),
-            epaisseur: epaisseur,
+            epaisseur,
         });
         lignes_retour.push(Ligne {
             x1: x3,
@@ -140,7 +140,7 @@ pub fn flocon_koch_recursif(lignes: &Vec<Ligne>, n_iter: u32) -> Vec<Ligne> {
             x2: x4,
             y2: y4,
             couleur: couleur.clone(),
-            epaisseur: epaisseur,
+            epaisseur,
         });
         lignes_retour.push(Ligne {
             x1: x4,
@@ -148,11 +148,11 @@ pub fn flocon_koch_recursif(lignes: &Vec<Ligne>, n_iter: u32) -> Vec<Ligne> {
             x2: x5,
             y2: y5,
             couleur: couleur.clone(),
-            epaisseur: epaisseur,
+            epaisseur,
         });
     }
 
-    return flocon_koch_recursif(&lignes_retour, n_iter - 1);
+    flocon_koch_recursif(&lignes_retour, n_iter - 1)
 }
 
 pub fn flocon_koch(hauteur: u32, largeur: u32, n_iter: u32) -> Vec<Ligne> {
@@ -171,12 +171,12 @@ pub fn flocon_koch(hauteur: u32, largeur: u32, n_iter: u32) -> Vec<Ligne> {
     let y3 = hauteur / 2 + (longueur as f32 * racine_3 * 2. / 6.) as u32;
     let x3 = largeur / 2;
     lignes.push(Ligne {
-        x1: x1,
-        y1: y1,
-        x2: x2,
-        y2: y2,
+        x1,
+        y1,
+        x2,
+        y2,
         couleur: couleur.clone(),
-        epaisseur: epaisseur,
+        epaisseur,
     });
 
     lignes.push(Ligne {
@@ -185,7 +185,7 @@ pub fn flocon_koch(hauteur: u32, largeur: u32, n_iter: u32) -> Vec<Ligne> {
         x2: x3,
         y2: y3,
         couleur: couleur.clone(),
-        epaisseur: epaisseur,
+        epaisseur,
     });
     lignes.push(Ligne {
         x1: x3,
@@ -193,14 +193,13 @@ pub fn flocon_koch(hauteur: u32, largeur: u32, n_iter: u32) -> Vec<Ligne> {
         x2: x1,
         y2: y1,
         couleur: couleur.clone(),
-        epaisseur: epaisseur,
+        epaisseur,
     });
 
-    let lignes_retour = flocon_koch_recursif(&lignes, n_iter);
-
-    return lignes_retour;
+    flocon_koch_recursif(&lignes, n_iter)
 }
 
+#[allow(clippy::too_many_arguments)]
 fn calcule_fractale_interne(
     x_min: f64,
     x_max: f64,
@@ -244,12 +243,12 @@ fn calcule_fractale_interne(
         }
     }
 
-    return pixels;
+    pixels
 }
 
 // Convertit une chaine hexadecimale
 // avec des octets séparés par des espaces
-fn convertit_str_to_vec_u8(chaine_hexa: &String) -> Vec<u8> {
+fn convertit_str_to_vec_u8(chaine_hexa: &str) -> Vec<u8> {
     let mut octets_retour: Vec<u8> = Vec::new();
     let octet_hexa_vec = chaine_hexa.split_whitespace().collect::<Vec<_>>();
     for octet_hexa in octet_hexa_vec {
@@ -258,7 +257,7 @@ fn convertit_str_to_vec_u8(chaine_hexa: &String) -> Vec<u8> {
         octets_retour.push(v);
     }
 
-    return octets_retour;
+    octets_retour
 }
 
 // Calcule l'image d'une fractale, et l'écrit dans un fichier bmp
@@ -283,10 +282,10 @@ pub fn calcule_fractale_et_ecrit_bmp(x_fractale: f64, y_fractale: f64, f_fractal
     let debut_bmp2 = "00 00 80 02 00 00 e0 01 00 00 01 00 18 00 00 00";
     let debut_bmp3 = "00 00 00 10 0e 00 d7 0d 00 00 d7 0d 00 00 00 00";
     let debut_bmp4 = "00 00 00 00 00 00";
-    bmp_octets.append(&mut convertit_str_to_vec_u8(&debut_bmp.to_string()));
-    bmp_octets.append(&mut convertit_str_to_vec_u8(&debut_bmp2.to_string()));
-    bmp_octets.append(&mut convertit_str_to_vec_u8(&debut_bmp3.to_string()));
-    bmp_octets.append(&mut convertit_str_to_vec_u8(&debut_bmp4.to_string()));
+    bmp_octets.append(&mut convertit_str_to_vec_u8(debut_bmp));
+    bmp_octets.append(&mut convertit_str_to_vec_u8(debut_bmp2));
+    bmp_octets.append(&mut convertit_str_to_vec_u8(debut_bmp3));
+    bmp_octets.append(&mut convertit_str_to_vec_u8(debut_bmp4));
 
     let img_pixels: Vec<f64> = calcule_fractale_interne(
         x_min, x_max, largeur, y_min, y_max, hauteur, max_n_iter, x_fractale, y_fractale,
@@ -312,5 +311,4 @@ pub fn calcule_fractale_et_ecrit_bmp(x_fractale: f64, y_fractale: f64, f_fractal
     }
 
     fichiers::ecrire_fichier_binaire(f_fractale_bmp, &bmp_octets);
-    println!("Fichier écrit: {}", &f_fractale_bmp);
 }

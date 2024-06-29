@@ -32,7 +32,7 @@ where
     let mut a_min_opt: Option<&A> = None;
     for (s, a) in c.iter() {
         if (a_min_opt.is_some()) {
-            if (a < &a_min_opt.unwrap()) {
+            if (a < a_min_opt.unwrap()) {
                 s_min_opt = Some(s);
                 a_min_opt = Some(a);
             }
@@ -42,7 +42,7 @@ where
         }
     }
 
-    return (s_min_opt.unwrap().clone(), a_min_opt.unwrap().clone());
+    (s_min_opt.unwrap().clone(), a_min_opt.unwrap().clone())
 }
 
 // Implémentation de l'algorithme de Dijkstra
@@ -81,7 +81,7 @@ where
     let mut sommet_final_opt: Option<S> = None;
 
     // Tant que la file n'est pas vide
-    while (&c.len() > &0) {
+    while !c.is_empty() {
         // Prendre le plus petit élément a de la file de priorité
         let (sommet, dist) = trouve_clef_min_val_dans_hashmap(&c);
 
@@ -126,7 +126,7 @@ where
         }
     }
 
-    return (p, prec, sommet_final_opt);
+    (p, prec, sommet_final_opt)
 }
 
 /*
@@ -152,17 +152,17 @@ impl Labyrinthe {
         let puissance_separateur: u32 = 32;
         let deux_puiss: u64 = u64::pow(2, puissance_separateur);
         let deux_puiss_moins_1: u64 = deux_puiss - 1;
-        return ((pos / deux_puiss) as u32, (pos & deux_puiss_moins_1) as u32);
+        ((pos / deux_puiss) as u32, (pos & deux_puiss_moins_1) as u32)
     }
 
     pub fn hauteur_largeur_vers_u64(hauteur: u32, largeur: u32) -> u64 {
         let puissance_separateur: u32 = 32;
         let deux_puiss: u64 = u64::pow(2, puissance_separateur);
-        return (hauteur as u64) * deux_puiss + (largeur as u64);
+        (hauteur as u64) * deux_puiss + (largeur as u64)
     }
 
     fn trouve_caractere_dans_le_plan(
-        plan: &Vec<String>,
+        plan: &[String],
         largeur: u32,
         hauteur: u32,
         caractere_a_trouver: char,
@@ -180,13 +180,13 @@ impl Labyrinthe {
             }
         }
 
-        return pos_vec;
+        pos_vec
     }
 
     // Fonctions publiques
     // Constructeur
-    pub fn new(plan: &Vec<String>) -> Self {
-        let s_plan = plan.clone();
+    pub fn new(plan: &[String]) -> Self {
+        let s_plan = plan.to_owned();
 
         let s_hauteur = s_plan.len() as u32;
         assert!(
@@ -209,7 +209,7 @@ impl Labyrinthe {
         let s_s_final =
             Self::trouve_caractere_dans_le_plan(&s_plan, s_largeur, s_hauteur, s_caractere_final);
 
-        return Labyrinthe {
+        Labyrinthe {
             plan: s_plan,
             hauteur: s_hauteur,
             largeur: s_largeur,
@@ -217,24 +217,24 @@ impl Labyrinthe {
             s_final: s_s_final,
             caractere_init: s_caractere_init,
             caractere_final: s_caractere_final,
-        };
+        }
     }
 
     // Getters/Setters
     pub fn s_init(&self) -> Vec<u64> {
-        return self.s_init.clone();
+        self.s_init.clone()
     }
 
     pub fn s_final(&self) -> Vec<u64> {
-        return self.s_final.clone();
+        self.s_final.clone()
     }
 
     pub fn caractere_init(&self) -> char {
-        return self.caractere_init;
+        self.caractere_init
     }
 
     pub fn caractere_final(&self) -> char {
-        return self.caractere_final;
+        self.caractere_final
     }
 }
 
@@ -257,10 +257,7 @@ impl Voisins<u64, u64> for Labyrinthe {
 
         // On peut traverser une case du labyrinthe qui contient:
         // soit un espace ' ', soit le caracteres initial ou final (car n'étant pas des murs)
-        let mut caracteres_passage: Vec<char> = Vec::new();
-        caracteres_passage.push(' ');
-        caracteres_passage.push(self.caractere_init);
-        caracteres_passage.push(self.caractere_final);
+        let caracteres_passage: Vec<char> = vec![' ', self.caractere_init, self.caractere_final];
 
         for (voisin, dist) in voisins_possibles {
             let (hauteur_v, largeur_v): (u32, u32) = Self::u64_vers_hauteur_largeur(voisin);
@@ -288,7 +285,7 @@ impl Voisins<u64, u64> for Labyrinthe {
             }
         }
 
-        return voisins;
+        voisins
     }
 }
 
@@ -386,7 +383,6 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String) {
         }
 
         fichiers::ecrire_fichier_texte_lignes(&f_plan_solution, &plan_solution);
-        println!("Fichier écrit: {}", f_plan_solution);
 
         let caractere_init = labyrinthe.caractere_init();
         let caractere_final = labyrinthe.caractere_final();
@@ -396,14 +392,12 @@ pub fn resoud_labyrinthe(f_plan_labyrinthe: String, f_plan_solution: String) {
         let caractere_final_en_couleur = "\x1b[92m$\x1b[0m";
         let mut plan_solution_couleur: Vec<String> = Vec::new();
         for ligne in plan_solution {
-            let ligne_couleur = ligne.replace(
-                caractere_sommet_parcouru,
-                &caractere_sommet_parcouru_couleur,
-            );
             let ligne_couleur =
-                ligne_couleur.replace(caractere_solution, &chemin_solution_en_couleur);
-            let ligne_couleur = ligne_couleur.replace(caractere_init, &caractere_init_en_couleur);
-            let ligne_couleur = ligne_couleur.replace(caractere_final, &caractere_final_en_couleur);
+                ligne.replace(caractere_sommet_parcouru, caractere_sommet_parcouru_couleur);
+            let ligne_couleur =
+                ligne_couleur.replace(caractere_solution, chemin_solution_en_couleur);
+            let ligne_couleur = ligne_couleur.replace(caractere_init, caractere_init_en_couleur);
+            let ligne_couleur = ligne_couleur.replace(caractere_final, caractere_final_en_couleur);
             plan_solution_couleur.push(ligne_couleur);
         }
         // Afficher la solution à l'écran en couleur

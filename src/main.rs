@@ -26,22 +26,22 @@ use crate::rationnels::Rationnels;
 
 // Connaitre le temps en secondes depuis l'epoch
 fn get_curr_time_epoch() -> f64 {
-    return (SystemTime::now()
+    (SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .expect("Time went backwards")
         .as_millis() as f64)
-        / 1000.;
+        / 1000.
 }
 
 fn main() {
     println!("Hello, world!");
 
-    let b_test_classiques = false;
+    let b_test_classiques = true;
     let b_test_recherche_tableau_et_tris = false;
     let b_test_tris_variants = false;
     let b_test_probas = false;
     let b_test_algos_divers = false;
-    let b_test_rationnels = true;
+    let b_test_rationnels = false;
     let b_test_fichiers = false;
     let b_test_conversions_entiers = false;
     let b_test_graphes = false;
@@ -49,7 +49,7 @@ fn main() {
 
     // Test des fonctions 'mathématiques': Factorielle, pgcd, fibonacci_interatif, fibonacci_recursif
     if (b_test_classiques) {
-        println!("");
+        println!();
         let n: u64 = 5;
         println!("Factorielle({}) = {}", n, classiques::factorielle(n));
 
@@ -82,7 +82,7 @@ fn main() {
     }
 
     if (b_test_recherche_tableau_et_tris) {
-        println!("");
+        println!();
 
         // Tester le générateur aléatoire (MINSTD)
         if (false) {
@@ -98,7 +98,7 @@ fn main() {
 
         //let mut mon_tableau: Vec<i32> = vec![1, 2, 3, 4, 5];
         //let mut mon_tableau: Vec<i32> = vec![5, 4, 3, 2, 1];
-        let mut mon_tableau: Vec<i32> = Vec::from_iter((0..n));
+        let mut mon_tableau: Vec<i32> = Vec::from_iter(0..n);
         //let mut mon_tableau: Vec<i32> = Vec::from_iter((0..n).rev());
 
         let mon_tableau2: &mut [i32] = mon_tableau.as_mut_slice();
@@ -136,13 +136,13 @@ fn main() {
 
         println!("tableau trié: \n{:?}", &mon_tableau2);
         assert!(
-            tri::verif_tableau_croissant(&mon_tableau2),
+            tri::verif_tableau_croissant(mon_tableau2),
             "Erreur: le tableau n'est pas correctement trié."
         );
     }
 
     if (b_test_tris_variants) {
-        println!("");
+        println!();
         // Tableau de données string
         let mut mon_tableau_gen: Vec<String> = vec![
             "rust".to_string(),
@@ -187,24 +187,24 @@ fn main() {
 
         println!("tableau trié: \n{:?}", &mon_tableau_gen2);
         assert!(
-            tri::verif_tableau_croissant(&mon_tableau_gen2),
+            tri::verif_tableau_croissant(mon_tableau_gen2),
             "Erreur: le tableau n'est pas correctement trié."
         );
     }
 
     if (b_test_probas) {
-        println!("");
+        println!();
         let seed: u32 = 1234;
         let n: usize = 10000;
         let normales: Vec<f64> = probabilites::box_muller(n, seed);
-        let moyenne = probabilites::moyenne(&normales.as_slice()).unwrap();
-        let variance = probabilites::variance(&normales.as_slice(), None).unwrap();
+        let moyenne = probabilites::moyenne(normales.as_slice()).unwrap();
+        let variance = probabilites::variance(normales.as_slice(), None).unwrap();
         //println!("normales: {:?}", &normales);
         println!("moyenne, variance, : {} {}", moyenne, variance);
     }
 
     if (b_test_algos_divers) {
-        println!("");
+        println!();
         let solutions = divers::resoud_probleme_des_8_dames();
         println!("Nb solutions: {}", solutions.len());
         //println!("Solutions: {:?}", solutions);
@@ -263,27 +263,25 @@ fn main() {
         // Test de la conjecture de Syracuse
         println!("\nTest de la conjecture de Syracuse");
         let n: u64 = 15;
-        let (temps_de_vol, altitude_max) = divers::calcule_temps_de_vol_et_altitude_max(n.clone());
+        let (temps_de_vol, altitude_max) = divers::calcule_temps_de_vol_et_altitude_max(n);
         println!(
             "n = {}; Temps de vol = {}; Altitude max = {}",
             n, temps_de_vol, altitude_max
         );
         let n: u64 = 27;
-        let (temps_de_vol, altitude_max) = divers::calcule_temps_de_vol_et_altitude_max(n.clone());
+        let (temps_de_vol, altitude_max) = divers::calcule_temps_de_vol_et_altitude_max(n);
         println!(
             "n = {}; Temps de vol = {}; Altitude max = {}",
             n, temps_de_vol, altitude_max
         );
         let n_max: u64 = 100;
-        let (temps_de_vol_max, temps_de_vol_max_index) =
-            divers::calcule_temps_de_vol_max(n_max.clone());
+        let (temps_de_vol_max, temps_de_vol_max_index) = divers::calcule_temps_de_vol_max(n_max);
         println!(
             "n_max = {}; Temps de vol max = {}; index associé = {}",
             n_max, temps_de_vol_max, temps_de_vol_max_index
         );
         let n_max: u64 = 1000000;
-        let (temps_de_vol_max, temps_de_vol_max_index) =
-            divers::calcule_temps_de_vol_max(n_max.clone());
+        let (temps_de_vol_max, temps_de_vol_max_index) = divers::calcule_temps_de_vol_max(n_max);
         println!(
             "n_max = {}; Temps de vol max = {}; index associé = {}",
             n_max, temps_de_vol_max, temps_de_vol_max_index
@@ -366,18 +364,24 @@ fn main() {
         println!("{} > {} ? Réponse: {}", &r1, &r2, r1 > r2);
         println!("{} <= {} ? Réponse: {}", &r1, &r2, r1 <= r2);
         println!("{} < {} ? Réponse: {}", &r1, &r2, r1 < r2);
-        println!("{} >= {} ? Réponse: {}", &r1, &r1, r1 >= r1);
-        println!("{} <= {} ? Réponse: {}", &r1, &r1, r1 <= r1);
+        #[allow(clippy::eq_op)]
+        let b_cmp = r1 >= r1;
+        println!("{} >= {} ? Réponse: {}", &r1, &r1, b_cmp);
+        #[allow(clippy::eq_op)]
+        let b_cmp = r1 <= r1;
+        println!("{} <= {} ? Réponse: {}", &r1, &r1, b_cmp);
 
         // Test comparison, via un des algos de tri générique
-        let mut mon_tableau_de_rationnels: Vec<Rationnels<i64>> = Vec::new();
-        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(2, 3));
-        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(-2, 3));
-        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(-1, 2));
-        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(2, 5));
-        mon_tableau_de_rationnels.push(rationnels::Rationnels::new(-7, 5));
+        let mut mon_tableau_de_rationnels: Vec<Rationnels<i64>> = vec![
+            rationnels::Rationnels::new(2, 3),
+            rationnels::Rationnels::new(-2, 3),
+            rationnels::Rationnels::new(-1, 2),
+            rationnels::Rationnels::new(2, 5),
+            rationnels::Rationnels::new(-7, 5),
+        ];
+
         let mon_tableau_de_rationnels2: &mut [Rationnels<i64>] =
-            &mut mon_tableau_de_rationnels.as_mut_slice();
+            mon_tableau_de_rationnels.as_mut_slice();
         println!("\ntableau départ: \n {:?}", &mon_tableau_de_rationnels2);
         tri_variantes::tri_par_insertion_generique(mon_tableau_de_rationnels2);
         println!("\ntableau trié: \n {:?}\n", &mon_tableau_de_rationnels2);
@@ -474,7 +478,7 @@ fn main() {
             }
 
             let f_plan_solution =
-                f_plan_labyrinthe.split(".").collect::<Vec<_>>()[0].to_string() + "_solution.txt";
+                f_plan_labyrinthe.split('.').collect::<Vec<_>>()[0].to_string() + "_solution.txt";
             //println!("{},{}", f_plan_labyrinthe, f_plan_solution);
             graphes::resoud_labyrinthe(f_plan_labyrinthe, f_plan_solution);
         }

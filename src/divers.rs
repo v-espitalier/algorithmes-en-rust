@@ -49,8 +49,8 @@ fn trouve_k_ieme_case_libre(k: usize, profondeur: usize, cases_prises: &[usize; 
     let mut k_decrement = k;
     for i in 0..8 {
         let mut prise: bool = false;
-        for j in 0..profondeur {
-            if cases_prises[j] == i {
+        for (_j, elem) in cases_prises.iter().enumerate().take(profondeur) {
+            if *elem == i {
                 prise = true;
                 break;
             }
@@ -124,7 +124,7 @@ pub fn resoud_probleme_des_8_dames() -> Vec<[usize; 8]> {
         }
         if (index_pruning == 8) {
             // index_pruning = 8 => Pas de conflit de diagonale: On a trouvé une nouvelle solution
-            solutions.push(solution_absolue_cour.clone());
+            solutions.push(solution_absolue_cour);
             index_pruning = 7; // On incrémentera le dernier index
         }
         n_positions_testees += 1;
@@ -151,25 +151,24 @@ pub fn resoud_probleme_des_8_dames() -> Vec<[usize; 8]> {
         for i in 0..8 {
             sol_new[i] = 7 - sol_prec[i];
         }
-        solutions.push(sol_new.clone());
+        solutions.push(sol_new);
     }
 
-    return solutions;
+    solutions
 }
 
-pub fn affiche_solutions_probleme_des_8_dames(solutions: &Vec<[usize; 8]>) {
+pub fn affiche_solutions_probleme_des_8_dames(solutions: &[[usize; 8]]) {
     // Afficher la dame en couleur, avec les 'escape sequences'
     let dame_en_couleur = "\x1b[93m*\x1b[0m";
     let dame: &str = dame_en_couleur; // "*";
-    for sol_index in 0..solutions.len() {
-        let sol_cour = solutions[sol_index];
+    for (sol_index, sol_cour) in solutions.iter().enumerate() {
         println!("Solution d'index {}", (sol_index + 1));
-        println!("");
+        println!();
         println!("   a b c d e f g h");
         for i in 0..8 {
             let mut rev_index = 8;
-            for j in 0..8 {
-                if sol_cour[j] == (7 - i) {
+            for (j, elem) in sol_cour.iter().enumerate() {
+                if *elem == (7 - i) {
                     rev_index = j;
                     break;
                 }
@@ -186,8 +185,8 @@ pub fn affiche_solutions_probleme_des_8_dames(solutions: &Vec<[usize; 8]>) {
             );
         }
         println!("   a b c d e f g h");
-        println!("");
-        println!("");
+        println!();
+        println!();
     }
 }
 
@@ -196,66 +195,66 @@ pub fn calcule_symetries_rotations(solution: &[usize; 8]) -> Vec<[usize; 8]> {
     // par symétrie ou rotation
     let mut solutions_multiples_cour: Vec<[usize; 8]> = Vec::new();
 
-    solutions_multiples_cour.push(solution.clone());
+    solutions_multiples_cour.push(*solution);
 
     let mut solution_transformee: [usize; 8] = [0; 8];
     // Symétrie échangeant A1 et A8
     for i in 0..8 {
         solution_transformee[i] = 7 - solution[i];
     }
-    solutions_multiples_cour.push(solution_transformee.clone());
+    solutions_multiples_cour.push(solution_transformee);
 
     // Symétrie échangeant A1 et H1
     for i in 0..8 {
         solution_transformee[i] = solution[7 - i];
     }
-    solutions_multiples_cour.push(solution_transformee.clone());
+    solutions_multiples_cour.push(solution_transformee);
 
     // Symétrie centrale (rotation 180 degres) échangeant A1 et H8
     for i in 0..8 {
         solution_transformee[i] = 7 - solution[7 - i];
     }
-    solutions_multiples_cour.push(solution_transformee.clone());
+    solutions_multiples_cour.push(solution_transformee);
 
     // Les 2 symétries axiales selon les diagonales
     for i in 0..8 {
         solution_transformee[solution[i]] = i;
     }
-    solutions_multiples_cour.push(solution_transformee.clone());
+    solutions_multiples_cour.push(solution_transformee);
 
     for i in 0..8 {
         solution_transformee[7 - solution[i]] = 7 - i;
     }
-    solutions_multiples_cour.push(solution_transformee.clone());
+    solutions_multiples_cour.push(solution_transformee);
 
     // Rotation de 90 degrés dans le sens trigo inverse, amenant A1 en A8.
-    for i in 0..8 {
+    for (i, elem_i) in solution_transformee.iter_mut().enumerate() {
         let mut bon_index = 8;
-        for j in 0..8 {
-            if solution[j] == i {
+        for (j, elem) in solution.iter().enumerate() {
+            if *elem == i {
                 bon_index = j;
                 break;
             }
         }
-        solution_transformee[i] = 7 - bon_index;
+        *elem_i = 7 - bon_index;
     }
-    solutions_multiples_cour.push(solution_transformee.clone());
+    solutions_multiples_cour.push(solution_transformee);
 
     // Rotation de 90 degrés dans le sens trigo, amenant A1 en H1.
     for i in 0..8 {
         let mut bon_index = 8;
-        for j in 0..8 {
-            if solution[j] == i {
+        for (j, elem) in solution.iter().enumerate() {
+            if *elem == i {
                 bon_index = j;
                 break;
             }
         }
         solution_transformee[7 - i] = bon_index;
     }
-    solutions_multiples_cour.push(solution_transformee.clone());
+    solutions_multiples_cour.push(solution_transformee);
 
     //println!("sols: {:?}", solutions_multiples_cour);
-    return solutions_multiples_cour;
+    solutions_multiples_cour
 }
 
 // Extrait les 12 solutions uniques du probleme de l'ensemble des solutions trouvées
@@ -268,14 +267,14 @@ pub fn calcule_solutions_uniques(solutions: &Vec<[usize; 8]>) -> Vec<[usize; 8]>
     let mut solutions_uniques: Vec<[usize; 8]> = Vec::new();
     let mut solutions_multiples: Vec<[usize; 8]> = Vec::new();
 
-    for sol_index in 0..solutions.len() {
+    for elem in solutions {
         //println!("sol_index: {}, nb sol multiples: {}", sol_index, solutions_multiples.len());
         //println!("{:?}", solutions_multiples);
         //if sol_index > 2 {panic!();}
-        let sol_cour = solutions[sol_index];
+        let sol_cour = elem;
         let mut trouve = false;
-        for i in 0..solutions_multiples.len() {
-            let sol_multiple_cour = solutions_multiples[i];
+        for elem in &solutions_multiples {
+            let sol_multiple_cour = elem;
             let mut identique = true;
             for j in 0..8 {
                 if sol_cour[j] != sol_multiple_cour[j] {
@@ -289,18 +288,18 @@ pub fn calcule_solutions_uniques(solutions: &Vec<[usize; 8]>) -> Vec<[usize; 8]>
             }
         }
         if !trouve {
-            solutions_uniques.push(sol_cour);
+            solutions_uniques.push(*sol_cour);
 
-            let solutions_multiples_cour = calcule_symetries_rotations(&sol_cour);
-            for j in 0..solutions_multiples_cour.len() {
-                solutions_multiples.push(solutions_multiples_cour[j]);
+            let solutions_multiples_cour = calcule_symetries_rotations(sol_cour);
+            for elem in &solutions_multiples_cour {
+                solutions_multiples.push(*elem);
             }
         }
     }
 
     //println!("Nb solutions_multiples: {}", solutions_multiples.len());
 
-    return solutions_uniques;
+    solutions_uniques
 }
 
 // Calcul itératif du pgcd des entiers a et b
@@ -342,7 +341,7 @@ pub fn pgcd_asm(a: u64, b: u64) -> u64 {
             in("ecx") b
         );
     }
-    return pgcd;
+    pgcd
 }
 
 // Recherche des nombres premiers compris entre min_n (inclus) et max_n (exclu).
@@ -376,7 +375,7 @@ pub fn recherche_premiers(min_n: usize, max_n: usize) -> Vec<usize> {
         }
     }
 
-    return premiers_trouves;
+    premiers_trouves
 }
 
 // Recherche des nombres premiers compris entre min_n (inclus) et max_n (exclu).
@@ -401,7 +400,7 @@ pub fn recherche_premiers_multithreading(
 
     static GLOBAL_THREAD_COUNT: AtomicUsize = AtomicUsize::new(0);
 
-    let mut premiers_trouves: Vec<usize> = Vec::new();
+    let premiers_trouves: Vec<usize> = Vec::new();
     let shared_premiers_trouves = Arc::new(Mutex::new(premiers_trouves));
 
     for batch_index in 0..n_batch {
@@ -443,9 +442,7 @@ pub fn recherche_premiers_multithreading(
     }
 
     println!("Attente terminée..");
-    premiers_trouves = shared_premiers_trouves.lock().unwrap().clone();
-
-    return premiers_trouves;
+    return shared_premiers_trouves.lock().unwrap().clone();
 }
 
 // Algorithmes relatifs du problème de Syracuse
@@ -459,7 +456,7 @@ pub fn calcule_temps_de_vol_et_altitude_max(n: u64) -> (u64, u64) {
     let mut n_cour: u64 = n;
     while (n_cour != 1) {
         if ((n_cour % 2) == 0) {
-            n_cour = n_cour / 2;
+            n_cour /= 2;
         } else {
             n_cour = 3 * n_cour + 1;
         }
@@ -467,10 +464,10 @@ pub fn calcule_temps_de_vol_et_altitude_max(n: u64) -> (u64, u64) {
             altitude_max = n_cour;
         }
 
-        temps_de_vol = temps_de_vol + 1;
+        temps_de_vol += 1;
     }
 
-    return (temps_de_vol, altitude_max);
+    (temps_de_vol, altitude_max)
 }
 
 // Calcule les suites de Syracuse inférieures ou égales à n
@@ -489,7 +486,7 @@ pub fn calcule_temps_de_vol_max(n_max: u64) -> (u64, u64) {
         }
     }
 
-    return (temps_de_vol_max, temps_de_vol_max_index);
+    (temps_de_vol_max, temps_de_vol_max_index)
 }
 
 // Meme calcul que la fonction au dessus (calcule_temps_de_vol_max)
@@ -577,5 +574,5 @@ pub fn _calcule_temps_de_vol_max_asm(n_max: u64) -> (u64, u64) {
         );
     }
 
-    return (temps_de_vol_max, temps_de_vol_max_index);
+    (temps_de_vol_max, temps_de_vol_max_index)
 }

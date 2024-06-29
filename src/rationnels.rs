@@ -16,7 +16,7 @@ pub struct Rationnels<T>
     denominateur: T,
 }
 
-impl<'a, T> Rationnels<T>
+impl<T> Rationnels<T>
 where
     T: PartialEq
         + PartialOrd
@@ -87,7 +87,7 @@ where
     fn add(self, other: Self) -> Self {
         let ret_num = self.numerateur * other.denominateur + self.denominateur * other.numerateur;
         let ret_den = self.denominateur * other.denominateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -110,7 +110,7 @@ where
     fn add(self, other: &Rationnels<T>) -> Rationnels<T> {
         let ret_num = self.numerateur * other.denominateur + self.denominateur * other.numerateur;
         let ret_den = self.denominateur * other.denominateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -154,7 +154,7 @@ where
     fn sub(self, other: Self) -> Self {
         let ret_num = self.numerateur * other.denominateur - self.denominateur * other.numerateur;
         let ret_den = self.denominateur * other.denominateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -176,7 +176,7 @@ where
     fn sub(self, other: &Rationnels<T>) -> Rationnels<T> {
         let ret_num = self.numerateur * other.denominateur - self.denominateur * other.numerateur;
         let ret_den = self.denominateur * other.denominateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -220,7 +220,7 @@ where
     fn mul(self, other: Self) -> Self {
         let ret_num = self.numerateur * other.numerateur;
         let ret_den = self.denominateur * other.denominateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -242,7 +242,7 @@ where
     fn mul(self, other: &Rationnels<T>) -> Rationnels<T> {
         let ret_num = self.numerateur * other.numerateur;
         let ret_den = self.denominateur * other.denominateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -264,7 +264,7 @@ where
     fn div(self, other: Self) -> Self {
         let ret_num = self.numerateur * other.denominateur;
         let ret_den = self.denominateur * other.numerateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -286,7 +286,7 @@ where
     fn div(self, other: &Rationnels<T>) -> Rationnels<T> {
         let ret_num = self.numerateur * other.denominateur;
         let ret_den = self.denominateur * other.numerateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -308,7 +308,7 @@ where
     fn neg(self) -> Self {
         let ret_num = -self.numerateur;
         let ret_den = self.denominateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -330,7 +330,7 @@ where
     fn neg(self) -> Rationnels<T> {
         let ret_num = -self.numerateur;
         let ret_den = self.denominateur;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -344,14 +344,7 @@ where
         let num_diff = self.numerateur * other.denominateur - self.denominateur * other.numerateur;
         let zero: T =
             T::try_from(0i8).expect("rationnels.rs zero(): Problème dans la conversion du zéro.");
-        return num_diff == zero;
-    }
-
-    fn ne(&self, other: &Rationnels<T>) -> bool {
-        let num_diff = self.numerateur * other.denominateur - self.denominateur * other.numerateur;
-        let zero: T =
-            T::try_from(0i8).expect("rationnels.rs zero(): Problème dans la conversion du zéro.");
-        return num_diff != zero;
+        num_diff == zero
     }
 }
 
@@ -370,21 +363,13 @@ where
 {
     fn partial_cmp(&self, other: &Rationnels<T>) -> Option<Ordering> {
         let sub_num: T = (self - other).numerateur;
-        let return_ord: std::cmp::Ordering;
         let zero: T =
             T::try_from(0i8).expect("rationnels.rs zero(): Problème dans la conversion du zéro.");
         match sub_num {
-            tmp if tmp > zero => {
-                return_ord = Ordering::Greater;
-            }
-            tmp if tmp < zero => {
-                return_ord = Ordering::Less;
-            }
-            _ => {
-                return_ord = Ordering::Equal;
-            }
+            tmp if tmp > zero => Some(Ordering::Greater),
+            tmp if tmp < zero => Some(Ordering::Less),
+            _ => Some(Ordering::Equal),
         }
-        return Some(return_ord);
     }
 }
 
@@ -403,7 +388,7 @@ where
             panic!("Erreur dans from: Division par zéro.");
         }
 
-        return num_f64 / den_f64;
+        num_f64 / den_f64
     }
 }
 
@@ -424,7 +409,7 @@ where
         let ret_num: T = T::from(input);
         let un: T = T::try_from(1i8).expect("rationnels.rs: Problème dans la conversion du 'un.'");
         let ret_den = un;
-        return Rationnels::<T>::new(ret_num, ret_den);
+        Rationnels::<T>::new(ret_num, ret_den)
     }
 }
 
@@ -473,7 +458,7 @@ where
     }
 
     // Appel récursif
-    return pgcd_generique(b, &m);
+    pgcd_generique(b, &m)
 
     // Le nombre de récursion est fini car a et b sont des entiers positifs
     // et diminuent strictement à chaque appel
